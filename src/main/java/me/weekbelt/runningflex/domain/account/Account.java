@@ -1,4 +1,4 @@
-package me.weekbelt.runningflex.domain;
+package me.weekbelt.runningflex.domain.account;
 
 import lombok.*;
 
