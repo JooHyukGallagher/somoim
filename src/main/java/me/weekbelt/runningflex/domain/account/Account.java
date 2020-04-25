@@ -6,11 +6,8 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-@Builder
-@AllArgsConstructor
-@NoArgsConstructor
-@Getter
-@EqualsAndHashCode(of = "id")
+@Builder @AllArgsConstructor
+@Getter @EqualsAndHashCode(of = "id")
 @Entity
 public class Account {
 
@@ -48,7 +45,21 @@ public class Account {
     private boolean runningUpdatedByEmail;
     private boolean runningUpdatedByWeb;
 
+    public Account() {
+        this.runningCreatedByWeb = true;
+        this.runningEnrollmentResultByWeb = true;
+        this.runningUpdatedByWeb = true;
+    }
+
     public void generateEmailCheckToken() {
         this.emailCheckToken = UUID.randomUUID().toString();
+    }
+
+    public void setEmailVerified(boolean emailVerified) {
+        this.emailVerified = emailVerified;
+    }
+
+    public void setJoinedAt(LocalDateTime joinedAt) {
+        this.joinedAt = joinedAt;
     }
 }

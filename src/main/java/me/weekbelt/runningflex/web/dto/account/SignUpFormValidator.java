@@ -1,6 +1,7 @@
-package me.weekbelt.runningflex.account;
+package me.weekbelt.runningflex.web.dto.account;
 
 import lombok.RequiredArgsConstructor;
+import me.weekbelt.runningflex.domain.account.AccountRepository;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
@@ -11,9 +12,10 @@ public class SignUpFormValidator implements Validator {
 
     private final AccountRepository accountRepository;
 
+    // 어떠한 도메인 클래스에 대한 검증인지 설정
     @Override
     public boolean supports(Class<?> clazz) {
-        return clazz.isAssignableFrom(SignUpForm.class);
+        return SignUpForm.class.isAssignableFrom(clazz);
     }
 
     @Override

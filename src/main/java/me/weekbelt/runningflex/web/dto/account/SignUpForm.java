@@ -1,4 +1,4 @@
-package me.weekbelt.runningflex.account;
+package me.weekbelt.runningflex.web.dto.account;
 
 import lombok.*;
 import org.hibernate.validator.constraints.Length;
