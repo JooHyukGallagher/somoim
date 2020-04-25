@@ -26,8 +26,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 class AccountControllerTest {
 
-    @Autowired private MockMvc mockMvc;
-    @Autowired private AccountRepository accountRepository;
+    @Autowired
+    private MockMvc mockMvc;
+    @Autowired
+    private AccountRepository accountRepository;
 
     @DisplayName("회원 가입 화면")
     @Test
@@ -65,8 +67,8 @@ class AccountControllerTest {
                 .param("password", "12345678")
                 .with(csrf()))      // POST 요청시 CSRF값을 비교하여 같으면 요청을 처리하고 다르면 403에러가 발생한다.
                 .andExpect(status().is3xxRedirection())
-                .andExpect(view().name("redirect:/"));
-//                .andExpect(authenticated().withUsername("joohyuk"));
+                .andExpect(view().name("redirect:/"))
+                .andExpect(authenticated().withUsername("joohyuk"));
 
         // 저장된 계정의 Password값이 인코딩이 되어있는지 확인
         Account account = accountRepository.findByEmail("vfrvfr4207@hanmail.net");
@@ -85,11 +87,12 @@ class AccountControllerTest {
     @Test
     public void checkEmailToken_with_wrong_input() throws Exception {
         mockMvc.perform(get("/check-email-token")
-        .param("token", "asdfasdfasdf")
-        .param("email", "wfsdf@gmail.com"))
+                .param("token", "asdfasdfasdf")
+                .param("email", "wfsdf@gmail.com"))
                 .andExpect(status().isOk())
                 .andExpect(model().attributeExists("error"))
-                .andExpect(view().name("account/checked-email"));
+                .andExpect(view().name("account/checked-email"))
+                .andExpect(unauthenticated());
     }
 
     @DisplayName("인증 메일 확인 - 입력값 정상")
@@ -110,6 +113,7 @@ class AccountControllerTest {
                 .andExpect(model().attributeDoesNotExist("error"))
                 .andExpect(model().attributeExists("nickname"))
                 .andExpect(model().attributeExists("numberOfUser"))
-                .andExpect(view().name("account/checked-email"));
+                .andExpect(view().name("account/checked-email"))
+                .andExpect(authenticated().withUsername(account.getNickname()));
     }
 }
