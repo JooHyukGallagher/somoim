@@ -116,4 +116,5 @@ class AccountControllerTest {
                 .andExpect(view().name("account/checked-email"))
                 .andExpect(authenticated().withUsername(account.getNickname()));
     }
+
 }

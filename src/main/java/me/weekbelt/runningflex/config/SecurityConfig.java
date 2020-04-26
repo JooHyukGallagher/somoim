@@ -20,6 +20,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         "/login-link").permitAll()
                 .mvcMatchers(HttpMethod.GET, "/profile/*").permitAll()
                 .anyRequest().authenticated();
+
+        http.formLogin()
+                .loginPage("/login")
+                .permitAll();
+
+        http.logout()
+                .logoutSuccessUrl("/");
     }
 
     // 글로벌 보안에 영향(자원 무시, 디버그 모드 설정, 사용자 정의 방화벽 정의를 구현하여 요청 거부)
