@@ -1,16 +1,28 @@
 package me.weekbelt.runningflex.config;
 
+import lombok.RequiredArgsConstructor;
+import me.weekbelt.runningflex.domain.account.AccountService;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
+import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 
+import javax.sql.DataSource;
+
+@RequiredArgsConstructor
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
+
+    private final AccountService accountService;
+    private final DataSource dataSource;
+
     // 패턴을 이용해서 접근을 제한
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -27,6 +39,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         http.logout()
                 .logoutSuccessUrl("/");
+
+        http.rememberMe()
+                .userDetailsService(accountService)
+                .tokenRepository(tokenRepository());
+    }
+
+    @Bean
+    public PersistentTokenRepository tokenRepository() {
+        JdbcTokenRepositoryImpl jdbcTokenRepository = new JdbcTokenRepositoryImpl();
+        jdbcTokenRepository.setDataSource(dataSource);
+        return jdbcTokenRepository;
     }
 
     // 글로벌 보안에 영향(자원 무시, 디버그 모드 설정, 사용자 정의 방화벽 정의를 구현하여 요청 거부)
