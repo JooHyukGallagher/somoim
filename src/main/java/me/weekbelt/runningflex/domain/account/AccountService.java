@@ -63,9 +63,9 @@ public class AccountService {
     public void login(Account account) {
         SecurityContext context = SecurityContextHolder.getContext();
         UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
-                account.getNickname(),
+                new UserAccount(account),
                 account.getPassword(),
-                List.of(new SimpleGrantedAuthority("ROLE_USER")));
+                List.of(new SimpleGrantedAuthority("ROLE_USER"))); // ROLE_USER의 권한을 부여함
         context.setAuthentication(authentication);
     }
 }
