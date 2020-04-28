@@ -13,6 +13,7 @@ import org.springframework.validation.Errors;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.validation.Valid;
@@ -52,7 +53,7 @@ public class AccountController {
     @GetMapping("/check-email-token")
     public String checkEmailToken(String token, String email, Model model) {
         String view = "account/checked-email";
-        Account account = accountRepository.findByEmail(email);
+        Account account = accountService.findByEmail(email);
         if (account == null) {
             model.addAttribute("error", "wrong.email");
             return view;
@@ -79,7 +80,7 @@ public class AccountController {
 
     @GetMapping("/resend-confirm-email")
     public String resendConfirmEmail(@CurrentUser Account account, Model model) {
-        if(!account.canSendConfirmEmail()){
+        if (!account.canSendConfirmEmail()) {
             model.addAttribute("error",
                     "인증 이메일은 10분에 한번만 전송할 수 있습니다.");
             model.addAttribute("email", account.getEmail());
@@ -88,5 +89,15 @@ public class AccountController {
 
         accountService.sendSignUpConfirmEmail(account);
         return "redirect:/";
+    }
+
+    @GetMapping("/profile/{nickname}")
+    public String viewProfile(@PathVariable String nickname, Model model,
+                              @CurrentUser Account account) {
+        Account findAccount = accountService.findByNickname(nickname);
+
+        model.addAttribute("account", findAccount);
+        model.addAttribute("isOwner", findAccount.equals(account));
+        return "account/profile";
     }
 }

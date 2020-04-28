@@ -41,12 +41,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .logoutSuccessUrl("/");
 
         http.rememberMe()
-                .userDetailsService(accountService)
+                .userDetailsService(accountService)     // UserDetail을 조회하는데 사용되는 UserDetailService를 지정
                 .tokenRepository(tokenRepository());
     }
 
     @Bean
     public PersistentTokenRepository tokenRepository() {
+        // JDBC 기반 영구 로그인 토큰 리포지토리
         JdbcTokenRepositoryImpl jdbcTokenRepository = new JdbcTokenRepositoryImpl();
         jdbcTokenRepository.setDataSource(dataSource);
         return jdbcTokenRepository;

@@ -3,6 +3,8 @@ package me.weekbelt.runningflex.domain.account;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
+
 @Transactional(readOnly = true)
 public interface AccountRepository extends JpaRepository<Account, Long> {
 
@@ -10,7 +12,7 @@ public interface AccountRepository extends JpaRepository<Account, Long> {
 
     boolean existsByNickname(String nickname);
 
-    Account findByEmail(String email);
+    Optional<Account> findByEmail(String email);
 
-    Account findByNickname(String nickname);
+    Optional<Account> findByNickname(String nickname);
 }

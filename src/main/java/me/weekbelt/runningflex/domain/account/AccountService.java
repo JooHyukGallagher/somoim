@@ -17,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Optional;
 
 @Transactional
 @RequiredArgsConstructor
@@ -74,14 +75,21 @@ public class AccountService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String emailOrNickname) throws UsernameNotFoundException {
-        Account account = accountRepository.findByEmail(emailOrNickname);
+        Account account = accountRepository.findByEmail(emailOrNickname).orElse(null);
         if (account == null) {
-            account = accountRepository.findByNickname(emailOrNickname);
-        }
-        if(account == null){
-            throw new UsernameNotFoundException(emailOrNickname);
+            account = accountRepository.findByNickname(emailOrNickname)
+                    .orElseThrow(() -> new UsernameNotFoundException("찾는 아이디나 이메일이 없습니다."));
         }
 
         return new UserAccount(account);
+    }
+
+    public Account findByNickname(String nickname) {
+        return accountRepository.findByNickname(nickname)
+                .orElseThrow(() -> new IllegalArgumentException("찾는" + nickname + "이 없습니다."));
+    }
+
+    public Account findByEmail(String email) {
+        return accountRepository.findByEmail(email).orElse(null);
     }
 }

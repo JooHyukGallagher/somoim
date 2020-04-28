@@ -2,6 +2,7 @@ package me.weekbelt.runningflex.web.controller;
 
 import me.weekbelt.runningflex.domain.account.Account;
 import me.weekbelt.runningflex.domain.account.AccountRepository;
+import me.weekbelt.runningflex.domain.account.AccountService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +29,8 @@ class AccountControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
+    @Autowired
+    AccountService accountService;
     @Autowired
     private AccountRepository accountRepository;
 
@@ -71,7 +74,7 @@ class AccountControllerTest {
                 .andExpect(authenticated().withUsername("joohyuk"));
 
         // 저장된 계정의 Password값이 인코딩이 되어있는지 확인
-        Account account = accountRepository.findByEmail("vfrvfr4207@hanmail.net");
+        Account account = accountService.findByEmail("vfrvfr4207@hanmail.net");
         assertThat(account).isNotNull();
         assertThat(account.getPassword()).isNotEqualTo("12345678");
         assertThat(account.getEmailCheckToken()).isNotNull();
