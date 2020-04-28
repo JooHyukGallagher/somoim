@@ -73,6 +73,7 @@ public class AccountService implements UserDetailsService {
         context.setAuthentication(authentication);
     }
 
+    @Transactional(readOnly = true)
     @Override
     public UserDetails loadUserByUsername(String emailOrNickname) throws UsernameNotFoundException {
         Account account = accountRepository.findByEmail(emailOrNickname).orElse(null);
@@ -91,5 +92,10 @@ public class AccountService implements UserDetailsService {
 
     public Account findByEmail(String email) {
         return accountRepository.findByEmail(email).orElse(null);
+    }
+
+    public void completeSignUp(Account account) {
+        account.completeSignUp();;
+        login(account);
     }
 }
