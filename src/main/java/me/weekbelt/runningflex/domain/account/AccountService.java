@@ -96,13 +96,13 @@ public class AccountService implements UserDetailsService {
     }
 
     public void completeSignUp(Account account) {
-        account.completeSignUp();;
+        account.completeSignUp();
         login(account);
     }
 
     public void updateProfile(Account account, Profile profile) {
-        Account findAccount = accountRepository.findByEmail(account.getEmail())
-                .orElseThrow(() -> new IllegalArgumentException("찾는 " + account.getEmail() + " 이메일이 없습니다."));
-        findAccount.updateProfile(profile);
+        account.updateProfile(profile);
+        accountRepository.save(account);
     }
+
 }

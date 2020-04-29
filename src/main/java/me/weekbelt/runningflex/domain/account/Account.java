@@ -77,7 +77,6 @@ public class Account {
         this.occupation = profile.getOccupation();
         this.location = profile.getLocation();
         this.bio = profile.getBio();
-        // TODO: 프로필 이미지 수정
-        // TODO: 문제가 하나 더 남아 있습니다.
+        this.profileImage = profile.getProfileImage();
     }
 }
