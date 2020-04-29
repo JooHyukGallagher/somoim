@@ -1,13 +1,14 @@
 package me.weekbelt.runningflex.domain.account;
 
 import lombok.*;
+import me.weekbelt.runningflex.web.dto.account.Notifications;
 import me.weekbelt.runningflex.web.dto.account.Profile;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-@Builder @AllArgsConstructor
+@Builder @AllArgsConstructor @NoArgsConstructor
 @Getter @EqualsAndHashCode(of = "id")
 @Entity
 public class Account {
@@ -37,22 +38,16 @@ public class Account {
     @Basic(fetch = FetchType.EAGER)
     private String profileImage;
 
-    private boolean runningCreatedByEmail;
-    private boolean runningCreatedByWeb;
+    private boolean groupCreatedByEmail;
+    private boolean groupCreatedByWeb = true;
 
-    private boolean runningEnrollmentResultByEmail;
-    private boolean runningEnrollmentResultByWeb;
+    private boolean groupEnrollmentResultByEmail;
+    private boolean groupEnrollmentResultByWeb = true;
 
-    private boolean runningUpdatedByEmail;
-    private boolean runningUpdatedByWeb;
+    private boolean groupUpdatedByEmail;
+    private boolean groupUpdatedByWeb = true;
 
     private LocalDateTime emailCheckTokenGeneratedAt;
-
-    public Account() {
-        this.runningCreatedByWeb = true;
-        this.runningEnrollmentResultByWeb = true;
-        this.runningUpdatedByWeb = true;
-    }
 
     public void generateEmailCheckToken() {
         this.emailCheckToken = UUID.randomUUID().toString();
@@ -82,5 +77,14 @@ public class Account {
 
     public void updatePassword(String newPassword) {
         this.password = newPassword;
+    }
+
+    public void updateNotifications(Notifications notifications) {
+        this.groupCreatedByEmail = notifications.isGroupCreatedByEmail();
+        this.groupCreatedByWeb = notifications.isGroupCreatedByWeb();
+        this.groupUpdatedByEmail = notifications.isGroupUpdatedByEmail();
+        this.groupUpdatedByWeb = notifications.isGroupUpdatedByWeb();
+        this.groupEnrollmentResultByEmail = notifications.isGroupEnrollmentResultByEmail();
+        this.groupEnrollmentResultByWeb = notifications.isGroupEnrollmentResultByWeb();
     }
 }

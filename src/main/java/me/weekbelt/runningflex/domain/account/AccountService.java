@@ -1,6 +1,7 @@
 package me.weekbelt.runningflex.domain.account;
 
 import lombok.RequiredArgsConstructor;
+import me.weekbelt.runningflex.web.dto.account.Notifications;
 import me.weekbelt.runningflex.web.dto.account.Profile;
 import me.weekbelt.runningflex.web.dto.account.SignUpForm;
 import org.springframework.mail.SimpleMailMessage;
@@ -43,9 +44,9 @@ public class AccountService implements UserDetailsService {
                 .nickname(signUpForm.getNickname())
                 .password(passwordEncoder.encode(signUpForm.getPassword()))
                 .emailVerified(false)
-                .runningCreatedByWeb(true)
-                .runningEnrollmentResultByEmail(true)
-                .runningUpdatedByWeb(true)
+                .groupCreatedByWeb(true)
+                .groupEnrollmentResultByWeb(true)
+                .groupUpdatedByWeb(true)
                 .build();
 
         // 생성한 엔티티를 DB에 저장
@@ -106,6 +107,11 @@ public class AccountService implements UserDetailsService {
 
     public void updatePassword(Account account, String newPassword) {
         account.updatePassword(passwordEncoder.encode(newPassword));
+        accountRepository.save(account);
+    }
+
+    public void updateNotifications(Account account, Notifications notifications) {
+        account.updateNotifications(notifications);
         accountRepository.save(account);
     }
 }
