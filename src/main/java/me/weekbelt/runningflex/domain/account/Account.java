@@ -79,4 +79,8 @@ public class Account {
         this.bio = profile.getBio();
         this.profileImage = profile.getProfileImage();
     }
+
+    public void updatePassword(String newPassword) {
+        this.password = newPassword;
+    }
 }

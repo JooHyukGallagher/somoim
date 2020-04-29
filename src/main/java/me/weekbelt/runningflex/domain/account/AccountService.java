@@ -18,7 +18,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.validation.Valid;
 import java.util.List;
-import java.util.Optional;
 
 @Transactional
 @RequiredArgsConstructor
@@ -105,4 +104,8 @@ public class AccountService implements UserDetailsService {
         accountRepository.save(account);
     }
 
+    public void updatePassword(Account account, String newPassword) {
+        account.updatePassword(passwordEncoder.encode(newPassword));
+        accountRepository.save(account);
+    }
 }

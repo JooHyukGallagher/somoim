@@ -1,7 +1,8 @@
-package me.weekbelt.runningflex.web.dto.account;
+package me.weekbelt.runningflex.web.dto.account.validator;
 
 import lombok.RequiredArgsConstructor;
 import me.weekbelt.runningflex.domain.account.AccountRepository;
+import me.weekbelt.runningflex.web.dto.account.SignUpForm;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;

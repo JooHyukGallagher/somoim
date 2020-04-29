@@ -6,7 +6,7 @@ import me.weekbelt.runningflex.domain.account.AccountRepository;
 import me.weekbelt.runningflex.domain.account.AccountService;
 import me.weekbelt.runningflex.domain.account.CurrentUser;
 import me.weekbelt.runningflex.web.dto.account.SignUpForm;
-import me.weekbelt.runningflex.web.dto.account.SignUpFormValidator;
+import me.weekbelt.runningflex.web.dto.account.validator.SignUpFormValidator;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
