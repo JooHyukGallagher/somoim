@@ -1,6 +1,7 @@
 package me.weekbelt.runningflex.domain.account;
 
 import lombok.*;
+import me.weekbelt.runningflex.web.dto.account.Profile;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -69,5 +70,14 @@ public class Account {
 
     public boolean canSendConfirmEmail() {
         return this.emailCheckTokenGeneratedAt.isBefore(LocalDateTime.now().minusMinutes(10));
+    }
+
+    public void updateProfile(Profile profile){
+        this.url = profile.getUrl();
+        this.occupation = profile.getOccupation();
+        this.location = profile.getLocation();
+        this.bio = profile.getBio();
+        // TODO: 프로필 이미지 수정
+        // TODO: 문제가 하나 더 남아 있습니다.
     }
 }

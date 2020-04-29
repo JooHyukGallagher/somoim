@@ -1,6 +1,7 @@
 package me.weekbelt.runningflex.domain.account;
 
 import lombok.RequiredArgsConstructor;
+import me.weekbelt.runningflex.web.dto.account.Profile;
 import me.weekbelt.runningflex.web.dto.account.SignUpForm;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -97,5 +98,11 @@ public class AccountService implements UserDetailsService {
     public void completeSignUp(Account account) {
         account.completeSignUp();;
         login(account);
+    }
+
+    public void updateProfile(Account account, Profile profile) {
+        Account findAccount = accountRepository.findByEmail(account.getEmail())
+                .orElseThrow(() -> new IllegalArgumentException("찾는 " + account.getEmail() + " 이메일이 없습니다."));
+        findAccount.updateProfile(profile);
     }
 }

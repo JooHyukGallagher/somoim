@@ -1,4 +1,4 @@
-package me.weekbelt.runningflex.web.controller;
+package me.weekbelt.runningflex.web.controller.account;
 
 import lombok.RequiredArgsConstructor;
 import me.weekbelt.runningflex.domain.account.Account;
