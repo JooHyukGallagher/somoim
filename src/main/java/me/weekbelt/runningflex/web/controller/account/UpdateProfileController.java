@@ -5,6 +5,7 @@ import me.weekbelt.runningflex.domain.account.Account;
 import me.weekbelt.runningflex.domain.account.AccountService;
 import me.weekbelt.runningflex.domain.account.CurrentUser;
 import me.weekbelt.runningflex.web.dto.account.Profile;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
@@ -19,12 +20,13 @@ import javax.validation.Valid;
 @Controller
 public class UpdateProfileController {
 
+    private final ModelMapper modelMapper;
     private final AccountService accountService;
 
     @GetMapping("/settings/profile")
     public String profileUpdateForm(@CurrentUser Account account, Model model) {
         model.addAttribute("account", account);
-        model.addAttribute("profile", new Profile(account));
+        model.addAttribute("profile", modelMapper.map(account, Profile.class));
         return "account/settings/profile";
     }
 

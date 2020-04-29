@@ -2,7 +2,6 @@ package me.weekbelt.runningflex.web.dto.account;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import me.weekbelt.runningflex.domain.account.Account;
 import org.hibernate.validator.constraints.Length;
 
 @NoArgsConstructor
@@ -22,12 +21,4 @@ public class Profile {
     private String location;
 
     private String profileImage;
-
-    public Profile(Account account) {
-        this.bio = account.getBio();
-        this.url = account.getUrl();
-        this.occupation = account.getOccupation();
-        this.location = account.getLocation();
-        this.profileImage = account.getProfileImage();
-    }
 }

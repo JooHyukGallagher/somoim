@@ -5,6 +5,7 @@ import me.weekbelt.runningflex.domain.account.Account;
 import me.weekbelt.runningflex.domain.account.AccountService;
 import me.weekbelt.runningflex.domain.account.CurrentUser;
 import me.weekbelt.runningflex.web.dto.account.Notifications;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
@@ -18,12 +19,13 @@ import javax.validation.Valid;
 @Controller
 public class UpdateNotificationController {
 
+    private final ModelMapper modelMapper;
     private final AccountService accountService;
 
     @GetMapping("/settings/notifications")
     public String updateNotificationsForm(@CurrentUser Account account, Model model) {
         model.addAttribute("account", account);
-        model.addAttribute("notifications", new Notifications(account));
+        model.addAttribute("notifications", modelMapper.map(account, Notifications.class));
         return "account/settings/notifications";
     }
 
