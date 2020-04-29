@@ -1,4 +1,4 @@
-package me.weekbelt.runningflex.web.controller;
+package me.weekbelt.runningflex.web.controller.account;
 
 import me.weekbelt.runningflex.domain.account.Account;
 import me.weekbelt.runningflex.domain.account.AccountRepository;

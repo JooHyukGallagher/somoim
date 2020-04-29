@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.assertj.core.api.Assertions.*;
@@ -25,6 +26,8 @@ class AccountSettingControllerTest {
     MockMvc mockMvc;
     @Autowired
     AccountRepository accountRepository;
+    @Autowired
+    PasswordEncoder passwordEncoder;
 
     @AfterEach
     public void afterEach() {
@@ -74,4 +77,44 @@ class AccountSettingControllerTest {
         Account joohyuk = accountRepository.findByNickname("joohyuk").get();
         assertThat(joohyuk.getBio()).isNull();
     }
+
+    @WithAccount("joohyuk")
+    @DisplayName("패스워드 수정 폼")
+    @Test
+    public void updatePassword_form() throws Exception {
+        mockMvc.perform(get("/settings/password"))
+                .andExpect(status().isOk())
+                .andExpect(model().attributeExists("account"))
+                .andExpect(model().attributeExists("passwordForm"))
+                .andExpect(view().name("account/settings/password"));
+    }
+
+    @WithAccount("joohyuk")
+    @DisplayName("패스워드 수정 - 입력값 정상")
+    @Test
+    public void updatePassword_success() throws Exception {
+        mockMvc.perform(post("/settings/password")
+                .param("newPassword", "12345678")
+                .param("newPasswordConfirm", "12345678")
+                .with(csrf()))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrl("/settings/password"))
+                .andExpect(flash().attributeExists("message"));
+    }
+
+    @WithAccount("joohyuk")
+    @DisplayName("패스워드 수정 - 입력값 에러 - 패스워드 불일치")
+    @Test
+    public void updatePassword_fail() throws Exception {
+        mockMvc.perform(post("/settings/password")
+                .param("newPassword", "12345678")
+                .param("newPasswordConfirm", "1212312378")
+                .with(csrf()))
+                .andExpect(status().isOk())
+                .andExpect(view().name("account/settings/password"))
+                .andExpect(model().hasErrors())
+                .andExpect(model().attributeExists("passwordForm"))
+                .andExpect(model().attributeExists("account"));
+    }
+
 }
