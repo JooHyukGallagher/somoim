@@ -121,4 +121,14 @@ public class AccountService implements UserDetailsService {
 
         login(account); // dropdown의 닉네임이 바꿔지도록 하기 위해
     }
+
+    public void sendLoginLink(Account account) {
+        account.generateEmailCheckToken();
+        SimpleMailMessage mailMessage = new SimpleMailMessage();
+        mailMessage.setTo(account.getEmail());
+        mailMessage.setSubject("소모임(가제), 로그인 링크");
+        mailMessage.setText("/login-by-email?token=" + account.getEmailCheckToken() +
+                "&email=" + account.getEmail());
+        javaMailSender.send(mailMessage);
+    }
 }
