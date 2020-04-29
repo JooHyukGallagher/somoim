@@ -87,4 +87,8 @@ public class Account {
         this.groupEnrollmentResultByEmail = notifications.isGroupEnrollmentResultByEmail();
         this.groupEnrollmentResultByWeb = notifications.isGroupEnrollmentResultByWeb();
     }
+
+    public void updateNickname(String nickname) {
+        this.nickname = nickname;
+    }
 }

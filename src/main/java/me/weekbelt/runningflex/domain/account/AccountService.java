@@ -114,4 +114,11 @@ public class AccountService implements UserDetailsService {
         account.updateNotifications(notifications);
         accountRepository.save(account);
     }
+
+    public void updateNickname(Account account, String nickname) {
+        account.updateNickname(nickname);
+        accountRepository.save(account);
+
+        login(account); // dropdown의 닉네임이 바꿔지도록 하기 위해
+    }
 }
