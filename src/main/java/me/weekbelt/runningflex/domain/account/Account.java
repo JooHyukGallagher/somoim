@@ -1,11 +1,14 @@
 package me.weekbelt.runningflex.domain.account;
 
 import lombok.*;
+import me.weekbelt.runningflex.domain.accountTag.AccountTag;
 import me.weekbelt.runningflex.web.dto.account.Notifications;
 import me.weekbelt.runningflex.web.dto.account.Profile;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Builder @AllArgsConstructor @NoArgsConstructor
@@ -13,8 +16,7 @@ import java.util.UUID;
 @Entity
 public class Account {
 
-    @Id
-    @GeneratedValue
+    @Id @GeneratedValue
     private Long id;
 
     @Column(unique = true)
@@ -48,6 +50,9 @@ public class Account {
     private boolean groupUpdatedByWeb = true;
 
     private LocalDateTime emailCheckTokenGeneratedAt;
+
+    @OneToMany(mappedBy = "account")
+    private List<AccountTag> accountTags = new ArrayList<>();
 
     public void generateEmailCheckToken() {
         this.emailCheckToken = UUID.randomUUID().toString();
