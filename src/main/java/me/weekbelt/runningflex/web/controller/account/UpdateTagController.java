@@ -16,6 +16,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @RequiredArgsConstructor
 @Controller
 public class UpdateTagController {
@@ -26,6 +29,10 @@ public class UpdateTagController {
     @GetMapping("/settings/tags")
     public String updateTags(@CurrentUser Account account, Model model) {
         model.addAttribute("account", account);
+
+        List<Tag> tags = accountService.getTags(account);
+        model.addAttribute("tags", tags.stream().map(Tag::getTitle)
+                .collect(Collectors.toList()));
         return "account/settings/tags";
     }
 
@@ -38,4 +45,5 @@ public class UpdateTagController {
         accountService.addTag(account, tag);
         return ResponseEntity.ok().build();
     }
+
 }

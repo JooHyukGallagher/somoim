@@ -24,6 +24,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Transactional
 @RequiredArgsConstructor
@@ -152,5 +153,13 @@ public class AccountService implements UserDetailsService {
 
         AccountTag savedAccountTag = accountTagRepository.save(accountTag);
         findAccount.getAccountTags().add(savedAccountTag);
+    }
+
+    public List<Tag> getTags(Account account) {
+//        Account findAccount = accountRepository.findById(account.getId())
+//                .orElseThrow(() -> new IllegalArgumentException("찾는 계정이 없습니다."));
+        List<AccountTag> accountTags = accountTagRepository.findByAccountId(account.getId());
+//        List<AccountTag> accountTags = findAccount.getAccountTags();
+        return accountTags.stream().map(AccountTag::getTag).collect(Collectors.toList());
     }
 }
