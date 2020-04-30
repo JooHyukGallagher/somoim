@@ -1,6 +1,10 @@
 package me.weekbelt.runningflex.domain.account;
 
 import lombok.RequiredArgsConstructor;
+import me.weekbelt.runningflex.domain.accountTag.AccountTag;
+import me.weekbelt.runningflex.domain.accountTag.AccountTagRepository;
+import me.weekbelt.runningflex.domain.tag.Tag;
+import me.weekbelt.runningflex.domain.tag.TagRepository;
 import me.weekbelt.runningflex.web.dto.account.Notifications;
 import me.weekbelt.runningflex.web.dto.account.Profile;
 import me.weekbelt.runningflex.web.dto.account.SignUpForm;
@@ -19,6 +23,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Optional;
 
 @Transactional
 @RequiredArgsConstructor
@@ -28,6 +33,8 @@ public class AccountService implements UserDetailsService {
     private final AccountRepository accountRepository;
     private final JavaMailSender javaMailSender;
     private final PasswordEncoder passwordEncoder;
+    private final TagRepository tagRepository;
+    private final AccountTagRepository accountTagRepository;
 
 
     public Account processNewAccount(SignUpForm signUpForm) {
@@ -130,5 +137,20 @@ public class AccountService implements UserDetailsService {
         mailMessage.setText("/login-by-email?token=" + account.getEmailCheckToken() +
                 "&email=" + account.getEmail());
         javaMailSender.send(mailMessage);
+    }
+
+    public void addTag(Account account, Tag tag) {
+        Account findAccount = accountRepository.findById(account.getId()).orElseThrow(
+                () -> new IllegalArgumentException("찾는 계정이 없습니다."));
+
+        Tag savedTag = tagRepository.save(tag);
+
+        AccountTag accountTag = AccountTag.builder()
+                .account(findAccount)
+                .tag(savedTag)
+                .build();
+
+        AccountTag savedAccountTag = accountTagRepository.save(accountTag);
+        findAccount.getAccountTags().add(savedAccountTag);
     }
 }
