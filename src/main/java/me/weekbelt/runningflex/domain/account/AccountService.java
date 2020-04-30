@@ -8,6 +8,7 @@ import me.weekbelt.runningflex.domain.tag.TagRepository;
 import me.weekbelt.runningflex.web.dto.account.Notifications;
 import me.weekbelt.runningflex.web.dto.account.Profile;
 import me.weekbelt.runningflex.web.dto.account.SignUpForm;
+import org.modelmapper.ModelMapper;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -34,13 +35,10 @@ public class AccountService implements UserDetailsService {
     private final AccountRepository accountRepository;
     private final JavaMailSender javaMailSender;
     private final PasswordEncoder passwordEncoder;
-    private final TagRepository tagRepository;
     private final AccountTagRepository accountTagRepository;
-
 
     public Account processNewAccount(SignUpForm signUpForm) {
         Account newAccount = saveNewAccount(signUpForm);
-        newAccount.generateEmailCheckToken();
         sendSignUpConfirmEmail(newAccount);
         return newAccount;
     }
@@ -56,7 +54,7 @@ public class AccountService implements UserDetailsService {
                 .groupEnrollmentResultByWeb(true)
                 .groupUpdatedByWeb(true)
                 .build();
-
+        account.generateEmailCheckToken();
         // 생성한 엔티티를 DB에 저장
         return accountRepository.save(account);
     }
@@ -141,12 +139,7 @@ public class AccountService implements UserDetailsService {
     }
 
     public void addTag(Account account, Tag tag) {
-        Account findAccount = accountRepository.findById(account.getId()).orElseThrow(
-                () -> new IllegalArgumentException("찾는 계정이 없습니다."));
-        Tag savedTag = tagRepository.save(tag);
-        AccountTag accountTag = AccountTag.builder().account(findAccount).tag(savedTag).build();
-        AccountTag savedAccountTag = accountTagRepository.save(accountTag);
-        findAccount.getAccountTags().add(savedAccountTag);
+        accountTagRepository.save(AccountTag.builder().account(account).tag(tag).build());
     }
 
     public List<Tag> getTags(Account account) {

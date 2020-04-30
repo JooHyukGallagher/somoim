@@ -7,6 +7,7 @@ import me.weekbelt.runningflex.domain.account.Account;
 import me.weekbelt.runningflex.domain.account.AccountService;
 import me.weekbelt.runningflex.domain.account.CurrentUser;
 import me.weekbelt.runningflex.domain.tag.Tag;
+import me.weekbelt.runningflex.domain.tag.TagRepository;
 import me.weekbelt.runningflex.domain.tag.TagService;
 import me.weekbelt.runningflex.web.dto.tag.TagForm;
 import org.springframework.http.ResponseEntity;
@@ -27,15 +28,18 @@ public class UpdateTagController {
     private final TagService tagService;
     private final AccountService accountService;
     private final ObjectMapper objectMapper;
+    private final TagRepository tagRepository;
 
     @GetMapping("/settings/tags")
     public String updateTags(@CurrentUser Account account, Model model) throws JsonProcessingException {
         model.addAttribute("account", account);
 
         List<Tag> tags = accountService.getTags(account);
-        List<String> allTags = tags.stream().map(Tag::getTitle)
-                .collect(Collectors.toList());
-        model.addAttribute("tags", allTags);
+        model.addAttribute("tags", tags.stream().map(Tag::getTitle)
+                .collect(Collectors.toList()));
+
+        List<String> allTags = tagRepository.findAll().stream()
+                .map(Tag::getTitle).collect(Collectors.toList());
         model.addAttribute("whitelist", objectMapper.writeValueAsString(allTags));
 
         return "account/settings/tags";

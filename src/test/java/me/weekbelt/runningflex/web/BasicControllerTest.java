@@ -1,6 +1,10 @@
 package me.weekbelt.runningflex.web;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import me.weekbelt.runningflex.domain.account.AccountRepository;
+import me.weekbelt.runningflex.domain.account.AccountService;
+import me.weekbelt.runningflex.domain.accountTag.AccountTagRepository;
+import me.weekbelt.runningflex.domain.tag.TagRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -12,15 +16,20 @@ import org.springframework.test.web.servlet.MockMvc;
 @SpringBootTest
 public abstract class BasicControllerTest {
 
-    @Autowired
-    protected MockMvc mockMvc;
-    @Autowired
-    protected AccountRepository accountRepository;
-    @Autowired
-    protected PasswordEncoder passwordEncoder;
+    @Autowired protected MockMvc mockMvc;
+    @Autowired protected ObjectMapper objectMapper;
+    @Autowired protected PasswordEncoder passwordEncoder;
+
+    @Autowired protected AccountRepository accountRepository;
+    @Autowired protected AccountTagRepository accountTagRepository;
+    @Autowired TagRepository tagRepository;
+
+    @Autowired protected AccountService accountService;
 
     @AfterEach
     public void afterEach() {
+        accountTagRepository.deleteAll();
+        tagRepository.deleteAll();
         accountRepository.deleteAll();
     }
 }
