@@ -40,9 +40,22 @@ public class UpdateTagController {
     @PostMapping("/settings/tags/add")
     public ResponseEntity<?> addTag(@CurrentUser Account account, @RequestBody TagForm tagForm) {
         String title = tagForm.getTagTitle();
-        Tag tag = tagService.findByTitle(title);
+        Tag tag = tagService.findSavedTagByTitle(title);
 
         accountService.addTag(account, tag);
+        return ResponseEntity.ok().build();
+    }
+
+    @ResponseBody
+    @PostMapping("/settings/tags/remove")
+    public ResponseEntity<?> removeTag(@CurrentUser Account account, @RequestBody TagForm tagForm) {
+        String title = tagForm.getTagTitle();
+        Tag tag = tagService.findTagByTitle(title);
+        if (tag == null) {
+            return ResponseEntity.badRequest().build();
+        }
+
+        accountService.removeTag(account, tag);
         return ResponseEntity.ok().build();
     }
 

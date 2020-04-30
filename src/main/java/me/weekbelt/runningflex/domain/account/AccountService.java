@@ -143,23 +143,24 @@ public class AccountService implements UserDetailsService {
     public void addTag(Account account, Tag tag) {
         Account findAccount = accountRepository.findById(account.getId()).orElseThrow(
                 () -> new IllegalArgumentException("찾는 계정이 없습니다."));
-
         Tag savedTag = tagRepository.save(tag);
-
-        AccountTag accountTag = AccountTag.builder()
-                .account(findAccount)
-                .tag(savedTag)
-                .build();
-
+        AccountTag accountTag = AccountTag.builder().account(findAccount).tag(savedTag).build();
         AccountTag savedAccountTag = accountTagRepository.save(accountTag);
         findAccount.getAccountTags().add(savedAccountTag);
     }
 
     public List<Tag> getTags(Account account) {
-//        Account findAccount = accountRepository.findById(account.getId())
-//                .orElseThrow(() -> new IllegalArgumentException("찾는 계정이 없습니다."));
         List<AccountTag> accountTags = accountTagRepository.findByAccountId(account.getId());
-//        List<AccountTag> accountTags = findAccount.getAccountTags();
         return accountTags.stream().map(AccountTag::getTag).collect(Collectors.toList());
+    }
+
+    public void removeTag(Account account, Tag tag) {
+        List<AccountTag> accountTags = accountTagRepository.findByAccountId(account.getId());
+        for (AccountTag accountTag : accountTags) {
+            if (accountTag.getTag().getTitle().equals(tag.getTitle())) {
+                accountTagRepository.delete(accountTag);
+                break;
+            }
+        }
     }
 }

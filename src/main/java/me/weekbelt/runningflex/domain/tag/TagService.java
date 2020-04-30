@@ -11,8 +11,12 @@ public class TagService {
 
     private final TagRepository tagRepository;
 
-    public Tag findByTitle(String title) {
+    public Tag findSavedTagByTitle(String title) {
         return tagRepository.findByTitle(title).orElseGet(
                 () -> tagRepository.save(Tag.builder().title(title).build()));
+    }
+
+    public Tag findTagByTitle(String title) {
+        return tagRepository.findByTitle(title).orElse(null);
     }
 }
