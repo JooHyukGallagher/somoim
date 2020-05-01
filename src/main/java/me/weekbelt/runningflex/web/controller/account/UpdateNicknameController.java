@@ -3,7 +3,7 @@ package me.weekbelt.runningflex.web.controller.account;
 import lombok.RequiredArgsConstructor;
 import me.weekbelt.runningflex.domain.account.Account;
 import me.weekbelt.runningflex.domain.account.AccountService;
-import me.weekbelt.runningflex.domain.account.CurrentUser;
+import me.weekbelt.runningflex.domain.account.CurrentAccount;
 import me.weekbelt.runningflex.web.dto.account.NicknameForm;
 import me.weekbelt.runningflex.web.dto.account.validator.NicknameValidator;
 import org.modelmapper.ModelMapper;
@@ -32,14 +32,14 @@ public class UpdateNicknameController {
     }
 
     @GetMapping("/settings/account")
-    public String updateAccountForm(@CurrentUser Account account, Model model) {
+    public String updateAccountForm(@CurrentAccount Account account, Model model) {
         model.addAttribute("account", account);
         model.addAttribute("nicknameForm", modelMapper.map(account, NicknameForm.class));
         return "account/settings/account";
     }
 
     @PostMapping("/settings/account")
-    public String updateAccount(@CurrentUser Account account, @Valid NicknameForm nicknameForm,
+    public String updateAccount(@CurrentAccount Account account, @Valid NicknameForm nicknameForm,
                                 Errors errors, Model model, RedirectAttributes attributes) {
         if (errors.hasErrors()) {
             model.addAttribute("account", account);

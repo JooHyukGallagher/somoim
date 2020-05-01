@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import me.weekbelt.runningflex.domain.account.Account;
 import me.weekbelt.runningflex.domain.account.AccountRepository;
 import me.weekbelt.runningflex.domain.account.AccountService;
-import me.weekbelt.runningflex.domain.account.CurrentUser;
+import me.weekbelt.runningflex.domain.account.CurrentAccount;
 import me.weekbelt.runningflex.web.dto.account.SignUpForm;
 import me.weekbelt.runningflex.web.dto.account.validator.SignUpFormValidator;
 import org.springframework.stereotype.Controller;
@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
-import java.util.Optional;
 
 @RequiredArgsConstructor
 @Controller
@@ -73,13 +72,13 @@ public class AccountController {
     }
 
     @GetMapping("/check-email")
-    public String checkEmail(@CurrentUser Account account, Model model) {
+    public String checkEmail(@CurrentAccount Account account, Model model) {
         model.addAttribute("email", account.getEmail());
         return "account/check-email";
     }
 
     @GetMapping("/resend-confirm-email")
-    public String resendConfirmEmail(@CurrentUser Account account, Model model) {
+    public String resendConfirmEmail(@CurrentAccount Account account, Model model) {
         if (!account.canSendConfirmEmail()) {
             model.addAttribute("error",
                     "인증 이메일은 10분에 한번만 전송할 수 있습니다.");
@@ -93,7 +92,7 @@ public class AccountController {
 
     @GetMapping("/profile/{nickname}")
     public String viewProfile(@PathVariable String nickname, Model model,
-                              @CurrentUser Account account) {
+                              @CurrentAccount Account account) {
         Account findAccount = accountService.findByNickname(nickname);
 
         model.addAttribute("account", findAccount);

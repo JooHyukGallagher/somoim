@@ -1,8 +1,11 @@
 package me.weekbelt.runningflex.domain.zone;
 
 import lombok.*;
+import me.weekbelt.runningflex.domain.accountZone.AccountZone;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Builder @AllArgsConstructor @NoArgsConstructor
 @Getter @EqualsAndHashCode(of = "id")
@@ -19,4 +22,12 @@ public class Zone {
 
     @Column
     private String province;
+
+    @OneToMany(mappedBy = "zone")
+    private List<AccountZone> accountZones = new ArrayList<>();
+
+    @Override
+    public String toString() {
+        return String.format("%s(%s)/%s", city, localNameOfCity, province);
+    }
 }

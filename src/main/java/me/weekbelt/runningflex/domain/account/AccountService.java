@@ -3,8 +3,11 @@ package me.weekbelt.runningflex.domain.account;
 import lombok.RequiredArgsConstructor;
 import me.weekbelt.runningflex.domain.accountTag.AccountTag;
 import me.weekbelt.runningflex.domain.accountTag.AccountTagRepository;
+import me.weekbelt.runningflex.domain.accountZone.AccountZone;
+import me.weekbelt.runningflex.domain.accountZone.AccountZoneRepository;
 import me.weekbelt.runningflex.domain.tag.Tag;
 import me.weekbelt.runningflex.domain.tag.TagRepository;
+import me.weekbelt.runningflex.domain.zone.Zone;
 import me.weekbelt.runningflex.web.dto.account.Notifications;
 import me.weekbelt.runningflex.web.dto.account.Profile;
 import me.weekbelt.runningflex.web.dto.account.SignUpForm;
@@ -36,6 +39,7 @@ public class AccountService implements UserDetailsService {
     private final JavaMailSender javaMailSender;
     private final PasswordEncoder passwordEncoder;
     private final AccountTagRepository accountTagRepository;
+    private final AccountZoneRepository accountZoneRepository;
 
     public Account processNewAccount(SignUpForm signUpForm) {
         Account newAccount = saveNewAccount(signUpForm);
@@ -155,5 +159,10 @@ public class AccountService implements UserDetailsService {
                 break;
             }
         }
+    }
+
+    public List<Zone> getZones(Account account) {
+        List<AccountZone> accountZones = accountZoneRepository.findByAccountId(account.getId());
+        return accountZones.stream().map(AccountZone::getZone).collect(Collectors.toList());
     }
 }

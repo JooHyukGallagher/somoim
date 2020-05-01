@@ -2,6 +2,7 @@ package me.weekbelt.runningflex.domain.account;
 
 import lombok.*;
 import me.weekbelt.runningflex.domain.accountTag.AccountTag;
+import me.weekbelt.runningflex.domain.accountZone.AccountZone;
 import me.weekbelt.runningflex.web.dto.account.Notifications;
 import me.weekbelt.runningflex.web.dto.account.Profile;
 
@@ -53,6 +54,9 @@ public class Account {
 
     @OneToMany(mappedBy = "account")
     private List<AccountTag> accountTags = new ArrayList<>();
+
+    @OneToMany(mappedBy = "account")
+    private List<AccountZone> accountZones = new ArrayList<>();
 
     public void generateEmailCheckToken() {
         this.emailCheckToken = UUID.randomUUID().toString();

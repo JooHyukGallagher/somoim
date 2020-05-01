@@ -5,7 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import me.weekbelt.runningflex.domain.account.Account;
 import me.weekbelt.runningflex.domain.account.AccountService;
-import me.weekbelt.runningflex.domain.account.CurrentUser;
+import me.weekbelt.runningflex.domain.account.CurrentAccount;
 import me.weekbelt.runningflex.domain.tag.Tag;
 import me.weekbelt.runningflex.domain.tag.TagRepository;
 import me.weekbelt.runningflex.domain.tag.TagService;
@@ -31,7 +31,7 @@ public class UpdateTagController {
     private final TagRepository tagRepository;
 
     @GetMapping("/settings/tags")
-    public String updateTags(@CurrentUser Account account, Model model) throws JsonProcessingException {
+    public String updateTags(@CurrentAccount Account account, Model model) throws JsonProcessingException {
         model.addAttribute("account", account);
 
         List<Tag> tags = accountService.getTags(account);
@@ -47,7 +47,7 @@ public class UpdateTagController {
 
     @ResponseBody
     @PostMapping("/settings/tags/add")
-    public ResponseEntity<?> addTag(@CurrentUser Account account, @RequestBody TagForm tagForm) {
+    public ResponseEntity<?> addTag(@CurrentAccount Account account, @RequestBody TagForm tagForm) {
         String title = tagForm.getTagTitle();
         Tag tag = tagService.findSavedTagByTitle(title);
 
@@ -57,7 +57,7 @@ public class UpdateTagController {
 
     @ResponseBody
     @PostMapping("/settings/tags/remove")
-    public ResponseEntity<?> removeTag(@CurrentUser Account account, @RequestBody TagForm tagForm) {
+    public ResponseEntity<?> removeTag(@CurrentAccount Account account, @RequestBody TagForm tagForm) {
         String title = tagForm.getTagTitle();
         Tag tag = tagService.findTagByTitle(title);
         if (tag == null) {
