@@ -2,22 +2,18 @@ package me.weekbelt.runningflex.domain.account;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import me.weekbelt.runningflex.config.AppProperties;
 import me.weekbelt.runningflex.domain.accountTag.AccountTag;
 import me.weekbelt.runningflex.domain.accountTag.AccountTagRepository;
 import me.weekbelt.runningflex.domain.accountZone.AccountZone;
 import me.weekbelt.runningflex.domain.accountZone.AccountZoneRepository;
 import me.weekbelt.runningflex.domain.tag.Tag;
-import me.weekbelt.runningflex.domain.tag.TagRepository;
 import me.weekbelt.runningflex.domain.zone.Zone;
 import me.weekbelt.runningflex.mail.EmailMessage;
 import me.weekbelt.runningflex.mail.EmailService;
 import me.weekbelt.runningflex.web.dto.account.Notifications;
 import me.weekbelt.runningflex.web.dto.account.Profile;
 import me.weekbelt.runningflex.web.dto.account.SignUpForm;
-import org.modelmapper.ModelMapper;
-import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContext;
@@ -28,6 +24,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.thymeleaf.TemplateEngine;
+import org.thymeleaf.context.Context;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
@@ -47,6 +45,8 @@ public class AccountService implements UserDetailsService {
     private final AccountTagRepository accountTagRepository;
     private final AccountZoneRepository accountZoneRepository;
     private final EmailService emailService;
+    private final TemplateEngine templateEngine;
+    private final AppProperties appProperties;
 
     public Account processNewAccount(SignUpForm signUpForm) {
         Account newAccount = saveNewAccount(signUpForm);
@@ -69,22 +69,41 @@ public class AccountService implements UserDetailsService {
     }
 
     public void sendSignUpConfirmEmail(Account newAccount) {
+        Context context = new Context();
+        context.setVariable("link", "/check-email-token?token=" +
+                newAccount.getEmailCheckToken() + "&email=" + newAccount.getEmail());
+        context.setVariable("nickname", newAccount.getNickname());
+        context.setVariable("linkName", "이메일 인증하기");
+        context.setVariable("message", "RunningFlex 서비스를 사용하려면 링크를 클릭하세요.");
+        context.setVariable("host", appProperties.getHost());
+
+        String message = templateEngine.process("mail/simple-link", context);
+
         EmailMessage emailMessage = EmailMessage.builder()
                 .to(newAccount.getEmail())
                 .subject("RunningFlex, 회원 가입 인증")
-                .message("/check-email-token?token=" + newAccount.getEmailCheckToken() +  // message는 나중에 HTML로 수정
-                        "&email=" + newAccount.getEmail())
+                .message(message)
                 .build();
 
         emailService.sendEmail(emailMessage);
     }
 
     public void sendLoginLink(Account account) {
+        Context context = new Context();
+        context.setVariable("link", "/login-by-email?token=" +
+                account.getEmailCheckToken() + "&email=" + account.getEmail());
+        context.setVariable("nickname", account.getNickname());
+        context.setVariable("linkName", "RunningFlex 로그인 하기");
+        context.setVariable("message", "로그인하려면 아래 링크를 클릭하세요.");
+        context.setVariable("host", appProperties.getHost());
+
+        String message = templateEngine.process("mail/simple-link", context);
+
         account.generateEmailCheckToken();;
         EmailMessage emailMessage = EmailMessage.builder()
                 .to(account.getEmail())
                 .subject("RunningFlex, 로그인 링크")
-                .message("/login-by-email?token=" + account.getEmailCheckToken() + "&email=" + account.getEmail())
+                .message(message)
                 .build();
 
         emailService.sendEmail(emailMessage);
