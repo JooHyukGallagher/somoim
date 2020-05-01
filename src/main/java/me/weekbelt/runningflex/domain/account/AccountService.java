@@ -1,6 +1,7 @@
 package me.weekbelt.runningflex.domain.account;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import me.weekbelt.runningflex.domain.accountTag.AccountTag;
 import me.weekbelt.runningflex.domain.accountTag.AccountTagRepository;
 import me.weekbelt.runningflex.domain.accountZone.AccountZone;
@@ -8,12 +9,15 @@ import me.weekbelt.runningflex.domain.accountZone.AccountZoneRepository;
 import me.weekbelt.runningflex.domain.tag.Tag;
 import me.weekbelt.runningflex.domain.tag.TagRepository;
 import me.weekbelt.runningflex.domain.zone.Zone;
+import me.weekbelt.runningflex.mail.EmailMessage;
+import me.weekbelt.runningflex.mail.EmailService;
 import me.weekbelt.runningflex.web.dto.account.Notifications;
 import me.weekbelt.runningflex.web.dto.account.Profile;
 import me.weekbelt.runningflex.web.dto.account.SignUpForm;
 import org.modelmapper.ModelMapper;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContext;
@@ -25,21 +29,24 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
 import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Transactional
 @RequiredArgsConstructor
 @Service
 public class AccountService implements UserDetailsService {
 
     private final AccountRepository accountRepository;
-    private final JavaMailSender javaMailSender;
     private final PasswordEncoder passwordEncoder;
     private final AccountTagRepository accountTagRepository;
     private final AccountZoneRepository accountZoneRepository;
+    private final EmailService emailService;
 
     public Account processNewAccount(SignUpForm signUpForm) {
         Account newAccount = saveNewAccount(signUpForm);
@@ -48,7 +55,6 @@ public class AccountService implements UserDetailsService {
     }
 
     private Account saveNewAccount(@Valid SignUpForm signUpForm) {
-        // 검증된 입력값을 통해 엔티티 생성
         Account account = Account.builder()
                 .email(signUpForm.getEmail())
                 .nickname(signUpForm.getNickname())
@@ -59,20 +65,29 @@ public class AccountService implements UserDetailsService {
                 .groupUpdatedByWeb(true)
                 .build();
         account.generateEmailCheckToken();
-        // 생성한 엔티티를 DB에 저장
         return accountRepository.save(account);
     }
 
     public void sendSignUpConfirmEmail(Account newAccount) {
-        // 메일 메시지 만들기
-        SimpleMailMessage mailMessage = new SimpleMailMessage();
-        mailMessage.setTo(newAccount.getEmail());
-        mailMessage.setSubject("RunningFlex, 회원 가입 인증");
-        mailMessage.setText("/check-email-token?token=" + newAccount.getEmailCheckToken()
-                + "&email=" + newAccount.getEmail());
+        EmailMessage emailMessage = EmailMessage.builder()
+                .to(newAccount.getEmail())
+                .subject("RunningFlex, 회원 가입 인증")
+                .message("/check-email-token?token=" + newAccount.getEmailCheckToken() +  // message는 나중에 HTML로 수정
+                        "&email=" + newAccount.getEmail())
+                .build();
 
-        // 메일 메시지 보내기
-        javaMailSender.send(mailMessage);
+        emailService.sendEmail(emailMessage);
+    }
+
+    public void sendLoginLink(Account account) {
+        account.generateEmailCheckToken();;
+        EmailMessage emailMessage = EmailMessage.builder()
+                .to(account.getEmail())
+                .subject("RunningFlex, 로그인 링크")
+                .message("/login-by-email?token=" + account.getEmailCheckToken() + "&email=" + account.getEmail())
+                .build();
+
+        emailService.sendEmail(emailMessage);
     }
 
     public void login(Account account) {
@@ -132,15 +147,6 @@ public class AccountService implements UserDetailsService {
         login(account); // dropdown의 닉네임이 바꿔지도록 하기 위해
     }
 
-    public void sendLoginLink(Account account) {
-        account.generateEmailCheckToken();
-        SimpleMailMessage mailMessage = new SimpleMailMessage();
-        mailMessage.setTo(account.getEmail());
-        mailMessage.setSubject("소모임(가제), 로그인 링크");
-        mailMessage.setText("/login-by-email?token=" + account.getEmailCheckToken() +
-                "&email=" + account.getEmail());
-        javaMailSender.send(mailMessage);
-    }
 
     public void addTag(Account account, Tag tag) {
         accountTagRepository.save(AccountTag.builder().account(account).tag(tag).build());

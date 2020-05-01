@@ -8,10 +8,12 @@ import me.weekbelt.runningflex.domain.accountZone.AccountZoneRepository;
 import me.weekbelt.runningflex.domain.tag.TagRepository;
 import me.weekbelt.runningflex.domain.zone.ZoneRepository;
 import me.weekbelt.runningflex.domain.zone.ZoneService;
+import me.weekbelt.runningflex.mail.EmailService;
 import org.junit.jupiter.api.AfterEach;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -31,6 +33,7 @@ public abstract class BasicControllerTest {
 
     @Autowired protected AccountService accountService;
     @Autowired protected ZoneService zoneService;
+    @MockBean protected EmailService emailService;
 
     @AfterEach
     public void afterEach() {
