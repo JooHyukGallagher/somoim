@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
@@ -36,5 +37,10 @@ public class ZoneService {
 
             zoneRepository.saveAll(zoneList);
         }
+    }
+
+    public Zone findByCityAndProvince(String cityName, String provinceName) {
+        return zoneRepository.findByCityAndProvince(cityName, provinceName)
+                .orElse(null);
     }
 }

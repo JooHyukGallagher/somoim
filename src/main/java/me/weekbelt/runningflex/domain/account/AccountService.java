@@ -165,4 +165,20 @@ public class AccountService implements UserDetailsService {
         List<AccountZone> accountZones = accountZoneRepository.findByAccountId(account.getId());
         return accountZones.stream().map(AccountZone::getZone).collect(Collectors.toList());
     }
+
+    public void addZone(Account account, Zone zone) {
+        accountZoneRepository.save(AccountZone.builder().account(account).zone(zone).build());
+    }
+
+    public void removeZone(Account account, Zone zone) {
+        List<AccountZone> accountZones = accountZoneRepository.findByAccountId(account.getId());
+        for (AccountZone accountZone : accountZones) {
+            if (accountZone.getZone().getCity().equals(zone.getCity()) &&
+                    accountZone.getZone().getLocalNameOfCity().equals(zone.getLocalNameOfCity()) &&
+                    accountZone.getZone().getProvince().equals(zone.getProvince())) {
+                accountZoneRepository.delete(accountZone);
+                break;
+            }
+        }
+    }
 }

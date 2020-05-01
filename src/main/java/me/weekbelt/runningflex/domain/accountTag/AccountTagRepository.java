@@ -13,4 +13,6 @@ public interface AccountTagRepository extends JpaRepository<AccountTag, Long> {
             "join fetch at.tag t where a.id = :accountId")
     List<AccountTag> findByAccountId(@Param("accountId") Long accountId);
 
+
+
 }
