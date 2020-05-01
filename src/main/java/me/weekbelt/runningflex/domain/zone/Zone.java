@@ -1,0 +1,22 @@
+package me.weekbelt.runningflex.domain.zone;
+
+import lombok.*;
+
+import javax.persistence.*;
+
+@Builder @AllArgsConstructor @NoArgsConstructor
+@Getter @EqualsAndHashCode(of = "id")
+@Entity
+public class Zone {
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(nullable = false)
+    private String city;
+
+    @Column(nullable = false)
+    private String localNameOfCity;
+
+    @Column
+    private String province;
+}
