@@ -4,6 +4,7 @@ import lombok.*;
 import me.weekbelt.runningflex.domain.accountTag.AccountTag;
 import me.weekbelt.runningflex.domain.accountZone.AccountZone;
 import me.weekbelt.runningflex.domain.societyManager.SocietyManager;
+import me.weekbelt.runningflex.domain.societyMember.SocietyMember;
 import me.weekbelt.runningflex.web.dto.account.Notifications;
 import me.weekbelt.runningflex.web.dto.account.Profile;
 
@@ -61,9 +62,9 @@ public class Account {
 
     @OneToMany(mappedBy = "manager")
     private List<SocietyManager> societyManagers = new ArrayList<>();
-//
-//    @OneToMany(mappedBy = "member")
-//    private List<GroupMember> groupMembers = new ArrayList<>();
+
+    @OneToMany(mappedBy = "member")
+    private List<SocietyMember> societyMembers = new ArrayList<>();
 
     public void generateEmailCheckToken() {
         this.emailCheckToken = UUID.randomUUID().toString();
