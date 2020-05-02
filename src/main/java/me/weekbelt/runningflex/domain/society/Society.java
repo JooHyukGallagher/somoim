@@ -4,6 +4,7 @@ import lombok.*;
 import me.weekbelt.runningflex.domain.societyManager.SocietyManager;
 import me.weekbelt.runningflex.domain.societyMember.SocietyMember;
 import me.weekbelt.runningflex.domain.societyTag.SocietyTag;
+import me.weekbelt.runningflex.domain.societyZone.SocietyZone;
 
 
 import javax.persistence.*;
@@ -41,8 +42,8 @@ public class Society {
     @OneToMany(mappedBy = "society")
     private List<SocietyTag> groupTags = new ArrayList<>();
 
-//    @OneToMany(mappedBy = "society")
-//    private List<GroupZone> groupZones = new ArrayList<>();
+    @OneToMany(mappedBy = "society")
+    private List<SocietyZone> societyZones = new ArrayList<>();
 
     private LocalDateTime publishedDateTime;
 
