@@ -3,6 +3,7 @@ package me.weekbelt.runningflex.domain.society;
 import lombok.*;
 import me.weekbelt.runningflex.domain.societyManager.SocietyManager;
 import me.weekbelt.runningflex.domain.societyMember.SocietyMember;
+import me.weekbelt.runningflex.domain.societyTag.SocietyTag;
 
 
 import javax.persistence.*;
@@ -37,9 +38,9 @@ public class Society {
     @Lob @Basic(fetch = FetchType.EAGER)
     private String image;
 
-//    @OneToMany(mappedBy = "society")
-//    private List<GroupTag> groupTags = new ArrayList<>();
-//
+    @OneToMany(mappedBy = "society")
+    private List<SocietyTag> groupTags = new ArrayList<>();
+
 //    @OneToMany(mappedBy = "society")
 //    private List<GroupZone> groupZones = new ArrayList<>();
 
