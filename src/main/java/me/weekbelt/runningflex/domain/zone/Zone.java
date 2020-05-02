@@ -2,6 +2,7 @@ package me.weekbelt.runningflex.domain.zone;
 
 import lombok.*;
 import me.weekbelt.runningflex.domain.accountZone.AccountZone;
+import me.weekbelt.runningflex.domain.groupZone.GroupZone;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -25,6 +26,9 @@ public class Zone {
 
     @OneToMany(mappedBy = "zone")
     private List<AccountZone> accountZones = new ArrayList<>();
+
+    @OneToMany(mappedBy = "zone")
+    private List<GroupZone> groupZones = new ArrayList<>();
 
     @Override
     public String toString() {
