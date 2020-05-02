@@ -2,7 +2,6 @@ package me.weekbelt.runningflex.domain.tag;
 
 import lombok.*;
 import me.weekbelt.runningflex.domain.accountTag.AccountTag;
-import me.weekbelt.runningflex.domain.groupTag.GroupTag;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -22,6 +21,6 @@ public class Tag {
     @OneToMany(mappedBy = "tag")
     private List<AccountTag> accountTags = new ArrayList<>();
 
-    @OneToMany(mappedBy = "tag")
-    private List<GroupTag> groupTags = new ArrayList<>();
+//    @OneToMany(mappedBy = "tag")
+//    private List<GroupTag> groupTags = new ArrayList<>();
 }
