@@ -1,4 +1,4 @@
-package me.weekbelt.runningflex;
+package me.weekbelt.runningflex.modules.main;
 
 import me.weekbelt.runningflex.modules.account.Account;
 import me.weekbelt.runningflex.modules.account.CurrentAccount;

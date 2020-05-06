@@ -1,4 +1,4 @@
-package me.weekbelt.runningflex.web;
+package me.weekbelt.runningflex.modules.main;
 
 import me.weekbelt.runningflex.infra.MockMvcTest;
 import me.weekbelt.runningflex.modules.account.AccountRepository;
