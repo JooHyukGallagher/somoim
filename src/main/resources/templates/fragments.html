@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="/node_modules/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="/node_modules/font-awesome/css/font-awesome.min.css" />
     <link rel="stylesheet" href="/node_modules/@yaireo/tagify/dist/tagify.css">
-<!--    <link rel="stylesheet" href="/node_modules/summernote/dist/summernote-bs4.min.css">-->
+    <link rel="stylesheet" href="/node_modules/summernote/dist/summernote-bs4.min.css">
     <script src="/node_modules/jquery/dist/jquery.min.js"></script>
     <script src="/node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="/node_modules/jdenticon/dist/jdenticon.min.js"></script>
@@ -56,8 +56,8 @@
                 <a class="nav-link" th:href="@{/notifications}">알림</a>
             </li>
             <li class="nav-item" sec:authorize="isAuthenticated()">
-                <a class="nav-link btn btn-outline-primary" th:href="@{/notifications}">
-                    <i class="fa fa-plus" aria-hidden="true"></i>스터디 개설
+                <a class="nav-link btn btn-outline-primary" th:href="@{/new-society}">
+                    <i class="fa fa-plus" aria-hidden="true"></i>동호회 개설
                 </a>
             </li>
             <li class="nav-item dropdown" sec:authorize="isAuthenticated()">
@@ -221,4 +221,19 @@
         });
     </script>
 </div>
+
+<div th:fragment="editor-script">
+    <script src="/node_modules/summernote/dist/summernote-bs4.js"></script>
+    <script type="application/javascript">
+        $(function () {
+            $('.editor').summernote({
+                fontNames: ['Arial', 'Arial Black', 'Comic Sans MS', 'Courier New', 'Noto Sans KR', 'Merriweather'],
+                placeholder: '동호회의 목표, 일정, 진행 방식, 모집중인 회원 등 동호회에 대해 자세히 적어 주세요.',
+                tabsize: 2,
+                height: 300
+            });
+        });
+    </script>
+</div>
+
 </html>

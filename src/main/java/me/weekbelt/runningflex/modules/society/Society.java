@@ -7,6 +7,8 @@ import me.weekbelt.runningflex.modules.societyTag.SocietyTag;
 import me.weekbelt.runningflex.modules.societyZone.SocietyZone;
 
 import javax.persistence.*;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -57,4 +59,8 @@ public class Society {
     private boolean closed;
 
     private boolean useBanner;
+
+    public String getEncodedPath() {
+        return URLEncoder.encode(this.path, StandardCharsets.UTF_8);
+    }
 }

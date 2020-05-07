@@ -4,7 +4,6 @@ import me.weekbelt.runningflex.infra.MockMvcTest;
 import me.weekbelt.runningflex.modules.account.Account;
 import me.weekbelt.runningflex.modules.account.AccountRepository;
 import me.weekbelt.runningflex.modules.account.WithAccount;
-import me.weekbelt.runningflex.modules.account.AccountBasicControllerTest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

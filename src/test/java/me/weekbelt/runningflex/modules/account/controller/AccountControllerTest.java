@@ -4,7 +4,6 @@ import me.weekbelt.runningflex.infra.MockMvcTest;
 import me.weekbelt.runningflex.infra.mail.EmailMessage;
 import me.weekbelt.runningflex.infra.mail.EmailService;
 import me.weekbelt.runningflex.modules.account.Account;
-import me.weekbelt.runningflex.modules.account.AccountBasicControllerTest;
 import me.weekbelt.runningflex.modules.account.AccountRepository;
 import me.weekbelt.runningflex.modules.account.AccountService;
 import org.junit.jupiter.api.DisplayName;

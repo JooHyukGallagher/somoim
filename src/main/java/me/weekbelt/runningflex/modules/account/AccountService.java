@@ -115,6 +115,9 @@ public class AccountService implements UserDetailsService {
         context.setAuthentication(authentication);
     }
 
+
+    // 로그인을 처리하기 위해 DB에서 계정정보를 가져와야 한다.
+    // 리턴한 UserDetails정보를 인메모리 저장소인 SpringSecurityHolder에 저장하게 된다.
     @Transactional(readOnly = true)
     @Override
     public UserDetails loadUserByUsername(String emailOrNickname) throws UsernameNotFoundException {

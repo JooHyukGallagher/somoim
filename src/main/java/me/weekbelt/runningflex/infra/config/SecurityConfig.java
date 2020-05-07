@@ -42,8 +42,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .logoutSuccessUrl("/");
 
         http.rememberMe()
-                .userDetailsService(userDetailsService)     // UserDetail을 조회하는데 사용되는 UserDetailService를 지정
-                .tokenRepository(tokenRepository());
+                .userDetailsService(userDetailsService)     // 토큰이 유효할 경우 UserDetail을 조회하는데 사용되는 UserDetailService를 지정
+                .tokenRepository(tokenRepository());        // PersistentTokenRepository를 구체화
     }
 
     @Bean
