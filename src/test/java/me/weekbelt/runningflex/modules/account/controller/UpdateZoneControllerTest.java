@@ -5,8 +5,6 @@ import me.weekbelt.runningflex.infra.MockMvcTest;
 import me.weekbelt.runningflex.modules.account.Account;
 import me.weekbelt.runningflex.modules.account.AccountService;
 import me.weekbelt.runningflex.modules.account.WithAccount;
-import me.weekbelt.runningflex.modules.accountZone.AccountZone;
-import me.weekbelt.runningflex.modules.accountZone.AccountZoneRepository;
 import me.weekbelt.runningflex.modules.zone.Zone;
 import me.weekbelt.runningflex.modules.zone.ZoneRepository;
 import me.weekbelt.runningflex.modules.zone.ZoneService;
@@ -17,8 +15,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
-
-import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
@@ -34,7 +30,6 @@ class UpdateZoneControllerTest{
     @Autowired AccountService accountService;
     @Autowired ZoneService zoneService;
     @Autowired ZoneRepository zoneRepository;
-    @Autowired AccountZoneRepository accountZoneRepository;
 
     private Zone testZone = Zone.builder()
             .city("test").localNameOfCity("테스트시").province("테스트주")
@@ -69,14 +64,9 @@ class UpdateZoneControllerTest{
                 .with(csrf()))
                 .andExpect(status().isOk());
 
-        Account account = accountService.findByNickname("joohyuk");
-        List<AccountZone> accountZones = accountZoneRepository.findByAccountId(account.getId());
-        AccountZone accountZone = accountZones.get(0);
-
-        assertThat(accountZone.getAccount().getId()).isEqualTo(account.getId());
-        assertThat(accountZone.getZone().getCity()).isEqualTo(testZone.getCity());
-        assertThat(accountZone.getZone().getLocalNameOfCity()).isEqualTo(testZone.getLocalNameOfCity());
-        assertThat(accountZone.getZone().getProvince()).isEqualTo(testZone.getProvince());
+        Account joohyuk = accountService.findByNickname("joohyuk");
+        Zone zone = zoneService.findByCityAndProvince(testZone.getCity(), testZone.getProvince());
+        assertThat(joohyuk.getZones().contains(zone)).isTrue();
     }
 
     @WithAccount("joohyuk")
@@ -97,7 +87,6 @@ class UpdateZoneControllerTest{
                 .with(csrf()))
                 .andExpect(status().isOk());
 
-        List<Zone> zones = accountService.getZones(joohyuk);
-        assertThat(zones.size()).isZero();
+        assertThat(joohyuk.getZones().contains(zone)).isTrue();
     }
 }

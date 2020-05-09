@@ -4,6 +4,7 @@ import lombok.*;
 import me.weekbelt.runningflex.modules.account.form.Notifications;
 import me.weekbelt.runningflex.modules.account.form.Profile;
 import me.weekbelt.runningflex.modules.tag.Tag;
+import me.weekbelt.runningflex.modules.zone.Zone;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -53,6 +54,9 @@ public class Account {
 
     @ManyToMany
     private List<Tag> tags = new ArrayList<>();
+
+    @ManyToMany
+    private List<Zone> zones = new ArrayList<>();
 
     public void generateEmailCheckToken() {
         this.emailCheckToken = UUID.randomUUID().toString();

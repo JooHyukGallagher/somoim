@@ -8,10 +8,6 @@ import me.weekbelt.runningflex.infra.mail.EmailService;
 import me.weekbelt.runningflex.modules.account.form.Notifications;
 import me.weekbelt.runningflex.modules.account.form.Profile;
 import me.weekbelt.runningflex.modules.account.form.SignUpForm;
-import me.weekbelt.runningflex.modules.accountTag.AccountTag;
-import me.weekbelt.runningflex.modules.accountTag.AccountTagRepository;
-import me.weekbelt.runningflex.modules.accountZone.AccountZone;
-import me.weekbelt.runningflex.modules.accountZone.AccountZoneRepository;
 import me.weekbelt.runningflex.modules.tag.Tag;
 import me.weekbelt.runningflex.modules.zone.Zone;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -30,7 +26,6 @@ import org.thymeleaf.context.Context;
 import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Slf4j
 @Transactional
@@ -40,8 +35,6 @@ public class AccountService implements UserDetailsService {
 
     private final AccountRepository accountRepository;
     private final PasswordEncoder passwordEncoder;
-    private final AccountTagRepository accountTagRepository;
-    private final AccountZoneRepository accountZoneRepository;
     private final EmailService emailService;
     private final TemplateEngine templateEngine;
     private final AppProperties appProperties;
@@ -186,23 +179,18 @@ public class AccountService implements UserDetailsService {
     }
 
     public List<Zone> getZones(Account account) {
-        List<AccountZone> accountZones = accountZoneRepository.findByAccountId(account.getId());
-        return accountZones.stream().map(AccountZone::getZone).collect(Collectors.toList());
+        return accountRepository.findById(account.getId())
+               .orElseThrow(() -> new IllegalArgumentException("해당 계정이 없습니다."))
+                .getZones();
     }
 
     public void addZone(Account account, Zone zone) {
-        accountZoneRepository.save(AccountZone.builder().account(account).zone(zone).build());
+        Optional<Account> findAccount = accountRepository.findById(account.getId());
+        findAccount.ifPresent(a -> a.getZones().add(zone));
     }
 
     public void removeZone(Account account, Zone zone) {
-        List<AccountZone> accountZones = accountZoneRepository.findByAccountId(account.getId());
-        for (AccountZone accountZone : accountZones) {
-            if (accountZone.getZone().getCity().equals(zone.getCity()) &&
-                    accountZone.getZone().getLocalNameOfCity().equals(zone.getLocalNameOfCity()) &&
-                    accountZone.getZone().getProvince().equals(zone.getProvince())) {
-                accountZoneRepository.delete(accountZone);
-                break;
-            }
-        }
+        Optional<Account> findAccount = accountRepository.findById(account.getId());
+        findAccount.ifPresent(a -> a.getZones().remove(zone));
     }
 }

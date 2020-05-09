@@ -15,9 +15,4 @@ public class Tag {
     @Column(unique = true, nullable = false)
     private String title;
 
-//    @OneToMany(mappedBy = "tag")
-//    private List<AccountTag> accountTags = new ArrayList<>();
-//
-//    @OneToMany(mappedBy = "tag")
-//    private List<SocietyTag> societyTags = new ArrayList<>();
 }
