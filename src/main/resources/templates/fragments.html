@@ -38,7 +38,7 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item">
-                <form th:action="@{/search/study}" class="form-inline" method="get">
+                <form th:action="@{/search/society}" class="form-inline" method="get">
                     <input class="form-control mr-sm-2" name="keyword" type="search" placeholder="러닝 모임 찾기"
                            aria-label="Search"/>
                 </form>
@@ -234,6 +234,16 @@
             });
         });
     </script>
+</div>
+
+<script th:fragment="tooltip" type="application/javascript">
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip()
+    })
+</script>
+
+<div th:fragment="society-banner" th:if="${society.useBanner}" class="row" id="society-logo">
+    <img th:src="${society.image}"/>
 </div>
 
 </html>

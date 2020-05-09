@@ -14,6 +14,7 @@ import org.springframework.validation.Errors;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.validation.Valid;
@@ -43,7 +44,7 @@ public class SocietyController {
     public String newSocietySubmit(@CurrentAccount Account account,
                                    @Valid SocietyForm societyForm, Errors errors,
                                    Model model) {
-        if (errors.hasErrors()){
+        if (errors.hasErrors()) {
             model.addAttribute("account", account);
             return "society/form";
         }
@@ -58,4 +59,13 @@ public class SocietyController {
         Society society = societyService.createNewSociety(newSociety, account);
         return "redirect:/society/" + society.getEncodedPath();
     }
+
+    @GetMapping("/society/{path}")
+    public String viewSociety(@CurrentAccount Account account, @PathVariable String path,
+                              Model model) {
+        model.addAttribute("account", account);
+        model.addAttribute("society", societyService.findSocietyByPath(path));
+        return "society/view";
+    }
+
 }

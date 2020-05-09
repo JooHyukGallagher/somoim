@@ -7,17 +7,17 @@
 
 <div class="container">
     <div class="py-5 text-center">
-        <h2>스터디 개설</h2>
+        <h2>동호회 개설</h2>
     </div>
     <div class="row justify-content-center">
         <form class="needs-validation col-sm-10" th:action="@{/new-society}" method="post" th:object="${societyForm}" novalidate>
             <div class="form-group">
                 <label for="path">동호회 URL</label>
                 <input id="path" type="text" th:field="*{path}" class="form-control"
-                       placeholder="예) study-path" aria-describedby="pathHelp" required min="2" max="20">
+                       placeholder="예) society-path" aria-describedby="pathHelp" required min="2" max="20">
                 <small id="pathHelp" class="form-text text-muted">
                     공백 없이 문자, 숫자, 대시(-)와 언더바(_)만 2자 이상 20자 이내로 입력하세요.
-                    스터디 홈 주소에 사용합니다. 예) /study/<b>study-path</b>
+                    스터디 홈 주소에 사용합니다. 예) /society/<b>society-path</b>
                 </small>
                 <small class="invalid-feedback">스터디 경로를 입력하세요.</small>
                 <small class="form-text text-danger" th:if="${#fields.hasErrors('path')}" th:errors="*{path}">Path Error</small>
@@ -63,6 +63,7 @@
     <!-- footer -->
     <div th:replace="fragments.html::footer"></div>
 </div>
+<script th:replace="fragments.html :: tooltip"></script>
 <script th:replace="fragments.html :: form-validation"></script>
 <script th:replace="fragments.html :: editor-script"></script>
 </body>

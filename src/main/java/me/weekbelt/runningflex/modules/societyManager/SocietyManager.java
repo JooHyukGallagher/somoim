@@ -21,4 +21,19 @@ public class SocietyManager {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "society_id")
     private Society society;
+
+    public static SocietyManager createSocietyManager(Account manager) {
+        return SocietyManager.builder()
+                .manager(manager)
+                .build();
+    }
+
+//    public static SocietyManager createSocietyManager(Account manager, Society society) {
+//        SocietyManager societyManager = SocietyManager.builder()
+//                .manager(manager)
+//                .society(society)
+//                .build();
+//        return societyManager;
+//    }
+
 }
