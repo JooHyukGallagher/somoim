@@ -5,8 +5,6 @@ import me.weekbelt.runningflex.infra.MockMvcTest;
 import me.weekbelt.runningflex.modules.account.Account;
 import me.weekbelt.runningflex.modules.account.AccountService;
 import me.weekbelt.runningflex.modules.account.WithAccount;
-import me.weekbelt.runningflex.modules.accountTag.AccountTag;
-import me.weekbelt.runningflex.modules.accountTag.AccountTagRepository;
 import me.weekbelt.runningflex.modules.tag.Tag;
 import me.weekbelt.runningflex.modules.tag.TagRepository;
 import me.weekbelt.runningflex.modules.tag.TagService;
@@ -16,8 +14,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
-
-import java.util.List;
 
 import static org.assertj.core.api.Assertions.*;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
@@ -33,7 +29,6 @@ class UpdateTagControllerTest{
     @Autowired TagService tagService;
     @Autowired AccountService accountService;
     @Autowired TagRepository tagRepository;
-    @Autowired AccountTagRepository accountTagRepository;
 
     @WithAccount("joohyuk")
     @DisplayName("계정의 태그 수정 폼")
@@ -65,9 +60,7 @@ class UpdateTagControllerTest{
 
         // AccountTag 저장 확인
         Account joohyuk = accountService.findByNickname("joohyuk");
-        List<AccountTag> accountTags = accountTagRepository.findByAccountId(joohyuk.getId());
-        assertThat(accountTags.get(0).getTag()).isEqualTo(newTag);
-        assertThat(accountTags.get(0).getAccount()).isEqualTo(joohyuk);
+        assertThat(joohyuk.getTags().contains(newTag)).isTrue();
     }
 
     @WithAccount("joohyuk")
@@ -79,11 +72,7 @@ class UpdateTagControllerTest{
         Tag newTag = tagRepository.save(Tag.builder().title("newTag").build());
         accountService.addTag(joohyuk, newTag);
 
-        assertThat(newTag.getTitle()).isEqualTo("newTag");
-
-        List<AccountTag> accountTags = accountTagRepository.findByAccountId(joohyuk.getId());
-        assertThat(accountTags.get(0).getTag()).isEqualTo(newTag);
-        assertThat(accountTags.get(0).getAccount()).isEqualTo(joohyuk);
+        assertThat(joohyuk.getTags().contains(newTag)).isTrue();
 
         TagForm tagForm = new TagForm();
         tagForm.setTagTitle("newTag");
@@ -96,8 +85,6 @@ class UpdateTagControllerTest{
                 .andExpect(status().isOk());
 
         // 삭제 요청 후 검증
-        List<AccountTag> deletedAccountTag = accountTagRepository.findByAccountId(joohyuk.getId());
-        assertThat(deletedAccountTag.size()).isEqualTo(0);
-
+        assertThat(joohyuk.getTags().contains(newTag)).isFalse();
     }
 }

@@ -3,10 +3,7 @@ package me.weekbelt.runningflex.modules.account;
 import lombok.*;
 import me.weekbelt.runningflex.modules.account.form.Notifications;
 import me.weekbelt.runningflex.modules.account.form.Profile;
-import me.weekbelt.runningflex.modules.accountTag.AccountTag;
-import me.weekbelt.runningflex.modules.accountZone.AccountZone;
-import me.weekbelt.runningflex.modules.societyManager.SocietyManager;
-import me.weekbelt.runningflex.modules.societyMember.SocietyMember;
+import me.weekbelt.runningflex.modules.tag.Tag;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -54,17 +51,8 @@ public class Account {
 
     private LocalDateTime emailCheckTokenGeneratedAt;
 
-    @OneToMany(mappedBy = "account")
-    private List<AccountTag> accountTags = new ArrayList<>();
-
-    @OneToMany(mappedBy = "account")
-    private List<AccountZone> accountZones = new ArrayList<>();
-
-    @OneToMany(mappedBy = "manager")
-    private List<SocietyManager> societyManagers = new ArrayList<>();
-
-    @OneToMany(mappedBy = "member")
-    private List<SocietyMember> societyMembers = new ArrayList<>();
+    @ManyToMany
+    private List<Tag> tags = new ArrayList<>();
 
     public void generateEmailCheckToken() {
         this.emailCheckToken = UUID.randomUUID().toString();

@@ -2,7 +2,6 @@ package me.weekbelt.runningflex.modules.zone;
 
 import lombok.*;
 import me.weekbelt.runningflex.modules.accountZone.AccountZone;
-import me.weekbelt.runningflex.modules.societyZone.SocietyZone;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -24,11 +23,11 @@ public class Zone {
     @Column
     private String province;
 
-    @OneToMany(mappedBy = "zone")
-    private List<AccountZone> accountZones = new ArrayList<>();
+//    @OneToMany(mappedBy = "zone")
+//    private List<AccountZone> accountZones = new ArrayList<>();
 
-    @OneToMany(mappedBy = "zone")
-    private List<SocietyZone> societyZones = new ArrayList<>();
+//    @OneToMany(mappedBy = "zone")
+//    private List<SocietyZone> societyZones = new ArrayList<>();
 
     @Override
     public String toString() {

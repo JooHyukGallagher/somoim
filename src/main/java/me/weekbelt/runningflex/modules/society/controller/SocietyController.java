@@ -40,32 +40,32 @@ public class SocietyController {
         return "society/form";
     }
 
-    @PostMapping("/new-society")
-    public String newSocietySubmit(@CurrentAccount Account account,
-                                   @Valid SocietyForm societyForm, Errors errors,
-                                   Model model) {
-        if (errors.hasErrors()) {
-            model.addAttribute("account", account);
-            return "society/form";
-        }
-
-        Society newSociety = Society.builder()
-                .path(societyForm.getPath())
-                .title(societyForm.getTitle())
-                .shortDescription(societyForm.getShortDescription())
-                .fullDescription(societyForm.getFullDescription())
-                .build();
-
-        Society society = societyService.createNewSociety(newSociety, account);
-        return "redirect:/society/" + society.getEncodedPath();
-    }
-
-    @GetMapping("/society/{path}")
-    public String viewSociety(@CurrentAccount Account account, @PathVariable String path,
-                              Model model) {
-        model.addAttribute("account", account);
-        model.addAttribute("society", societyService.findSocietyByPath(path));
-        return "society/view";
-    }
+//    @PostMapping("/new-society")
+//    public String newSocietySubmit(@CurrentAccount Account account,
+//                                   @Valid SocietyForm societyForm, Errors errors,
+//                                   Model model) {
+//        if (errors.hasErrors()) {
+//            model.addAttribute("account", account);
+//            return "society/form";
+//        }
+//
+//        Society newSociety = Society.builder()
+//                .path(societyForm.getPath())
+//                .title(societyForm.getTitle())
+//                .shortDescription(societyForm.getShortDescription())
+//                .fullDescription(societyForm.getFullDescription())
+//                .build();
+//
+//        Society society = societyService.createNewSociety(newSociety, account);
+//        return "redirect:/society/" + society.getEncodedPath();
+//    }
+//
+//    @GetMapping("/society/{path}")
+//    public String viewSociety(@CurrentAccount Account account, @PathVariable String path,
+//                              Model model) {
+//        model.addAttribute("account", account);
+//        model.addAttribute("society", societyService.findSocietyByPath(path));
+//        return "society/view";
+//    }
 
 }

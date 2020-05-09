@@ -29,6 +29,7 @@ import org.thymeleaf.context.Context;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -96,7 +97,8 @@ public class AccountService implements UserDetailsService {
 
         String message = templateEngine.process("mail/simple-link", context);
 
-        account.generateEmailCheckToken();;
+        account.generateEmailCheckToken();
+        ;
         EmailMessage emailMessage = EmailMessage.builder()
                 .to(account.getEmail())
                 .subject("RunningFlex, 로그인 링크")
@@ -168,22 +170,19 @@ public class AccountService implements UserDetailsService {
 
 
     public void addTag(Account account, Tag tag) {
-        accountTagRepository.save(AccountTag.builder().account(account).tag(tag).build());
+        Optional<Account> findAccount = accountRepository.findById(account.getId());
+        findAccount.ifPresent(a -> a.getTags().add(tag));
     }
 
     public List<Tag> getTags(Account account) {
-        List<AccountTag> accountTags = accountTagRepository.findByAccountId(account.getId());
-        return accountTags.stream().map(AccountTag::getTag).collect(Collectors.toList());
+        return accountRepository.findById(account.getId())
+                .orElseThrow(() -> new IllegalArgumentException("계정이 존재하지 않습니다."))
+                .getTags();
     }
 
     public void removeTag(Account account, Tag tag) {
-        List<AccountTag> accountTags = accountTagRepository.findByAccountId(account.getId());
-        for (AccountTag accountTag : accountTags) {
-            if (accountTag.getTag().getTitle().equals(tag.getTitle())) {
-                accountTagRepository.delete(accountTag);
-                break;
-            }
-        }
+        Optional<Account> findAccount = accountRepository.findById(account.getId());
+        findAccount.ifPresent(a -> a.getTags().remove(tag));
     }
 
     public List<Zone> getZones(Account account) {
