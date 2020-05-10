@@ -3,12 +3,21 @@ package me.weekbelt.runningflex.modules.society;
 import lombok.*;
 import me.weekbelt.runningflex.modules.account.Account;
 import me.weekbelt.runningflex.modules.account.UserAccount;
+import me.weekbelt.runningflex.modules.tag.Tag;
+import me.weekbelt.runningflex.modules.zone.Zone;
+
 import javax.persistence.*;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.List;
 
+@NamedEntityGraph(name = "Society.withAll", attributeNodes = {
+        @NamedAttributeNode("tags"),
+        @NamedAttributeNode("zones"),
+        @NamedAttributeNode("managers"),
+        @NamedAttributeNode("members")})
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
@@ -21,11 +30,11 @@ public class Society {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-//    @OneToMany(mappedBy = "society")
-//    private List<SocietyManager> societyManagers = new ArrayList<>();
-//
-//    @OneToMany(mappedBy = "society")
-//    private List<SocietyMember> societyMembers = new ArrayList<>();
+    @ManyToMany
+    private List<Account> managers = new ArrayList<>();
+
+    @ManyToMany
+    private List<Account> members = new ArrayList<>();
 
     @Column(unique = true)
     private String path;
@@ -42,11 +51,11 @@ public class Society {
     @Basic(fetch = FetchType.EAGER)
     private String image;
 
-//    @OneToMany(mappedBy = "society")
-//    private List<SocietyTag> societyTags = new ArrayList<>();
-//
-//    @OneToMany(mappedBy = "society")
-//    private List<SocietyZone> societyZones = new ArrayList<>();
+    @ManyToMany
+    private List<Tag> tags = new ArrayList<>();
+
+    @ManyToMany
+    private List<Zone> zones = new ArrayList<>();
 
     private LocalDateTime publishedDateTime;
 
@@ -66,4 +75,22 @@ public class Society {
         return URLEncoder.encode(this.path, StandardCharsets.UTF_8);
     }
 
+    public void addManager(Account account) {
+        this.managers.add(account);
+    }
+
+    public boolean isJoinable(UserAccount userAccount) {
+        Account account = userAccount.getAccount();
+        return this.isPublished() && this.isRecruiting()
+                && !this.members.contains(account)
+                && !this.managers.contains(account);
+    }
+
+    public boolean isMember(UserAccount userAccount) {
+        return this.members.contains(userAccount.getAccount());
+    }
+
+    public boolean isManager(UserAccount userAccount) {
+        return this.managers.contains(userAccount.getAccount());
+    }
 }
