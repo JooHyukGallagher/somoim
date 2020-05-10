@@ -64,8 +64,16 @@ public class SocietyController {
     public String viewSociety(@CurrentAccount Account account, @PathVariable String path,
                               Model model) {
         model.addAttribute("account", account);
-        model.addAttribute("society", societyService.findSocietyByPath(path));
+        model.addAttribute("society", societyService.getSociety(path));
         return "society/view";
+    }
+
+    @GetMapping("/society/{path}/members")
+    public String viewSocietyMember(@CurrentAccount Account account, @PathVariable String path,
+                                    Model model) {
+        model.addAttribute("account", account);
+        model.addAttribute("society", societyService.getSociety(path));
+        return "/society/members";
     }
 
 }

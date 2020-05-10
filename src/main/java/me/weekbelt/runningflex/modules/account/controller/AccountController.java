@@ -94,7 +94,6 @@ public class AccountController {
     public String viewProfile(@PathVariable String nickname, Model model,
                               @CurrentAccount Account account) {
         Account findAccount = accountService.findByNickname(nickname);
-
         model.addAttribute("account", findAccount);
         model.addAttribute("isOwner", findAccount.equals(account));
         return "account/profile";

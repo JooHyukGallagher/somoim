@@ -56,7 +56,7 @@ class SocietyControllerTest {
                 .andExpect(status().is3xxRedirection())
                 .andExpect(redirectedUrl("/society/test-path"));
 
-        Society society = societyService.findSocietyByPath("test-path");
+        Society society = societyService.getSociety("test-path");
         Account account = accountService.findByNickname("joohyuk");
 
         assertThat(society).isNotNull();

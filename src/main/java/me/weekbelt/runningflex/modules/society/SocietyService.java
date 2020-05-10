@@ -18,7 +18,7 @@ public class SocietyService {
         return newSociety;
     }
 
-    public Society findSocietyByPath(String path) {
+    public Society getSociety(String path) {
         return societyRepository.findByPath(path)
                 .orElseThrow(() -> new IllegalArgumentException(path + "에 해당하는 동호회가 없습니다."));
     }

@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments.html :: head"></head>
+<body class="bg-light">
+<div th:replace="fragments.html :: main-nav"></div>
+<div th:replace="society/societyFragments.html :: society-banner"></div>
+<div class="container">
+    <div th:replace="society/societyFragments.html :: society-info"></div>
+    <div th:replace="society/societyFragments.html :: society-menu(societyMenu='members')"></div>
+
+    <div th:replace="society/societyFragments.html :: member-list(members=${society.managers},isManager=${true})"></div>
+    <div th:replace="society/societyFragments.html :: member-list(members=${society.members},isManager=${false})"></div>
+
+    <div th:replace="fragments.html :: footer"></div>
+</div>
+<script th:replace="fragments.html :: tooltip"></script>
+</body>
+</html>
