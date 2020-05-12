@@ -18,7 +18,7 @@ import java.nio.file.AccessDeniedException;
 @RequiredArgsConstructor
 @RequestMapping("/society/{path}/settings")
 @Controller
-public class UpdateBannerController {
+public class UpdateSocietyBannerController {
 
     private final SocietyService societyService;
 

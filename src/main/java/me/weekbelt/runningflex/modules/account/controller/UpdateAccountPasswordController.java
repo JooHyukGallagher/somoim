@@ -19,7 +19,7 @@ import javax.validation.Valid;
 
 @RequiredArgsConstructor
 @Controller
-public class UpdatePasswordController {
+public class UpdateAccountPasswordController {
 
     private final AccountService accountService;
 

@@ -20,7 +20,7 @@ import javax.validation.Valid;
 
 @RequiredArgsConstructor
 @Controller
-public class UpdateNicknameController {
+public class UpdateAccountNicknameController {
 
     private final ModelMapper modelMapper;
     private final NicknameValidator nicknameValidator;

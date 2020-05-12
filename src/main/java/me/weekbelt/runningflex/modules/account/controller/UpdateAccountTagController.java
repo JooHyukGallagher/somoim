@@ -24,7 +24,7 @@ import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Controller
-public class UpdateTagController {
+public class UpdateAccountTagController {
 
     private final TagService tagService;
     private final AccountService accountService;

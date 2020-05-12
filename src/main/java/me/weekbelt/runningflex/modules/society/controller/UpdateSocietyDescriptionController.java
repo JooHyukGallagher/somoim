@@ -22,7 +22,7 @@ import java.nio.file.AccessDeniedException;
 @RequiredArgsConstructor
 @RequestMapping("/society/{path}/settings")
 @Controller
-public class UpdateDescriptionController {
+public class UpdateSocietyDescriptionController {
 
     private final SocietyService societyService;
     private final ModelMapper modelMapper;

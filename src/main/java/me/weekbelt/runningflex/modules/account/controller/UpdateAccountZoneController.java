@@ -24,7 +24,7 @@ import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Controller
-public class UpdateZoneController {
+public class UpdateAccountZoneController {
 
     private final ObjectMapper objectMapper;
     private final ZoneRepository zoneRepository;
