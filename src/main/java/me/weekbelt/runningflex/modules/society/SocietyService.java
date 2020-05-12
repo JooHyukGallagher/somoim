@@ -37,4 +37,16 @@ public class SocietyService {
     public void updateSocietyDescription(Society society, SocietyDescriptionForm societyDescriptionForm) {
         society.updateDescription(societyDescriptionForm);
     }
+
+    public void updateSocietyImage(Society society, String image) {
+        society.updateSocietyImage(image);
+    }
+
+    public void enableSocietyBanner(Society society) {
+        society.enableSocietyBanner();
+    }
+
+    public void disableSocietyBanner(Society society) {
+        society.disableSocietyBanner();
+    }
 }

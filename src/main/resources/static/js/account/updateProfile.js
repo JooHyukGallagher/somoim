@@ -20,6 +20,11 @@ const profileImage = {
                 const reader = new FileReader();
                 reader.onload = e => {
                     if (e.target.result) {
+                        if (!e.target.result.startsWith("data:image")) {
+                            alert("이미지 파일을 선택하세요.");
+                            return;
+                        }
+
                         // 이미 태그 만들기
                         let img = document.createElement("img");
                         img.id = 'new-profile';

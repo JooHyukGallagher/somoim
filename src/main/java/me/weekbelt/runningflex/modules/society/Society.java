@@ -96,4 +96,16 @@ public class Society {
         this.shortDescription = societyDescriptionForm.getShortDescription();
         this.fullDescription = societyDescriptionForm.getFullDescription();
     }
+
+    public void updateSocietyImage(String image) {
+        this.image = image;
+    }
+
+    public void enableSocietyBanner() {
+        this.useBanner = true;
+    }
+
+    public void disableSocietyBanner() {
+        this.useBanner = false;
+    }
 }
