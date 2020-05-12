@@ -64,7 +64,7 @@ class UpdateZoneControllerTest{
                 .with(csrf()))
                 .andExpect(status().isOk());
 
-        Account joohyuk = accountService.findByNickname("joohyuk");
+        Account joohyuk = accountService.getAccount("joohyuk");
         Zone zone = zoneService.findByCityAndProvince(testZone.getCity(), testZone.getProvince());
         assertThat(joohyuk.getZones().contains(zone)).isTrue();
     }
@@ -73,7 +73,7 @@ class UpdateZoneControllerTest{
     @DisplayName("계정의 지역 정보 삭제")
     @Test
     public void removeZone() throws Exception {
-        Account joohyuk = accountService.findByNickname("joohyuk");
+        Account joohyuk = accountService.getAccount("joohyuk");
         Zone zone = zoneService.findByCityAndProvince(testZone.getCity(),
                 testZone.getProvince());
         accountService.addZone(joohyuk, zone);

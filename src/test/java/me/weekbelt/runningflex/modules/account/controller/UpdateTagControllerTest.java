@@ -59,7 +59,7 @@ class UpdateTagControllerTest{
         assertThat(newTag.getTitle()).isEqualTo(tagForm.getTagTitle());
 
         // AccountTag 저장 확인
-        Account joohyuk = accountService.findByNickname("joohyuk");
+        Account joohyuk = accountService.getAccount("joohyuk");
         assertThat(joohyuk.getTags().contains(newTag)).isTrue();
     }
 
@@ -68,7 +68,7 @@ class UpdateTagControllerTest{
     @Test
     public void removeTag() throws Exception {
         // 정상적으로 태그가 추가되었는지 확인
-        Account joohyuk = accountService.findByNickname("joohyuk");
+        Account joohyuk = accountService.getAccount("joohyuk");
         Tag newTag = tagRepository.save(Tag.builder().title("newTag").build());
         accountService.addTag(joohyuk, newTag);
 

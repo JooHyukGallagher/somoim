@@ -126,11 +126,6 @@ public class AccountService implements UserDetailsService {
         return new UserAccount(account);
     }
 
-    public Account findByNickname(String nickname) {
-        return accountRepository.findByNickname(nickname)
-                .orElseThrow(() -> new IllegalArgumentException("찾는" + nickname + "이 없습니다."));
-    }
-
     public Account findByEmail(String email) {
         return accountRepository.findByEmail(email).orElse(null);
     }
@@ -193,5 +188,10 @@ public class AccountService implements UserDetailsService {
     public void removeZone(Account account, Zone zone) {
         Optional<Account> findAccount = accountRepository.findById(account.getId());
         findAccount.ifPresent(a -> a.getZones().remove(zone));
+    }
+
+    public Account getAccount(String nickname) {
+        return accountRepository.findByNickname(nickname)
+                .orElseThrow(() -> new IllegalArgumentException(nickname + "에 해당하는 사용자가 없습니다."));
     }
 }

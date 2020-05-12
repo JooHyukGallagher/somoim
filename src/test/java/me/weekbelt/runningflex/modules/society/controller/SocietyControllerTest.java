@@ -57,7 +57,7 @@ class SocietyControllerTest {
                 .andExpect(redirectedUrl("/society/test-path"));
 
         Society society = societyService.getSociety("test-path");
-        Account account = accountService.findByNickname("joohyuk");
+        Account account = accountService.getAccount("joohyuk");
 
         assertThat(society).isNotNull();
         assertThat(society.getManagers().contains(account)).isTrue();
@@ -74,7 +74,7 @@ class SocietyControllerTest {
                 .fullDescription("<p>full description</p>")
                 .build();
 
-        Account joohyuk = accountService.findByNickname("joohyuk");
+        Account joohyuk = accountService.getAccount("joohyuk");
         societyService.createNewSociety(society, joohyuk);
 
         mockMvc.perform(post("/new-society")
@@ -101,7 +101,7 @@ class SocietyControllerTest {
                 .fullDescription("<p>full description<p>")
                 .build();
 
-        Account joohyuk = accountService.findByNickname("joohyuk");
+        Account joohyuk = accountService.getAccount("joohyuk");
         societyService.createNewSociety(society, joohyuk);
 
         mockMvc.perform(get("/society/test-path"))
