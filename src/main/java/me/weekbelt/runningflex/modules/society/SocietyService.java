@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import me.weekbelt.runningflex.modules.account.Account;
 import me.weekbelt.runningflex.modules.society.form.SocietyDescriptionForm;
 import me.weekbelt.runningflex.modules.tag.Tag;
+import me.weekbelt.runningflex.modules.zone.Zone;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -59,6 +60,30 @@ public class SocietyService {
         return society;
     }
 
+    public void addTag(Society society, Tag tag) {
+        society.getTags().add(tag);
+    }
+
+    public void removeTag(Society society, Tag tag) {
+        society.getTags().remove(tag);
+    }
+
+    public Society getSocietyToUpdateZone(Account account, String path) throws AccessDeniedException {
+        Society society = societyRepository.findSocietyWithZonesByPath(path)
+                .orElse(null);
+        checkIfExistingSociety(path, society);
+        checkIfManager(account, society);
+        return society;
+    }
+
+    public void addZone(Society society, Zone zone) {
+        society.getZones().add(zone);
+    }
+
+    public void removeZone(Society society, Zone zone) {
+        society.getZones().remove(zone);
+    }
+
     private void checkIfExistingSociety(String path, Society society) {
         if (society == null) {
             throw new IllegalArgumentException(path + "에 해당하는 스터디가 없습니다.");
@@ -69,13 +94,5 @@ public class SocietyService {
         if (!society.isManagedBy(account)) {
             throw new AccessDeniedException("해당 기능을 사용할 수 없습니다.");
         }
-    }
-
-    public void addTag(Society society, Tag tag) {
-        society.getTags().add(tag);
-    }
-
-    public void removeTag(Society society, Tag tag) {
-        society.getTags().remove(tag);
     }
 }
