@@ -55,7 +55,7 @@ class UpdateAccountTagControllerTest {
                 .andExpect(status().isOk());
 
         // Tag 저장 확인
-        Tag newTag = tagService.findSavedTagByTitle(tagForm.getTagTitle());
+        Tag newTag = tagService.findOrCreateNew(tagForm.getTagTitle());
         assertThat(newTag.getTitle()).isEqualTo(tagForm.getTagTitle());
 
         // AccountTag 저장 확인

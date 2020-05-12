@@ -11,7 +11,7 @@ public class TagService {
 
     private final TagRepository tagRepository;
 
-    public Tag findSavedTagByTitle(String title) {
+    public Tag findOrCreateNew(String title) {
         // 만약 태그가 DB에 없다면 저장하고 반환
         return tagRepository.findByTitle(title).orElseGet(
                 () -> tagRepository.save(Tag.builder().title(title).build()));

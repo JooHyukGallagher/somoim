@@ -50,7 +50,7 @@ public class UpdateAccountTagController {
     @PostMapping("/settings/tags/add")
     public ResponseEntity<?> addTag(@CurrentAccount Account account, @RequestBody TagForm tagForm) {
         String title = tagForm.getTagTitle();
-        Tag tag = tagService.findSavedTagByTitle(title);
+        Tag tag = tagService.findOrCreateNew(title);
 
         accountService.addTag(account, tag);
         return ResponseEntity.ok().build();

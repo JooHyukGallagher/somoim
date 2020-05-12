@@ -108,4 +108,8 @@ public class Society {
     public void disableSocietyBanner() {
         this.useBanner = false;
     }
+
+    public boolean isManagedBy(Account account) {
+        return this.managers.contains(account);
+    }
 }

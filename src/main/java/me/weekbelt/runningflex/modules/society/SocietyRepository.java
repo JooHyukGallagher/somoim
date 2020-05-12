@@ -12,4 +12,7 @@ public interface SocietyRepository extends JpaRepository<Society, Long> {
 
     @EntityGraph(attributePaths = {"tags", "zones", "managers", "members"}, type = EntityGraph.EntityGraphType.LOAD)
     Optional<Society> findByPath(String path);
+
+    @EntityGraph(attributePaths = {"tags", "managers"})
+    Optional<Society> findAccountWithTagsByPath(String path);
 }
