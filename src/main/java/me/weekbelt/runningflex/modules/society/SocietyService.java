@@ -2,6 +2,7 @@ package me.weekbelt.runningflex.modules.society;
 
 import lombok.RequiredArgsConstructor;
 import me.weekbelt.runningflex.modules.account.Account;
+import me.weekbelt.runningflex.modules.society.form.SocietyDescriptionForm;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -31,5 +32,9 @@ public class SocietyService {
             throw new AccessDeniedException("해당 기능을 사용할 수 없습니다.");
         }
         return society;
+    }
+
+    public void updateSocietyDescription(Society society, SocietyDescriptionForm societyDescriptionForm) {
+        society.updateDescription(societyDescriptionForm);
     }
 }

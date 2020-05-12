@@ -3,6 +3,7 @@ package me.weekbelt.runningflex.modules.society;
 import lombok.*;
 import me.weekbelt.runningflex.modules.account.Account;
 import me.weekbelt.runningflex.modules.account.UserAccount;
+import me.weekbelt.runningflex.modules.society.form.SocietyDescriptionForm;
 import me.weekbelt.runningflex.modules.tag.Tag;
 import me.weekbelt.runningflex.modules.zone.Zone;
 
@@ -89,5 +90,10 @@ public class Society {
 
     public boolean isManager(UserAccount userAccount) {
         return this.managers.contains(userAccount.getAccount());
+    }
+
+    public void updateDescription(SocietyDescriptionForm societyDescriptionForm) {
+        this.shortDescription = societyDescriptionForm.getShortDescription();
+        this.fullDescription = societyDescriptionForm.getFullDescription();
     }
 }
