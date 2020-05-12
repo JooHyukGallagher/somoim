@@ -3,6 +3,7 @@ package me.weekbelt.runningflex.modules.account;
 import lombok.*;
 import me.weekbelt.runningflex.modules.account.form.Notifications;
 import me.weekbelt.runningflex.modules.account.form.Profile;
+import me.weekbelt.runningflex.modules.society.Society;
 import me.weekbelt.runningflex.modules.tag.Tag;
 import me.weekbelt.runningflex.modules.zone.Zone;
 
@@ -117,5 +118,9 @@ public class Account {
 
     public void updateNickname(String nickname) {
         this.nickname = nickname;
+    }
+
+    public boolean isManagerOf(Society society) {
+        return society.getManagers().contains(this);
     }
 }
