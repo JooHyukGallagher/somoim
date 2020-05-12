@@ -1,6 +1,7 @@
 package me.weekbelt.runningflex.modules.account;
 
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
 import me.weekbelt.runningflex.modules.account.AccountService;
 import me.weekbelt.runningflex.modules.account.WithAccount;
 import me.weekbelt.runningflex.modules.account.form.SignUpForm;
@@ -15,6 +16,7 @@ public class WithAccountSecurityContextFactory implements WithSecurityContextFac
 
     private final AccountService accountService;
 
+    @SneakyThrows
     @Override
     public SecurityContext createSecurityContext(WithAccount withAccount) {
         String nickname = withAccount.value();

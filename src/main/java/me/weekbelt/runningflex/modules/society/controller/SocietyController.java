@@ -7,7 +7,6 @@ import me.weekbelt.runningflex.modules.society.Society;
 import me.weekbelt.runningflex.modules.society.SocietyService;
 import me.weekbelt.runningflex.modules.society.form.SocietyForm;
 import me.weekbelt.runningflex.modules.society.validator.SocietyFormValidator;
-import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
@@ -18,8 +17,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.validation.Valid;
-import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
 
 @RequiredArgsConstructor
 @Controller
@@ -73,7 +70,7 @@ public class SocietyController {
                                     Model model) {
         model.addAttribute("account", account);
         model.addAttribute("society", societyService.getSociety(path));
-        return "/society/members";
+        return "society/member";
     }
 
 }

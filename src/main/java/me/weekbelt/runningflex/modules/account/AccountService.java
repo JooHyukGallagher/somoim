@@ -26,6 +26,7 @@ import org.thymeleaf.context.Context;
 import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Slf4j
 @Transactional
@@ -167,7 +168,7 @@ public class AccountService implements UserDetailsService {
         findAccount.ifPresent(a -> a.getTags().add(tag));
     }
 
-    public List<Tag> getTags(Account account) {
+    public Set<Tag> getTags(Account account) {
         return accountRepository.findById(account.getId())
                 .orElseThrow(() -> new IllegalArgumentException("계정이 존재하지 않습니다."))
                 .getTags();
@@ -178,7 +179,7 @@ public class AccountService implements UserDetailsService {
         findAccount.ifPresent(a -> a.getTags().remove(tag));
     }
 
-    public List<Zone> getZones(Account account) {
+    public Set<Zone> getZones(Account account) {
         return accountRepository.findById(account.getId())
                .orElseThrow(() -> new IllegalArgumentException("해당 계정이 없습니다."))
                 .getZones();

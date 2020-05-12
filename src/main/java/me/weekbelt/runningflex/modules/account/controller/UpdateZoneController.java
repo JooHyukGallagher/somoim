@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
@@ -34,7 +35,7 @@ public class UpdateZoneController {
     public String updateZonesForm(@CurrentAccount Account account, Model model) throws JsonProcessingException {
         model.addAttribute("account", account);
 
-        List<Zone> zones = accountService.getZones(account);
+        Set<Zone> zones = accountService.getZones(account);
         model.addAttribute("zones", zones.stream().map(Zone::toString)
                 .collect(Collectors.toList()));
 

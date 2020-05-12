@@ -10,31 +10,22 @@ import javax.persistence.*;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
-@NamedEntityGraph(name = "Society.withAll", attributeNodes = {
-        @NamedAttributeNode("tags"),
-        @NamedAttributeNode("zones"),
-        @NamedAttributeNode("managers"),
-        @NamedAttributeNode("members")})
-@Builder
-@AllArgsConstructor
-@NoArgsConstructor
-@Getter
-@EqualsAndHashCode(of = "id")
+@AllArgsConstructor @NoArgsConstructor
+@Getter @EqualsAndHashCode(of = "id")
 @Entity
 public class Society {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToMany
-    private List<Account> managers = new ArrayList<>();
+    private Set<Account> managers = new HashSet<>();
 
     @ManyToMany
-    private List<Account> members = new ArrayList<>();
+    private Set<Account> members = new HashSet<>();
 
     @Column(unique = true)
     private String path;
@@ -43,19 +34,17 @@ public class Society {
 
     private String shortDescription;
 
-    @Lob
-    @Basic(fetch = FetchType.EAGER)
+    @Lob @Basic(fetch = FetchType.EAGER)
     private String fullDescription;
 
-    @Lob
-    @Basic(fetch = FetchType.EAGER)
+    @Lob @Basic(fetch = FetchType.EAGER)
     private String image;
 
     @ManyToMany
-    private List<Tag> tags = new ArrayList<>();
+    private Set<Tag> tags = new HashSet<>();
 
     @ManyToMany
-    private List<Zone> zones = new ArrayList<>();
+    private Set<Zone> zones = new HashSet<>();
 
     private LocalDateTime publishedDateTime;
 
@@ -70,6 +59,14 @@ public class Society {
     private boolean closed;
 
     private boolean useBanner;
+
+    @Builder
+    public Society(String path, String title, String shortDescription, String fullDescription) {
+        this.path = path;
+        this.title = title;
+        this.shortDescription = shortDescription;
+        this.fullDescription = fullDescription;
+    }
 
     public String getEncodedPath() {
         return URLEncoder.encode(this.path, StandardCharsets.UTF_8);

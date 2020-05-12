@@ -8,11 +8,9 @@ import me.weekbelt.runningflex.modules.zone.Zone;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
-@Builder @AllArgsConstructor @NoArgsConstructor
+@AllArgsConstructor @NoArgsConstructor
 @Getter @EqualsAndHashCode(of = "id")
 @Entity
 public class Account {
@@ -53,10 +51,30 @@ public class Account {
     private LocalDateTime emailCheckTokenGeneratedAt;
 
     @ManyToMany
-    private List<Tag> tags = new ArrayList<>();
+    private Set<Tag> tags = new HashSet<>();
 
     @ManyToMany
-    private List<Zone> zones = new ArrayList<>();
+    private Set<Zone> zones = new HashSet<>();
+
+    @Builder
+    public Account(String email, String nickname, String password, boolean emailVerified,
+                   String emailCheckToken, LocalDateTime joinedAt,
+                   boolean groupCreatedByWeb, boolean groupCreatedByEmail,
+                   boolean groupEnrollmentResultByWeb, boolean groupEnrollmentResultByEmail,
+                   boolean groupUpdatedByWeb, boolean groupUpdatedByEmail) {
+        this.email = email;
+        this.nickname = nickname;
+        this.password = password;
+        this.emailVerified = emailVerified;
+        this.emailCheckToken = emailCheckToken;
+        this.joinedAt = joinedAt;
+        this.groupCreatedByWeb = groupCreatedByWeb;
+        this.groupCreatedByEmail = groupCreatedByEmail;
+        this.groupEnrollmentResultByWeb = groupEnrollmentResultByWeb;
+        this.groupEnrollmentResultByEmail = groupEnrollmentResultByEmail;
+        this.groupUpdatedByWeb = groupUpdatedByWeb;
+        this.groupUpdatedByEmail = groupUpdatedByEmail;
+    }
 
     public void generateEmailCheckToken() {
         this.emailCheckToken = UUID.randomUUID().toString();

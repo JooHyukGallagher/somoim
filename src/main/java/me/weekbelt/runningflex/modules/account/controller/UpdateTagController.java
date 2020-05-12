@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
@@ -34,7 +35,7 @@ public class UpdateTagController {
     public String updateTags(@CurrentAccount Account account, Model model) throws JsonProcessingException {
         model.addAttribute("account", account);
 
-        List<Tag> tags = accountService.getTags(account);
+        Set<Tag> tags = accountService.getTags(account);
         model.addAttribute("tags", tags.stream().map(Tag::getTitle)
                 .collect(Collectors.toList()));
 

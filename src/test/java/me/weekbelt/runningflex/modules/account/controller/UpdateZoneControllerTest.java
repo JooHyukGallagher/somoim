@@ -87,6 +87,6 @@ class UpdateZoneControllerTest{
                 .with(csrf()))
                 .andExpect(status().isOk());
 
-        assertThat(joohyuk.getZones().contains(zone)).isTrue();
+        assertThat(joohyuk.getZones().contains(zone)).isFalse();
     }
 }

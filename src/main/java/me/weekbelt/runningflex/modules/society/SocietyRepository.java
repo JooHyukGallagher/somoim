@@ -10,6 +10,6 @@ import java.util.Optional;
 public interface SocietyRepository extends JpaRepository<Society, Long> {
     boolean existsByPath(String path);
 
-    @EntityGraph(value = "Society.withAll", type = EntityGraph.EntityGraphType.LOAD)
+    @EntityGraph(attributePaths = {"tags", "zones", "managers", "members"}, type = EntityGraph.EntityGraphType.LOAD)
     Optional<Society> findByPath(String path);
 }
