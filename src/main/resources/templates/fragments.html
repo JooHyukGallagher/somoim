@@ -28,7 +28,7 @@
 
 <nav th:fragment="main-nav" class="navbar navbar-expand-sm navbar-dark bg-dark">
     <a class="navbar-brand" href="/" th:href="@{/}">
-        <img src="/images/title/title.png" width="100" height="30">
+        <h3>somoim</h3>
     </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -39,7 +39,7 @@
         <ul class="navbar-nav mr-auto">
             <li class="nav-item">
                 <form th:action="@{/search/society}" class="form-inline" method="get">
-                    <input class="form-control mr-sm-2" name="keyword" type="search" placeholder="러닝 모임 찾기"
+                    <input class="form-control mr-sm-2" name="keyword" type="search" placeholder="소모임 찾기"
                            aria-label="Search"/>
                 </form>
             </li>
@@ -59,7 +59,7 @@
             </li>
             <li class="nav-item" sec:authorize="isAuthenticated()">
                 <a class="nav-link btn btn-outline-primary" th:href="@{/new-society}">
-                    <i class="fa fa-plus" aria-hidden="true"></i>동호회 개설
+                    <i class="fa fa-plus" aria-hidden="true"></i>소모임 개설
                 </a>
             </li>
             <li class="nav-item dropdown" sec:authorize="isAuthenticated()">
@@ -76,7 +76,7 @@
                         <span sec:authentication="name">Username</span>
                     </h6>
                     <a class="dropdown-item" th:href="@{'/profile/' + ${#authentication.name}}">프로필</a>
-                    <a class="dropdown-item">스터디</a>
+                    <a class="dropdown-item">소모임</a>
                     <div class="dropdown-divider"></div>
                     <a class="dropdown-item" th:href="@{'/settings/profile'}">설정</a>
                     <form class="form-inline my-2 my-lg-0" th:action="@{/logout}" method="post">
@@ -230,7 +230,7 @@
         $(function () {
             $('.editor').summernote({
                 fontNames: ['Arial', 'Arial Black', 'Comic Sans MS', 'Courier New', 'Noto Sans KR', 'Merriweather'],
-                placeholder: '동호회의 목표, 일정, 진행 방식, 모집중인 회원 등 동호회에 대해 자세히 적어 주세요.',
+                placeholder: '소모임의 목표, 일정, 진행 방식, 모집중인 회원 등 소모임에 대해 자세히 적어 주세요.',
                 tabsize: 2,
                 height: 300
             });
