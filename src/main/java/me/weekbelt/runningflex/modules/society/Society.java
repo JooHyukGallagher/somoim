@@ -158,4 +158,8 @@ public class Society {
             throw new RuntimeException("인원 모집을 멈출 수 없습니다. 소모임을 공개하거나 한 시간뒤 다시 시도하세요");
         }
     }
+
+    public void updatePath(String newPath) {
+        this.path = newPath;
+    }
 }

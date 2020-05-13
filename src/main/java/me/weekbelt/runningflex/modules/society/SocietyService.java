@@ -10,6 +10,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.nio.file.AccessDeniedException;
 
+import static me.weekbelt.runningflex.modules.society.form.SocietyForm.VALID_PATH_PATTERN;
+
 @RequiredArgsConstructor
 @Transactional
 @Service
@@ -119,5 +121,18 @@ public class SocietyService {
 
     public void stopRecruit(Society society) {
         society.stopRecruit();
+    }
+
+    public boolean isValidPath(String newPath) {
+        if (!newPath.matches(VALID_PATH_PATTERN)) {
+            return false;
+        }
+
+        return !societyRepository.existsByPath(newPath);
+
+    }
+
+    public void updateSocietyPath(Society society, String newPath) {
+        society.updatePath(newPath);
     }
 }

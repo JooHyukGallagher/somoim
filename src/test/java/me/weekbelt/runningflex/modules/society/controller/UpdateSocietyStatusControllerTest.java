@@ -213,4 +213,43 @@ class UpdateSocietyStatusControllerTest {
         assertThat(society.isRecruiting()).isTrue();
         assertThat(society.isClosed()).isFalse();
     }
+
+    @DisplayName("소모임 경로 수정 - 성공")
+    @WithAccount("joohyuk")
+    @Test
+    public void updateSocietyPath_Success() throws Exception {
+        Account joohyuk = accountService.getAccount("joohyuk");
+        Society society = societyFactory.createSociety("test", joohyuk);
+
+        String requestUrl = "/society/" + society.getEncodedPath() + "/settings/society/path";
+        String newPath = "newTest";
+        mockMvc.perform(post(requestUrl)
+                .param("newPath", newPath)
+                .with(csrf()))
+                .andExpect(flash().attribute("message", "소모임 경로를 수정했습니다."))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrl("/society/" + society.getEncodedPath() + "/settings/society"));
+
+        Society findSociety = societyService.getSocietyToUpdateStatus(joohyuk, newPath);
+        assertThat(findSociety).isNotNull();
+    }
+
+    @DisplayName("소모임 경로 수정 - 실패")
+    @WithAccount("joohyuk")
+    @Test
+    public void updateSocietyPath_Fail() throws Exception {
+        Account joohyuk = accountService.getAccount("joohyuk");
+        Society society = societyFactory.createSociety("test", joohyuk);
+
+        String requestUrl = "/society/" + society.getEncodedPath() + "/settings/society/path";
+        String newPath = "!@#!@#";
+        mockMvc.perform(post(requestUrl)
+                .param("newPath", newPath)
+                .with(csrf()))
+                .andExpect(model().attributeExists("account"))
+                .andExpect(model().attributeExists("society"))
+                .andExpect(model().attributeExists("societyPathError"))
+                .andExpect(view().name("society/settings/society"))
+                .andExpect(status().isOk());
+    }
 }
