@@ -291,4 +291,34 @@ class UpdateSocietyStatusControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(view().name("society/settings/society"));
     }
+
+    @DisplayName("소모임 삭제 - 성공")
+    @WithAccount("joohyuk")
+    @Test
+    public void removeSociety_Success() throws Exception {
+        Account joohyuk = accountService.getAccount("joohyuk");
+        Society society = societyFactory.createSociety("test", joohyuk);
+
+        String requestUrl = "/society/" + society.getEncodedPath() + "/settings/society/remove";
+        mockMvc.perform(post(requestUrl)
+                .with(csrf()))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrl("/"));
+    }
+
+//    @DisplayName("소모임 삭제 - 실패")
+//    @WithAccount("joohyuk")
+//    @Test
+//    public void removeSociety_fail() throws Exception {
+//        Account joohyuk = accountService.getAccount("joohyuk");
+//        Society society = societyFactory.createSociety("test", joohyuk);
+//
+//        societyService.publish(society);  // 소모임 공개
+//
+//        String requestUrl = "/society/" + society.getEncodedPath() + "/settings/society/remove";
+//        mockMvc.perform(post(requestUrl)
+//                .with(csrf()))
+//                .andExpect(model().hasErrors())
+//                .andExpect(status().isBadRequest());
+//    }
 }

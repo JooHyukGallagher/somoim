@@ -143,4 +143,12 @@ public class SocietyService {
     public void updateSocietyTitle(Society society, String newTitle) {
         society.updateTitle(newTitle);
     }
+
+    public void remove(Society society) {
+        if (society.isRemovable()) {
+            societyRepository.delete(society);
+        } else {
+            throw new IllegalArgumentException("소모임을 삭제할 수 없습니다.");
+        }
+    }
 }

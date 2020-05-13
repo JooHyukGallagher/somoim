@@ -79,7 +79,7 @@ public class UpdateSocietyStatusController {
                                     @RequestParam String newPath, Model model,
                                     RedirectAttributes attributes) throws AccessDeniedException {
         Society society = societyService.getSocietyToUpdateStatus(account, path);
-        if(!societyService.isValidPath(newPath)) {
+        if (!societyService.isValidPath(newPath)) {
             model.addAttribute("account", account);
             model.addAttribute("society", society);
             model.addAttribute("societyPathError", "해당 소모임 경로는 사용할 수 없습니다. 다른 값을 입력하세요.");
@@ -93,10 +93,10 @@ public class UpdateSocietyStatusController {
 
     @PostMapping("/society/title")
     public String updateSocietyTitle(@CurrentAccount Account account, @PathVariable String path,
-                                    @RequestParam String newTitle, Model model,
-                                    RedirectAttributes attributes) throws AccessDeniedException {
+                                     @RequestParam String newTitle, Model model,
+                                     RedirectAttributes attributes) throws AccessDeniedException {
         Society society = societyService.getSocietyToUpdateStatus(account, path);
-        if(!societyService.isValidTitle(newTitle)) {
+        if (!societyService.isValidTitle(newTitle)) {
             model.addAttribute("account", account);
             model.addAttribute("society", society);
             model.addAttribute("societyTitleError", "소모임 이름을 다시 입력하세요.");
@@ -106,5 +106,13 @@ public class UpdateSocietyStatusController {
         societyService.updateSocietyTitle(society, newTitle);
         attributes.addFlashAttribute("message", "소모임 이름을 수정했습니다.");
         return "redirect:/society/" + society.getEncodedPath() + "/settings/society";
+    }
+
+    @PostMapping("/society/remove")
+    public String removeSociety(@CurrentAccount Account account, @PathVariable String path,
+                                Model model) throws AccessDeniedException {
+        Society society = societyService.getSocietyToUpdateStatus(account, path);
+        societyService.remove(society);
+        return "redirect:/";
     }
 }

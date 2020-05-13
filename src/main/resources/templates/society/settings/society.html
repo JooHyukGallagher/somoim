@@ -118,35 +118,35 @@
             </div>
 
             <hr/>
-<!--            <div class="row" th:if="${society.isRemovable()}">-->
-<!--                <h5 class="col-sm-12 text-danger">소모임 삭제</h5>-->
-<!--                <form class="col-sm-12" action="#" th:action="@{'/society/' + ${society.getPath()} + '/settings/society/remove'}" method="post" novalidate>-->
-<!--                    <div class="alert alert-danger" role="alert">-->
-<!--                        소모임를 삭제하면 소모임 관련 모든 기록을 삭제하며 복구할 수 없습니다. <br/>-->
-<!--                        <b>다음에 해당하는 소모임은 자동으로 삭제 됩니다.</b>-->
-<!--                        <ul>-->
-<!--                            <li>만든지 1주일이 지난 비공개 소모임</li>-->
-<!--                            <li>소모임 공개 이후, 한달 동안 모임을 만들지 않은 소모임</li>-->
-<!--                            <li>소모임 공개 이후, 모임을 만들지 않고 종료한 소모임</li>-->
-<!--                        </ul>-->
-<!--                    </div>-->
-<!--                    <div class="form-group">-->
-<!--                        <button class="btn btn-outline-danger" type="submit" aria-describedby="submitHelp">소모임 삭제</button>-->
-<!--                    </div>-->
-<!--                </form>-->
-<!--            </div>-->
-<!--            <div class="row" th:if="${!society.isRemovable()}">-->
-<!--                <h5 class="col-sm-12 text-danger">소모임 삭제</h5>-->
-<!--                <form class="col-sm-12" action="#" th:action="@{'/society/' + ${society.getPath()} + '/settings/society/remove'}" method="post" novalidate>-->
-<!--                    <div class="alert alert-danger" role="alert">-->
-<!--                        공개 중이고 모임을 했던 소모임은 삭제할 수 없습니다.-->
-<!--                    </div>-->
-<!--                    <div class="form-group">-->
-<!--                        <button class="btn btn-outline-danger" type="submit" aria-describedby="submitHelp" disabled>소모임 삭제</button>-->
-<!--                    </div>-->
-<!--                </form>-->
-<!--            </div>-->
-<!--        </div>-->
+            <div class="row" th:if="${society.isRemovable()}">
+                <h5 class="col-sm-12 text-danger">소모임 삭제</h5>
+                <form class="col-sm-12" action="#" th:action="@{'/society/' + ${society.getPath()} + '/settings/society/remove'}" method="post" novalidate>
+                    <div class="alert alert-danger" role="alert">
+                        소모임를 삭제하면 소모임 관련 모든 기록을 삭제하며 복구할 수 없습니다. <br/>
+                        <b>다음에 해당하는 소모임은 자동으로 삭제 됩니다.</b>
+                        <ul>
+                            <li>만든지 1주일이 지난 비공개 소모임</li>
+                            <li>소모임 공개 이후, 한달 동안 모임을 만들지 않은 소모임</li>
+                            <li>소모임 공개 이후, 모임을 만들지 않고 종료한 소모임</li>
+                        </ul>
+                    </div>
+                    <div class="form-group">
+                        <button class="btn btn-outline-danger" type="submit" aria-describedby="submitHelp">소모임 삭제</button>
+                    </div>
+                </form>
+            </div>
+            <div class="row" th:if="${!society.isRemovable()}">
+                <h5 class="col-sm-12 text-danger">소모임 삭제</h5>
+                <form class="col-sm-12" action="#" th:action="@{'/society/' + ${society.getPath()} + '/settings/society/remove'}" method="post" novalidate>
+                    <div class="alert alert-danger" role="alert">
+                        공개 중이고 모임을 했던 소모임은 삭제할 수 없습니다.
+                    </div>
+                    <div class="form-group">
+                        <button class="btn btn-outline-danger" type="submit" aria-describedby="submitHelp" disabled>소모임 삭제</button>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
     <div th:replace="fragments.html :: footer"></div>
 </div>

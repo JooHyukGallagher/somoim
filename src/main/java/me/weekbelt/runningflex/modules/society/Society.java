@@ -166,4 +166,8 @@ public class Society {
     public void updateTitle(String newTitle) {
         this.title = newTitle;
     }
+
+    public boolean isRemovable() {
+        return !this.published; // TODO: 모임을 했던 스터디는 삭제할 수 없다.
+    }
 }
