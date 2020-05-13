@@ -3,96 +3,112 @@ package me.weekbelt.runningflex.modules.society.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import me.weekbelt.runningflex.infra.MockMvcTest;
 import me.weekbelt.runningflex.modules.account.Account;
-import me.weekbelt.runningflex.modules.account.AccountRepository;
 import me.weekbelt.runningflex.modules.account.AccountService;
 import me.weekbelt.runningflex.modules.account.WithAccount;
 import me.weekbelt.runningflex.modules.society.Society;
 import me.weekbelt.runningflex.modules.society.SocietyFactory;
 import me.weekbelt.runningflex.modules.society.SocietyService;
-import me.weekbelt.runningflex.modules.tag.Tag;
-import me.weekbelt.runningflex.modules.tag.TagRepository;
-import me.weekbelt.runningflex.modules.tag.form.TagForm;
+import me.weekbelt.runningflex.modules.zone.Zone;
+import me.weekbelt.runningflex.modules.zone.ZoneRepository;
+import me.weekbelt.runningflex.modules.zone.ZoneService;
+import me.weekbelt.runningflex.modules.zone.form.ZoneForm;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.*;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @MockMvcTest
-class UpdateSocietyTagControllerTest {
+class UpdateSocietyZoneControllerTest {
 
-    @Autowired MockMvc mockMvc;
-    @Autowired AccountRepository accountRepository;
-    @Autowired AccountService accountService;
-    @Autowired SocietyService societyService;
-    @Autowired ObjectMapper objectMapper;
-    @Autowired TagRepository tagRepository;
-    @Autowired SocietyFactory societyFactory;
+    @Autowired
+    ZoneRepository zoneRepository;
+    @Autowired
+    MockMvc mockMvc;
+    @Autowired
+    AccountService accountService;
+    @Autowired
+    SocietyFactory societyFactory;
+    @Autowired
+    ObjectMapper objectMapper;
+    @Autowired
+    ZoneService zoneService;
+    @Autowired
+    SocietyService societyService;
 
-    @DisplayName("소모임 태그 수정 폼")
+    public Zone testZone = Zone.builder()
+            .city("test").localNameOfCity("테스트시").province("테스트주")
+            .build();
+
+    @BeforeEach
+    void beforeEach() {
+        zoneRepository.save(testZone);
+    }
+
+    @DisplayName("소모임의 지역 정보 수정 폼")
     @WithAccount("joohyuk")
     @Test
-    public void updateTagForm() throws Exception {
-        // 소모임 생성
+    public void updateZoneForm() throws Exception {
         Account joohyuk = accountService.getAccount("joohyuk");
         Society society = societyFactory.createSociety("test", joohyuk);
 
-        String requestUrl = "/society/" + society.getEncodedPath() + "/settings/tags";
+        String requestUrl = "/society/" + society.getEncodedPath() + "/settings/zones";
         mockMvc.perform(get(requestUrl))
                 .andExpect(model().attributeExists("account"))
                 .andExpect(model().attributeExists("society"))
-                .andExpect(model().attributeExists("tags"))
+                .andExpect(model().attributeExists("zones"))
                 .andExpect(model().attributeExists("whitelist"))
                 .andExpect(status().isOk())
-                .andExpect(view().name("society/settings/tags"));
+                .andExpect(view().name("society/settings/zones"));
     }
 
-    @DisplayName("소모임에 태그 추가")
+    @DisplayName("소모임의 지역 정보 추가")
     @WithAccount("joohyuk")
     @Test
-    public void addTag() throws Exception {
+    public void addZone() throws Exception {
         Account joohyuk = accountService.getAccount("joohyuk");
         Society society = societyFactory.createSociety("test", joohyuk);
 
-        TagForm tagForm = new TagForm();
-        tagForm.setTagTitle("test");
+        ZoneForm zoneForm = new ZoneForm();
+        zoneForm.setZoneName(testZone.toString());
 
-        String requestUrl = "/society/" + society.getEncodedPath() + "/settings/tags/add";
+        String requestUrl = "/society/" + society.getEncodedPath() + "/settings/zones/add";
         mockMvc.perform(post(requestUrl)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(tagForm))
+                .content(objectMapper.writeValueAsString(zoneForm))
                 .with(csrf()))
                 .andExpect(status().isOk());
     }
 
-    @DisplayName("소모임에 태그 삭제")
+    @DisplayName("소모임의 지역 정보 삭제")
     @WithAccount("joohyuk")
     @Test
-    public void removeTag() throws Exception {
+    public void removeZone() throws Exception {
         Account joohyuk = accountService.getAccount("joohyuk");
         Society society = societyFactory.createSociety("test", joohyuk);
-        Tag newTag = tagRepository.save(Tag.builder().title("test").build());
-        societyService.addTag(society, newTag);
 
-        assertThat(society.getTags().contains(newTag)).isTrue();
+        Zone zone = zoneService.findByCityAndProvince(testZone.getCity(), testZone.getProvince());
+        societyService.addZone(society, zone);
 
-        TagForm tagForm = new TagForm();
-        tagForm.setTagTitle("test");
+        assertThat(society.getZones().contains(zone)).isTrue();
 
-        String requestUrl = "/society/" + society.getEncodedPath() + "/settings/tags/remove";
+        ZoneForm zoneForm = new ZoneForm();
+        zoneForm.setZoneName(testZone.toString());
+
+        String requestUrl = "/society/" + society.getEncodedPath() + "/settings/zones/remove";
         mockMvc.perform(post(requestUrl)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(tagForm))
+                .content(objectMapper.writeValueAsString(zoneForm))
                 .with(csrf()))
                 .andExpect(status().isOk());
 
-        assertThat(society.getTags().contains(newTag)).isFalse();
+        assertThat(society.getZones().contains(zone)).isFalse();
     }
-
 }
