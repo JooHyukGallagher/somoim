@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import me.weekbelt.runningflex.modules.account.Account;
 import me.weekbelt.runningflex.modules.account.CurrentAccount;
 import me.weekbelt.runningflex.modules.society.Society;
+import me.weekbelt.runningflex.modules.society.SocietyRepository;
 import me.weekbelt.runningflex.modules.society.SocietyService;
 import me.weekbelt.runningflex.modules.society.form.SocietyForm;
 import me.weekbelt.runningflex.modules.society.validator.SocietyFormValidator;
@@ -24,6 +25,7 @@ public class SocietyController {
 
     private final SocietyService societyService;
     private final SocietyFormValidator societyFormValidator;
+    private final SocietyRepository societyRepository;
 
     @InitBinder("societyForm")
     public void societyFormInitBinder(WebDataBinder webDataBinder) {
@@ -73,4 +75,20 @@ public class SocietyController {
         return "society/member";
     }
 
+    // TODO: 원래 POST 요청을 해야한다.
+    @GetMapping("/society/{path}/join")
+    public String joinSociety(@CurrentAccount Account account, @PathVariable String path) {
+        Society society = societyRepository.findSocietyWithMembersByPath(path)
+                .orElseThrow(() -> new IllegalArgumentException(path + "에 해당하는 소모임이 없습니다."));
+        societyService.addMembers(society, account);
+        return "redirect:/society/" + society.getEncodedPath() + "/members";
+    }
+
+    @GetMapping("/society/{path}/leave")
+    public String leaveSociety(@CurrentAccount Account account, @PathVariable String path) {
+        Society society = societyRepository.findSocietyWithMembersByPath(path)
+                .orElseThrow(() -> new IllegalArgumentException(path + "에 해당하는 소모임이 없습니다."));
+        societyService.removeMember(society, account);
+        return "redirect:/society/" + society.getEncodedPath() + "/members";
+    }
 }

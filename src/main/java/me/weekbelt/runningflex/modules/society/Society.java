@@ -66,6 +66,8 @@ public class Society {
 
     private boolean useBanner;
 
+    private int memberCount;
+
     @Builder
     public Society(String path, String title, String shortDescription, String fullDescription) {
         this.path = path;
@@ -169,5 +171,15 @@ public class Society {
 
     public boolean isRemovable() {
         return !this.published; // TODO: 모임을 했던 스터디는 삭제할 수 없다.
+    }
+
+    public void addMember(Account account) {
+        this.getMembers().add(account);
+        this.memberCount++;
+    }
+
+    public void removeMember(Account account) {
+        this.getMembers().remove(account);
+        this.memberCount--;
     }
 }

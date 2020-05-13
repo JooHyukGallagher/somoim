@@ -1,11 +1,9 @@
 package me.weekbelt.runningflex.modules.society.controller;
 
 import me.weekbelt.runningflex.infra.MockMvcTest;
-import me.weekbelt.runningflex.modules.account.Account;
-import me.weekbelt.runningflex.modules.account.AccountRepository;
-import me.weekbelt.runningflex.modules.account.AccountService;
-import me.weekbelt.runningflex.modules.account.WithAccount;
+import me.weekbelt.runningflex.modules.account.*;
 import me.weekbelt.runningflex.modules.society.Society;
+import me.weekbelt.runningflex.modules.society.SocietyFactory;
 import me.weekbelt.runningflex.modules.society.SocietyRepository;
 import me.weekbelt.runningflex.modules.society.SocietyService;
 import org.junit.jupiter.api.DisplayName;
@@ -32,6 +30,10 @@ class SocietyControllerTest {
     AccountRepository accountRepository;
     @Autowired
     SocietyRepository societyRepository;
+    @Autowired
+    SocietyFactory societyFactory;
+    @Autowired
+    AccountFactory accountFactory;
 
     @DisplayName("동호회 개설 폼 조회")
     @WithAccount("joohyuk")
@@ -110,4 +112,45 @@ class SocietyControllerTest {
                 .andExpect(view().name("society/view"));
     }
 
+    @DisplayName("소모임 가입")
+    @WithAccount("joohyuk")
+    @Test
+    public void joinSociety() throws Exception {
+        Account weekbelt = accountFactory.createAccount("weekbelt");
+        Society society = societyFactory.createSociety("test", weekbelt);
+
+        societyService.publish(society);
+        societyService.startRecruit(society);
+
+        String requestUrl = "/society/" + society.getEncodedPath() + "/join";
+        mockMvc.perform(get(requestUrl))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrl("/society/" + society.getEncodedPath() + "/members"));
+
+        Society findSociety = societyRepository.findSocietyWithMembersByPath("test").orElse(null);
+        Account joohyuk = accountService.getAccount("joohyuk");
+        assertThat(findSociety.getMembers().contains(joohyuk)).isTrue();
+    }
+
+    @DisplayName("소모임 탈퇴")
+    @WithAccount("joohyuk")
+    @Test
+    public void leaveSociety() throws Exception {
+        Account weekbelt = accountFactory.createAccount("weekbelt");
+        Society society = societyFactory.createSociety("test", weekbelt);
+
+        societyService.publish(society);
+        societyService.startRecruit(society);
+
+        Account joohyuk = accountService.getAccount("joohyuk");
+        societyService.addMembers(society, joohyuk);
+
+        String requestUrl = "/society/" + society.getEncodedPath() + "/leave";
+        mockMvc.perform(get(requestUrl))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrl("/society/" + society.getEncodedPath() + "/members"));
+
+        Society findSociety = societyRepository.findSocietyWithMembersByPath("test").orElse(null);
+        assertThat(findSociety.getMembers().contains(joohyuk)).isFalse();
+    }
 }

@@ -151,4 +151,13 @@ public class SocietyService {
             throw new IllegalArgumentException("소모임을 삭제할 수 없습니다.");
         }
     }
+
+    public void addMembers(Society society, Account account) {
+        society.addMember(account);
+    }
+
+
+    public void removeMember(Society society, Account account) {
+        society.removeMember(account);
+    }
 }

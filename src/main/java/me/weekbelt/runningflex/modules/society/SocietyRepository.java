@@ -21,4 +21,7 @@ public interface SocietyRepository extends JpaRepository<Society, Long> {
 
     @EntityGraph(attributePaths = "managers")
     Optional<Society> findSocietyWithManagersByPath(String path);
+
+    @EntityGraph(attributePaths = "members")
+    Optional<Society> findSocietyWithMembersByPath(String path);
 }
