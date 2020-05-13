@@ -252,4 +252,43 @@ class UpdateSocietyStatusControllerTest {
                 .andExpect(view().name("society/settings/society"))
                 .andExpect(status().isOk());
     }
+
+    @DisplayName("소모임 제목 수정 - 성공")
+    @WithAccount("joohyuk")
+    @Test
+    public void updateSocietyTitle_Success() throws Exception {
+        Account joohyuk = accountService.getAccount("joohyuk");
+        Society society = societyFactory.createSociety("test", joohyuk);
+
+        String requestUrl = "/society/" + society.getEncodedPath() + "/settings/society/title";
+        String newTitle = "newTest";
+        mockMvc.perform(post(requestUrl)
+                .param("newTitle", newTitle)
+                .with(csrf()))
+                .andExpect(flash().attribute("message", "소모임 이름을 수정했습니다."))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrl("/society/" + society.getEncodedPath() + "/settings/society"));
+
+        Society findSociety = societyService.getSocietyToUpdateStatus(joohyuk, "test");
+        assertThat(findSociety.getTitle()).isEqualTo(newTitle);
+    }
+
+    @DisplayName("소모임 제목 수정 - 실패")
+    @WithAccount("joohyuk")
+    @Test
+    public void updateSocietyTitle_Fail() throws Exception {
+        Account joohyuk = accountService.getAccount("joohyuk");
+        Society society = societyFactory.createSociety("test", joohyuk);
+
+        String requestUrl = "/society/" + society.getEncodedPath() + "/settings/society/title";
+        String newTitle = "newTestasdfahsdfhaslkjelfkjlskdjflaksdjflkajsldkjflaksjdlfkjslfdkjflkjlkjsdlfkjs";
+        mockMvc.perform(post(requestUrl)
+                .param("newTitle", newTitle)
+                .with(csrf()))
+                .andExpect(model().attributeExists("account"))
+                .andExpect(model().attributeExists("society"))
+                .andExpect(model().attributeExists("societyTitleError"))
+                .andExpect(status().isOk())
+                .andExpect(view().name("society/settings/society"));
+    }
 }

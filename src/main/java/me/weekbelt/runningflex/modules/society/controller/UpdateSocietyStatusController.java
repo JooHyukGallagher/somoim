@@ -90,4 +90,21 @@ public class UpdateSocietyStatusController {
         attributes.addFlashAttribute("message", "소모임 경로를 수정했습니다.");
         return "redirect:/society/" + society.getEncodedPath() + "/settings/society";
     }
+
+    @PostMapping("/society/title")
+    public String updateSocietyTitle(@CurrentAccount Account account, @PathVariable String path,
+                                    @RequestParam String newTitle, Model model,
+                                    RedirectAttributes attributes) throws AccessDeniedException {
+        Society society = societyService.getSocietyToUpdateStatus(account, path);
+        if(!societyService.isValidTitle(newTitle)) {
+            model.addAttribute("account", account);
+            model.addAttribute("society", society);
+            model.addAttribute("societyTitleError", "소모임 이름을 다시 입력하세요.");
+            return "society/settings/society";
+        }
+
+        societyService.updateSocietyTitle(society, newTitle);
+        attributes.addFlashAttribute("message", "소모임 이름을 수정했습니다.");
+        return "redirect:/society/" + society.getEncodedPath() + "/settings/society";
+    }
 }

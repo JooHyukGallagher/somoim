@@ -135,4 +135,12 @@ public class SocietyService {
     public void updateSocietyPath(Society society, String newPath) {
         society.updatePath(newPath);
     }
+
+    public boolean isValidTitle(String newTitle) {
+        return newTitle.length() <= 50;
+    }
+
+    public void updateSocietyTitle(Society society, String newTitle) {
+        society.updateTitle(newTitle);
+    }
 }

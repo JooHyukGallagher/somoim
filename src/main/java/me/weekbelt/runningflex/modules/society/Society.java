@@ -162,4 +162,8 @@ public class Society {
     public void updatePath(String newPath) {
         this.path = newPath;
     }
+
+    public void updateTitle(String newTitle) {
+        this.title = newTitle;
+    }
 }
