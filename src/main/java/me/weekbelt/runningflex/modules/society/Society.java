@@ -14,12 +14,15 @@ import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
-@AllArgsConstructor @NoArgsConstructor
-@Getter @EqualsAndHashCode(of = "id")
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@EqualsAndHashCode(of = "id")
 @Entity
 public class Society {
 
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToMany
@@ -35,10 +38,12 @@ public class Society {
 
     private String shortDescription;
 
-    @Lob @Basic(fetch = FetchType.EAGER)
+    @Lob
+    @Basic(fetch = FetchType.EAGER)
     private String fullDescription;
 
-    @Lob @Basic(fetch = FetchType.EAGER)
+    @Lob
+    @Basic(fetch = FetchType.EAGER)
     private String image;
 
     @ManyToMany
@@ -141,7 +146,16 @@ public class Society {
             this.recruiting = true;
             this.recruitingUpdatedDateTime = LocalDateTime.now();
         } else {
-            throw new RuntimeException("인원 모집을 시작할 수 없습니다. 스터디를 공개하거 한시간 뒤 다시 시도하세요.");
+            throw new RuntimeException("인원 모집을 시작할 수 없습니다. 소모임을 공개하거나 한시간 뒤 다시 시도하세요.");
+        }
+    }
+
+    public void stopRecruit() {
+        if (canUpdateRecruiting()) {
+            this.recruiting = false;
+            this.recruitingUpdatedDateTime = LocalDateTime.now();
+        } else {
+            throw new RuntimeException("인원 모집을 멈출 수 없습니다. 소모임을 공개하거나 한 시간뒤 다시 시도하세요");
         }
     }
 }

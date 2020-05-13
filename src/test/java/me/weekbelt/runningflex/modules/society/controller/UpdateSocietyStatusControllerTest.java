@@ -97,7 +97,7 @@ class UpdateSocietyStatusControllerTest {
         assertThat(society.isRecruiting()).isFalse();
     }
 
-    @DisplayName("소모임 인원 모집 시작")
+    @DisplayName("소모임 인원 모집 시작 - 성공")
     @WithAccount("joohyuk")
     @Test
     public void startRecruit_Success() throws Exception {
@@ -124,7 +124,7 @@ class UpdateSocietyStatusControllerTest {
         assertThat(society.isRecruiting()).isTrue();
     }
 
-    @DisplayName("소모임 인원 모집 시작 실패")
+    @DisplayName("소모임 인원 모집 시작 - 실패")
     @WithAccount("joohyuk")
     @Test
     public void startRecruit_Fail() throws Exception {
@@ -148,5 +148,69 @@ class UpdateSocietyStatusControllerTest {
                 .andExpect(redirectedUrl("/society/" + society.getEncodedPath() + "/settings/society"));
     }
 
+//    @DisplayName("소모임 인원 모집 종료 - 성공")
+//    @WithAccount("joohyuk")
+//    @Test
+//    public void stopRecruit_Success() throws Exception {
+//        Account joohyuk = accountService.getAccount("joohyuk");
+//        Society society = societyFactory.createSociety("test", joohyuk);
+//
+//        societyService.publish(society);        // 소모임 공개
+//
+//        assertThat(society.isPublished()).isTrue();
+//        assertThat(society.isRecruiting()).isFalse();
+//        assertThat(society.isClosed()).isFalse();
+//
+//        societyService.startRecruit(society);    // 소모임 인원 모집 시작
+//
+//        assertThat(society.isPublished()).isTrue();
+//        assertThat(society.isRecruiting()).isTrue();
+//        assertThat(society.isClosed()).isFalse();
+//
+//        String requestUrl = "/society/" + society.getEncodedPath() + "/settings/recruit/stop";
+//        mockMvc.perform(post(requestUrl)
+//                .with(csrf()))
+//                .andExpect(flash().attribute("message", "인원 모집을 종료합니다."))
+//                .andExpect(status().is3xxRedirection())
+//                .andExpect(redirectedUrl("/society/" + society.getEncodedPath() + "/settings/society"));
+//
+//        Society findSociety = societyService.getSocietyToUpdateStatus(joohyuk, society.getEncodedPath());
+//
+//        assertThat(findSociety.isPublished()).isTrue();
+//        assertThat(society.isRecruiting()).isFalse();
+//        assertThat(society.isClosed()).isFalse();
+//    }
 
+    @DisplayName("소모임 인원 모집 종료 - 실패")
+    @WithAccount("joohyuk")
+    @Test
+    public void stopRecruit_Success() throws Exception {
+        Account joohyuk = accountService.getAccount("joohyuk");
+        Society society = societyFactory.createSociety("test", joohyuk);
+
+        societyService.publish(society);        // 소모임 공개
+
+        assertThat(society.isPublished()).isTrue();
+        assertThat(society.isRecruiting()).isFalse();
+        assertThat(society.isClosed()).isFalse();
+
+        societyService.startRecruit(society);    // 소모임 인원 모집 시작
+
+        assertThat(society.isPublished()).isTrue();
+        assertThat(society.isRecruiting()).isTrue();
+        assertThat(society.isClosed()).isFalse();
+
+        String requestUrl = "/society/" + society.getEncodedPath() + "/settings/recruit/stop";
+        mockMvc.perform(post(requestUrl)
+                .with(csrf()))
+                .andExpect(flash().attribute("message", "1시간 안에 인원 모집 설정을 여러번 변경할 수 없습니다."))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrl("/society/" + society.getEncodedPath() + "/settings/society"));
+
+        Society findSociety = societyService.getSocietyToUpdateStatus(joohyuk, society.getEncodedPath());
+
+        assertThat(findSociety.isPublished()).isTrue();
+        assertThat(society.isRecruiting()).isTrue();
+        assertThat(society.isClosed()).isFalse();
+    }
 }
