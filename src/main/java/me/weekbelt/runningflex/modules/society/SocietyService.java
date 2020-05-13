@@ -112,4 +112,8 @@ public class SocietyService {
     public void close(Society society) {
         society.close();
     }
+
+    public void startRecruit(Society society) {
+        society.startRecruit();
+    }
 }

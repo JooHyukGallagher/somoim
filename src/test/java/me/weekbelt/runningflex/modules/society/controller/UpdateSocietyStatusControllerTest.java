@@ -96,4 +96,57 @@ class UpdateSocietyStatusControllerTest {
         assertThat(society.isClosed()).isTrue();
         assertThat(society.isRecruiting()).isFalse();
     }
+
+    @DisplayName("소모임 인원 모집 시작")
+    @WithAccount("joohyuk")
+    @Test
+    public void startRecruit_Success() throws Exception {
+        Account joohyuk = accountService.getAccount("joohyuk");
+        Society society = societyFactory.createSociety("test", joohyuk);
+
+        societyService.publish(society);
+
+        assertThat(society.isPublished()).isTrue();
+        assertThat(society.isClosed()).isFalse();
+        assertThat(society.isRecruiting()).isFalse();
+
+        String requestUrl = "/society/" + society.getEncodedPath() + "/settings/recruit/start";
+        mockMvc.perform(post(requestUrl)
+                .with(csrf()))
+                .andExpect(flash().attribute("message", "인원 모집을 시작합니다."))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrl("/society/" + society.getEncodedPath() + "/settings/society"));
+
+        Society findSociety = societyService.getSocietyToUpdateStatus(joohyuk, society.getEncodedPath());
+
+        assertThat(findSociety.isPublished()).isTrue();
+        assertThat(society.isClosed()).isFalse();
+        assertThat(society.isRecruiting()).isTrue();
+    }
+
+    @DisplayName("소모임 인원 모집 시작 실패")
+    @WithAccount("joohyuk")
+    @Test
+    public void startRecruit_Fail() throws Exception {
+        Account joohyuk = accountService.getAccount("joohyuk");
+        Society society = societyFactory.createSociety("test", joohyuk);
+
+        societyService.publish(society);
+
+        assertThat(society.isPublished()).isTrue();
+        assertThat(society.isClosed()).isFalse();
+        assertThat(society.isRecruiting()).isFalse();
+
+        societyService.startRecruit(society); // 모집시작
+
+        // 바로 또 모집 시작하는경우 실패
+        String requestUrl = "/society/" + society.getEncodedPath() + "/settings/recruit/start";
+        mockMvc.perform(post(requestUrl)
+                .with(csrf()))
+                .andExpect(flash().attribute("message", "1시간 안에 인원 모집 설정을 여러번 변경할 수 없습니다."))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrl("/society/" + society.getEncodedPath() + "/settings/society"));
+    }
+
+
 }

@@ -130,4 +130,18 @@ public class Society {
             this.closedDateTime = LocalDateTime.now();
         }
     }
+
+    public boolean canUpdateRecruiting() {
+        return this.published && this.recruitingUpdatedDateTime == null ||
+                this.recruitingUpdatedDateTime.isBefore(LocalDateTime.now().minusHours(1));
+    }
+
+    public void startRecruit() {
+        if (canUpdateRecruiting()) {
+            this.recruiting = true;
+            this.recruitingUpdatedDateTime = LocalDateTime.now();
+        } else {
+            throw new RuntimeException("인원 모집을 시작할 수 없습니다. 스터디를 공개하거 한시간 뒤 다시 시도하세요.");
+        }
+    }
 }
