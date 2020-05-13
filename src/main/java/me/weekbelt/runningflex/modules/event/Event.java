@@ -69,4 +69,10 @@ public class Event {
         this.limitOfEnrollments = limitOfEnrollments;
         this.eventType = eventType;
     }
+
+    public void createEvent(Society society, Account createdBy) {
+        this.createdBy = createdBy;
+        this.createdDateTime = LocalDateTime.now();
+        this.society = society;
+    }
 }

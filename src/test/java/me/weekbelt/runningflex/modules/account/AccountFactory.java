@@ -15,7 +15,6 @@ public class AccountFactory {
                 .nickname(nickname)
                 .email(nickname + "@email.com")
                 .build();
-        accountRepository.save(account);
-        return account;
+        return accountRepository.save(account);
     }
 }
