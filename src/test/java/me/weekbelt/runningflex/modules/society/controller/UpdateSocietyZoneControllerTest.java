@@ -56,8 +56,7 @@ class UpdateSocietyZoneControllerTest {
     @WithAccount("joohyuk")
     @Test
     public void updateZoneForm() throws Exception {
-        Account joohyuk = accountService.getAccount("joohyuk");
-        Society society = societyFactory.createSociety("test", joohyuk);
+        Society society = getSociety();
 
         String requestUrl = "/society/" + society.getEncodedPath() + "/settings/zones";
         mockMvc.perform(get(requestUrl))
@@ -69,12 +68,12 @@ class UpdateSocietyZoneControllerTest {
                 .andExpect(view().name("society/settings/zones"));
     }
 
+
     @DisplayName("소모임의 지역 정보 추가")
     @WithAccount("joohyuk")
     @Test
     public void addZone() throws Exception {
-        Account joohyuk = accountService.getAccount("joohyuk");
-        Society society = societyFactory.createSociety("test", joohyuk);
+        Society society = getSociety();
 
         ZoneForm zoneForm = new ZoneForm();
         zoneForm.setZoneName(testZone.toString());
@@ -91,8 +90,7 @@ class UpdateSocietyZoneControllerTest {
     @WithAccount("joohyuk")
     @Test
     public void removeZone() throws Exception {
-        Account joohyuk = accountService.getAccount("joohyuk");
-        Society society = societyFactory.createSociety("test", joohyuk);
+        Society society = getSociety();
 
         Zone zone = zoneService.findByCityAndProvince(testZone.getCity(), testZone.getProvince());
         societyService.addZone(society, zone);
@@ -110,5 +108,10 @@ class UpdateSocietyZoneControllerTest {
                 .andExpect(status().isOk());
 
         assertThat(society.getZones().contains(zone)).isFalse();
+    }
+
+    private Society getSociety() {
+        Account joohyuk = accountService.getAccount("joohyuk");
+        return societyFactory.createSociety("test", joohyuk);
     }
 }

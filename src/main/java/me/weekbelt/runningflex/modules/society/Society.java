@@ -112,4 +112,22 @@ public class Society {
     public boolean isManagedBy(Account account) {
         return this.managers.contains(account);
     }
+
+    public void publish() {
+        if (this.closed || this.published) {
+            throw new RuntimeException("소모임을 공개할 수 없는 상태입니다. 소모임을 이미 공개했거나 종료했습니다.");
+        } else {
+            this.published = true;
+            this.publishedDateTime = LocalDateTime.now();
+        }
+    }
+
+    public void close() {
+        if (!this.published || this.closed) {
+            throw new RuntimeException("소모임을 종료할 수 없습니다. 소모임을 공개하지 않았거나 이미 종료한 소모임입니다.");
+        } else {
+            this.closed = true;
+            this.closedDateTime = LocalDateTime.now();
+        }
+    }
 }

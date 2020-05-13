@@ -40,8 +40,7 @@ class UpdateSocietyTagControllerTest {
     @Test
     public void updateTagForm() throws Exception {
         // 소모임 생성
-        Account joohyuk = accountService.getAccount("joohyuk");
-        Society society = societyFactory.createSociety("test", joohyuk);
+        Society society = getSociety();
 
         String requestUrl = "/society/" + society.getEncodedPath() + "/settings/tags";
         mockMvc.perform(get(requestUrl))
@@ -53,12 +52,12 @@ class UpdateSocietyTagControllerTest {
                 .andExpect(view().name("society/settings/tags"));
     }
 
+
     @DisplayName("소모임에 태그 추가")
     @WithAccount("joohyuk")
     @Test
     public void addTag() throws Exception {
-        Account joohyuk = accountService.getAccount("joohyuk");
-        Society society = societyFactory.createSociety("test", joohyuk);
+        Society society = getSociety();
 
         TagForm tagForm = new TagForm();
         tagForm.setTagTitle("test");
@@ -75,8 +74,7 @@ class UpdateSocietyTagControllerTest {
     @WithAccount("joohyuk")
     @Test
     public void removeTag() throws Exception {
-        Account joohyuk = accountService.getAccount("joohyuk");
-        Society society = societyFactory.createSociety("test", joohyuk);
+        Society society = getSociety();
         Tag newTag = tagRepository.save(Tag.builder().title("test").build());
         societyService.addTag(society, newTag);
 
@@ -95,4 +93,8 @@ class UpdateSocietyTagControllerTest {
         assertThat(society.getTags().contains(newTag)).isFalse();
     }
 
+    private Society getSociety() {
+        Account joohyuk = accountService.getAccount("joohyuk");
+        return societyFactory.createSociety("test", joohyuk);
+    }
 }

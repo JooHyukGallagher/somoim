@@ -76,12 +76,21 @@ public class SocietyService {
         return society;
     }
 
+
     public void addZone(Society society, Zone zone) {
         society.getZones().add(zone);
     }
 
     public void removeZone(Society society, Zone zone) {
         society.getZones().remove(zone);
+    }
+
+    public Society getSocietyToUpdateStatus(Account account, String path) throws AccessDeniedException {
+        Society society = societyRepository.findSocietyWithManagersByPath(path)
+                .orElse(null);
+        checkIfExistingSociety(path, society);
+        checkIfManager(account, society);
+        return society;
     }
 
     private void checkIfExistingSociety(String path, Society society) {
@@ -94,5 +103,13 @@ public class SocietyService {
         if (!society.isManagedBy(account)) {
             throw new AccessDeniedException("해당 기능을 사용할 수 없습니다.");
         }
+    }
+
+    public void publish(Society society) {
+        society.publish();
+    }
+
+    public void close(Society society) {
+        society.close();
     }
 }
