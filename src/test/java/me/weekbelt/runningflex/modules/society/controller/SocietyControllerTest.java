@@ -58,8 +58,8 @@ class SocietyControllerTest {
                 .andExpect(status().is3xxRedirection())
                 .andExpect(redirectedUrl("/society/test-path"));
 
-        Society society = societyService.getSociety("test-path");
-        Account account = accountService.getAccount("joohyuk");
+        Society society = societyService.getSocietyByPath("test-path");
+        Account account = accountService.getAccountByNickname("joohyuk");
 
         assertThat(society).isNotNull();
         assertThat(society.getManagers().contains(account)).isTrue();
@@ -76,7 +76,7 @@ class SocietyControllerTest {
                 .fullDescription("<p>full description</p>")
                 .build();
 
-        Account joohyuk = accountService.getAccount("joohyuk");
+        Account joohyuk = accountService.getAccountByNickname("joohyuk");
         societyService.createNewSociety(society, joohyuk);
 
         mockMvc.perform(post("/new-society")
@@ -103,7 +103,7 @@ class SocietyControllerTest {
                 .fullDescription("<p>full description<p>")
                 .build();
 
-        Account joohyuk = accountService.getAccount("joohyuk");
+        Account joohyuk = accountService.getAccountByNickname("joohyuk");
         societyService.createNewSociety(society, joohyuk);
 
         mockMvc.perform(get("/society/test-path"))
@@ -128,7 +128,7 @@ class SocietyControllerTest {
                 .andExpect(redirectedUrl("/society/" + society.getEncodedPath() + "/members"));
 
         Society findSociety = societyRepository.findSocietyWithMembersByPath("test").orElse(null);
-        Account joohyuk = accountService.getAccount("joohyuk");
+        Account joohyuk = accountService.getAccountByNickname("joohyuk");
         assertThat(findSociety.getMembers().contains(joohyuk)).isTrue();
     }
 
@@ -142,7 +142,7 @@ class SocietyControllerTest {
         societyService.publish(society);
         societyService.startRecruit(society);
 
-        Account joohyuk = accountService.getAccount("joohyuk");
+        Account joohyuk = accountService.getAccountByNickname("joohyuk");
         societyService.addMembers(society, joohyuk);
 
         String requestUrl = "/society/" + society.getEncodedPath() + "/leave";

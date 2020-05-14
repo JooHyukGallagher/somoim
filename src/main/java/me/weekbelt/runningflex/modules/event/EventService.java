@@ -19,4 +19,9 @@ public class EventService {
         event.createEvent(society, account);
         return eventRepository.save(event);
     }
+
+    public Event getEventById(Long id) {
+        return eventRepository.findById(id)
+                .orElseThrow((() -> new IllegalArgumentException("찾는 모임이 없습니다.")));
+    }
 }

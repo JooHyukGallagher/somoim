@@ -44,7 +44,7 @@ class UpdateSocietyDescriptionControllerTest {
     @WithAccount("joohyuk")
     @Test
     public void updateDescriptionForm_success() throws Exception {
-        Account joohyuk = accountService.getAccount("joohyuk");
+        Account joohyuk = accountService.getAccountByNickname("joohyuk");
         Society society = societyFactory.createSociety("test-study", joohyuk);
 
         mockMvc.perform(get("/society/" + society.getPath() + "/settings/description"))
@@ -59,7 +59,7 @@ class UpdateSocietyDescriptionControllerTest {
     @WithAccount("joohyuk")
     @Test
     public void updateDescription_success() throws Exception {
-        Account joohyuk = accountService.getAccount("joohyuk");
+        Account joohyuk = accountService.getAccountByNickname("joohyuk");
         Society society = societyFactory.createSociety("test-study", joohyuk);
 
         mockMvc.perform(post("/society/" + society.getPath() + "/settings/description")
@@ -75,7 +75,7 @@ class UpdateSocietyDescriptionControllerTest {
     @WithAccount("joohyuk")
     @Test
     public void updateDescription_fail() throws Exception {
-        Account joohyuk = accountService.getAccount("joohyuk");
+        Account joohyuk = accountService.getAccountByNickname("joohyuk");
         Society society = societyFactory.createSociety("test-study", joohyuk);
 
         mockMvc.perform(post("/society/" + society.getPath() + "/settings/description")

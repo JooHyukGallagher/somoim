@@ -190,7 +190,7 @@ public class AccountService implements UserDetailsService {
         findAccount.ifPresent(a -> a.getZones().remove(zone));
     }
 
-    public Account getAccount(String nickname) {
+    public Account getAccountByNickname(String nickname) {
         return accountRepository.findByNickname(nickname)
                 .orElseThrow(() -> new IllegalArgumentException(nickname + "에 해당하는 사용자가 없습니다."));
     }

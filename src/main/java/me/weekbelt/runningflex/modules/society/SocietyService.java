@@ -25,13 +25,13 @@ public class SocietyService {
         return newSociety;
     }
 
-    public Society getSociety(String path) {
+    public Society getSocietyByPath(String path) {
         return societyRepository.findByPath(path)
                 .orElseThrow(() -> new IllegalArgumentException(path + "에 해당하는 동호회가 없습니다."));
     }
 
     public Society getSocietyToUpdate(Account account, String path) throws AccessDeniedException {
-        Society society = this.getSociety(path);
+        Society society = this.getSocietyByPath(path);
         if (!account.isManagerOf(society)) {
             throw new AccessDeniedException("해당 기능을 사용할 수 없습니다.");
         }

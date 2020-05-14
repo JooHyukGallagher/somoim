@@ -34,7 +34,7 @@ class UpdateSocietyStatusControllerTest {
     @WithAccount("joohyuk")
     @Test
     public void societyStatusForm() throws Exception {
-        Account joohyuk = accountService.getAccount("joohyuk");
+        Account joohyuk = accountService.getAccountByNickname("joohyuk");
         Society society = societyFactory.createSociety("test", joohyuk);
 
         String requestUrl = "/society/" + society.getEncodedPath() + "/settings/society";
@@ -49,7 +49,7 @@ class UpdateSocietyStatusControllerTest {
     @WithAccount("joohyuk")
     @Test
     public void publishSociety() throws Exception {
-        Account joohyuk = accountService.getAccount("joohyuk");
+        Account joohyuk = accountService.getAccountByNickname("joohyuk");
         Society society = societyFactory.createSociety("test", joohyuk);
 
         assertThat(society.isPublished()).isFalse();
@@ -74,7 +74,7 @@ class UpdateSocietyStatusControllerTest {
     @WithAccount("joohyuk")
     @Test
     public void closeSociety() throws Exception {
-        Account joohyuk = accountService.getAccount("joohyuk");
+        Account joohyuk = accountService.getAccountByNickname("joohyuk");
         Society society = societyFactory.createSociety("test", joohyuk);
 
         societyService.publish(society);
@@ -101,7 +101,7 @@ class UpdateSocietyStatusControllerTest {
     @WithAccount("joohyuk")
     @Test
     public void startRecruit_Success() throws Exception {
-        Account joohyuk = accountService.getAccount("joohyuk");
+        Account joohyuk = accountService.getAccountByNickname("joohyuk");
         Society society = societyFactory.createSociety("test", joohyuk);
 
         societyService.publish(society);
@@ -128,7 +128,7 @@ class UpdateSocietyStatusControllerTest {
     @WithAccount("joohyuk")
     @Test
     public void startRecruit_Fail() throws Exception {
-        Account joohyuk = accountService.getAccount("joohyuk");
+        Account joohyuk = accountService.getAccountByNickname("joohyuk");
         Society society = societyFactory.createSociety("test", joohyuk);
 
         societyService.publish(society);
@@ -185,7 +185,7 @@ class UpdateSocietyStatusControllerTest {
     @WithAccount("joohyuk")
     @Test
     public void stopRecruit_Success() throws Exception {
-        Account joohyuk = accountService.getAccount("joohyuk");
+        Account joohyuk = accountService.getAccountByNickname("joohyuk");
         Society society = societyFactory.createSociety("test", joohyuk);
 
         societyService.publish(society);        // 소모임 공개
@@ -218,7 +218,7 @@ class UpdateSocietyStatusControllerTest {
     @WithAccount("joohyuk")
     @Test
     public void updateSocietyPath_Success() throws Exception {
-        Account joohyuk = accountService.getAccount("joohyuk");
+        Account joohyuk = accountService.getAccountByNickname("joohyuk");
         Society society = societyFactory.createSociety("test", joohyuk);
 
         String requestUrl = "/society/" + society.getEncodedPath() + "/settings/society/path";
@@ -238,7 +238,7 @@ class UpdateSocietyStatusControllerTest {
     @WithAccount("joohyuk")
     @Test
     public void updateSocietyPath_Fail() throws Exception {
-        Account joohyuk = accountService.getAccount("joohyuk");
+        Account joohyuk = accountService.getAccountByNickname("joohyuk");
         Society society = societyFactory.createSociety("test", joohyuk);
 
         String requestUrl = "/society/" + society.getEncodedPath() + "/settings/society/path";
@@ -257,7 +257,7 @@ class UpdateSocietyStatusControllerTest {
     @WithAccount("joohyuk")
     @Test
     public void updateSocietyTitle_Success() throws Exception {
-        Account joohyuk = accountService.getAccount("joohyuk");
+        Account joohyuk = accountService.getAccountByNickname("joohyuk");
         Society society = societyFactory.createSociety("test", joohyuk);
 
         String requestUrl = "/society/" + society.getEncodedPath() + "/settings/society/title";
@@ -277,7 +277,7 @@ class UpdateSocietyStatusControllerTest {
     @WithAccount("joohyuk")
     @Test
     public void updateSocietyTitle_Fail() throws Exception {
-        Account joohyuk = accountService.getAccount("joohyuk");
+        Account joohyuk = accountService.getAccountByNickname("joohyuk");
         Society society = societyFactory.createSociety("test", joohyuk);
 
         String requestUrl = "/society/" + society.getEncodedPath() + "/settings/society/title";
@@ -296,7 +296,7 @@ class UpdateSocietyStatusControllerTest {
     @WithAccount("joohyuk")
     @Test
     public void removeSociety_Success() throws Exception {
-        Account joohyuk = accountService.getAccount("joohyuk");
+        Account joohyuk = accountService.getAccountByNickname("joohyuk");
         Society society = societyFactory.createSociety("test", joohyuk);
 
         String requestUrl = "/society/" + society.getEncodedPath() + "/settings/society/remove";

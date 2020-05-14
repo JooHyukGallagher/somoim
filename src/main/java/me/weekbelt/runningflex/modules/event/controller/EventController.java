@@ -65,4 +65,13 @@ public class EventController {
         Event createdEvent = eventService.createEvent(event, society, account);
         return "redirect:/society/" + society.getEncodedPath() + "/events/" + createdEvent.getId();
     }
+
+    @GetMapping("/events/{id}")
+    public String getEvent(@CurrentAccount Account account, @PathVariable String path,
+                           @PathVariable Long id, Model model) {
+        model.addAttribute("account", account);
+        model.addAttribute("event", eventService.getEventById(id));
+        model.addAttribute("society", societyService.getSocietyByPath(path));
+        return "event/view";
+    }
 }

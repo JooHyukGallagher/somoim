@@ -93,7 +93,7 @@ public class AccountController {
     @GetMapping("/profile/{nickname}")
     public String viewProfile(@PathVariable String nickname, Model model,
                               @CurrentAccount Account account) {
-        Account findAccount = accountService.getAccount(nickname);
+        Account findAccount = accountService.getAccountByNickname(nickname);
         model.addAttribute("account", findAccount);
         model.addAttribute("isOwner", findAccount.equals(account));
         return "account/profile";

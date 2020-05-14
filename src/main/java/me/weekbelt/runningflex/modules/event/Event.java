@@ -5,6 +5,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import me.weekbelt.runningflex.modules.account.Account;
+import me.weekbelt.runningflex.modules.account.UserAccount;
 import me.weekbelt.runningflex.modules.society.Society;
 
 import javax.persistence.*;
@@ -74,5 +75,27 @@ public class Event {
         this.createdBy = createdBy;
         this.createdDateTime = LocalDateTime.now();
         this.society = society;
+    }
+
+    public boolean isEnrollableFor(UserAccount userAccount) {
+        return isNotClosed() && !isAlreadyEnrolled(userAccount);
+    }
+
+    public boolean isDisenrollableFor(UserAccount userAccount) {
+        return isNotClosed() && isAlreadyEnrolled(userAccount);
+    }
+
+    private boolean isNotClosed() {
+        return this.endEnrollmentDateTime.isAfter(LocalDateTime.now());
+    }
+
+    private boolean isAlreadyEnrolled(UserAccount userAccount) {
+        Account account = userAccount.getAccount();
+        for (Enrollment enrollment : this.enrollments) {
+            if (enrollment.getAccount().equals(account)) {
+                return true;
+            }
+        }
+        return false;
     }
 }

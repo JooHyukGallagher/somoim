@@ -111,7 +111,7 @@ class UpdateSocietyZoneControllerTest {
     }
 
     private Society getSociety() {
-        Account joohyuk = accountService.getAccount("joohyuk");
+        Account joohyuk = accountService.getAccountByNickname("joohyuk");
         return societyFactory.createSociety("test", joohyuk);
     }
 }
