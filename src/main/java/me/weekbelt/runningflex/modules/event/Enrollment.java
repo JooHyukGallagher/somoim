@@ -38,4 +38,16 @@ public class Enrollment {
         this.accepted = accepted;
         this.attended = attended;
     }
+
+    public void addEvent(Event event) {
+        this.event = event;
+    }
+
+    public void accepted() {
+        this.accepted = true;
+    }
+
+    public void notAccepted() {
+        this.accepted = false;
+    }
 }

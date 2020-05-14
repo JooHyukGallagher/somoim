@@ -6,12 +6,14 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import me.weekbelt.runningflex.modules.account.Account;
 import me.weekbelt.runningflex.modules.account.UserAccount;
+import me.weekbelt.runningflex.modules.event.form.EventForm;
 import me.weekbelt.runningflex.modules.society.Society;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @NoArgsConstructor
 @Getter @EqualsAndHashCode(of = "id")
@@ -98,4 +100,96 @@ public class Event {
         }
         return false;
     }
+
+    public int numberOfRemainSpots() {
+        return this.limitOfEnrollments - (int) this.enrollments.stream()
+                .filter(Enrollment::isAccepted).count();
+    }
+
+    public long getNumberOfAcceptedEnrollments() {
+        return this.enrollments.stream().filter(Enrollment::isAccepted).count();
+    }
+
+    public void updateEvent(EventForm eventForm) {
+        this.title = eventForm.getTitle();
+        this.description = eventForm.getDescription();
+        this.eventType = eventForm.getEventType();
+        this.endEnrollmentDateTime = eventForm.getEndEnrollmentDateTime();
+        this.startDateTime = eventForm.getStartDateTime();
+        this.endDateTime = eventForm.getEndDateTime();
+        this.limitOfEnrollments = eventForm.getLimitOfEnrollments();
+    }
+
+    public boolean canAccept(Enrollment enrollment) {
+        return this.eventType == EventType.CONFIRMATIVE
+                && this.enrollments.contains(enrollment)
+                && !enrollment.isAttended()
+                && !enrollment.isAccepted();
+    }
+
+    public boolean canReject(Enrollment enrollment) {
+        return this.eventType == EventType.CONFIRMATIVE
+                && !enrollments.contains(enrollment)
+                && !enrollment.isAttended()
+                && enrollment.isAccepted();
+    }
+
+    public boolean isAbleToAcceptWaitingEnrollment() {
+        return this.eventType == EventType.FCFS
+                && this.limitOfEnrollments > this.getNumberOfAcceptedEnrollments();
+    }
+
+    public void addEnrollment(Enrollment enrollment) {
+        this.enrollments.add(enrollment);
+        enrollment.addEvent(this);
+    }
+
+    public void removeEnrollment(Enrollment enrollment) {
+        this.enrollments.remove(enrollment);
+        enrollment.addEvent(null);
+    }
+
+    public void acceptNextWaitingEnrollment() {
+        if (this.isAbleToAcceptWaitingEnrollment()) {
+            Enrollment enrollmentToAccept = this.getTheFirstWaitingEnrollment();
+            if(enrollmentToAccept != null) {
+                enrollmentToAccept.accepted();
+            }
+        }
+    }
+
+    private Enrollment getTheFirstWaitingEnrollment() {
+        for (Enrollment enrollment : enrollments) {
+            if (!enrollment.isAccepted()) {
+                return enrollment;
+            }
+        }
+        return null;
+    }
+
+    public void acceptWaitingList() {
+        if (this.isAbleToAcceptWaitingEnrollment()) {
+            var waitingList = getWaitingList();
+            int numberToAccept = (int) Math.min(this.limitOfEnrollments -
+                    this.getNumberOfAcceptedEnrollments(), waitingList.size());
+            waitingList.subList(0, numberToAccept).forEach(Enrollment::accepted);
+        }
+    }
+
+    private List<Enrollment> getWaitingList() {
+        return this.enrollments.stream()
+                .filter(enrollment -> !enrollment.isAccepted())
+                .collect(Collectors.toList());
+    }
+
+//    public boolean isAttended(UserAccount userAccount) {
+//        Account account = userAccount.getAccount();
+//        for (Enrollment enrollment : enrollments) {
+//            if (enrollment.getAccount().equals(account) && enrollment.isAttended()) {
+//                return true;
+//            }
+//        }
+//
+//        return false;
+//    }
 }

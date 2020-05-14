@@ -160,4 +160,9 @@ public class SocietyService {
     public void removeMember(Society society, Account account) {
         society.removeMember(account);
     }
+
+    public Society getSocietyToEnroll(String path) {
+        return societyRepository.findSocietyOnlyByPath(path)
+                .orElseThrow(() -> new IllegalArgumentException(path + "에 해당하는 스터디가 없습니다."));
+    }
 }

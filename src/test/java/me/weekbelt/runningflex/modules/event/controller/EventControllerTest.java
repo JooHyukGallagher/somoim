@@ -142,4 +142,33 @@ class EventControllerTest {
         Assertions.assertThat(createdEvent.getSociety()).isEqualTo(society);
     }
 
+//    @DisplayName("모임 리스트 조회")
+//    @WithAccount("joohyuk")
+//    @Test
+//    public void eventListView() throws Exception {
+//        Account joohyuk = accountService.getAccountByNickname("joohyuk");
+//        Society society = societyFactory.createSociety("test", joohyuk);
+//
+//        LocalDateTime now = LocalDateTime.now();
+//        Event event = Event.builder()
+//                .title("test title")
+//                .description("test description")
+//                .endEnrollmentDateTime(now.plusDays(1))
+//                .startDateTime(now.plusDays(1).plusHours(2))
+//                .endDateTime(now.plusDays(1).plusHours(7))
+//                .build();
+//
+//        Event createdEvent = eventService.createEvent(event, society, joohyuk);
+//
+//        String requestUrl = "/society/" + society.getEncodedPath() + "/events/" + createdEvent.getId();
+//        mockMvc.perform(get(requestUrl))
+//                .andExpect(model().attributeExists("account"))
+//                .andExpect(model().attributeExists("event"))
+//                .andExpect(model().attributeExists("society"))
+//                .andExpect(status().isOk())
+//                .andExpect(view().name("event/view"));
+//
+//        Assertions.assertThat(createdEvent.getCreatedBy()).isEqualTo(joohyuk);
+//        Assertions.assertThat(createdEvent.getSociety()).isEqualTo(society);
+//    }
 }

@@ -1,5 +1,6 @@
 package me.weekbelt.runningflex.modules.event.validator;
 
+import me.weekbelt.runningflex.modules.event.Event;
 import me.weekbelt.runningflex.modules.event.form.EventForm;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
@@ -24,23 +25,24 @@ public class EventValidator implements Validator {
                     "모임 접수 종료 일시를 정확히 입력하세요.");
         }
 
+        if (isNotValidStartDateTime(eventForm)) {
+            errors.rejectValue("startDateTime", "wrong.datetime",
+                    "모임 시작 일시를 정확히 입력하세요.");
+        }
+
         if (isNotValidEndDateTime(eventForm)) {
             errors.rejectValue("endDateTime", "wrong.datetime",
                     "모임 접수 종료 일시를 정확히 입력하세요.");
         }
 
-        if (isNotValidStartDateTime(eventForm)) {
-            errors.rejectValue("startDateTime", "wrong.datetime",
-                    "모임 시작 일시를 정확히 입력하세요.");
-        }
     }
 
     private boolean isNotValidEndEnrollmentDateTime(EventForm eventForm) {
-        return eventForm.getStartDateTime().isBefore(eventForm.getEndEnrollmentDateTime());
+        return eventForm.getEndEnrollmentDateTime().isBefore(LocalDateTime.now());
     }
 
     private boolean isNotValidStartDateTime(EventForm eventForm) {
-        return eventForm.getEndEnrollmentDateTime().isBefore(LocalDateTime.now());
+        return eventForm.getStartDateTime().isBefore(eventForm.getEndEnrollmentDateTime());
     }
 
     private boolean isNotValidEndDateTime(EventForm eventForm) {
@@ -49,4 +51,10 @@ public class EventValidator implements Validator {
                 endDateTime.isBefore(eventForm.getEndEnrollmentDateTime());
     }
 
+    public void validateUpdateForm(EventForm eventForm, Event event, Errors errors) {
+        if (eventForm.getLimitOfEnrollments() < event.getNumberOfAcceptedEnrollments()) {
+            errors.rejectValue("limitOfEnrollments", "wrong.value",
+                    "확인된 참가 신청보다 모집 인원 수가 커야 합니다.");
+        }
+    }
 }
