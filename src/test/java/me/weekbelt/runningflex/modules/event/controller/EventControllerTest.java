@@ -5,6 +5,7 @@ import me.weekbelt.runningflex.modules.account.Account;
 import me.weekbelt.runningflex.modules.account.AccountFactory;
 import me.weekbelt.runningflex.modules.account.AccountService;
 import me.weekbelt.runningflex.modules.account.WithAccount;
+import me.weekbelt.runningflex.modules.enrollment.EnrollmentRepository;
 import me.weekbelt.runningflex.modules.event.*;
 import me.weekbelt.runningflex.modules.society.Society;
 import me.weekbelt.runningflex.modules.society.SocietyFactory;

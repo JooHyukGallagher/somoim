@@ -1,4 +1,4 @@
-package me.weekbelt.runningflex.modules.event;
+package me.weekbelt.runningflex.modules.enrollment;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

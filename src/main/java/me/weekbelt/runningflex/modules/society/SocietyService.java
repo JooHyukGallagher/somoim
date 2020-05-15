@@ -2,9 +2,11 @@ package me.weekbelt.runningflex.modules.society;
 
 import lombok.RequiredArgsConstructor;
 import me.weekbelt.runningflex.modules.account.Account;
+import me.weekbelt.runningflex.modules.society.event.SocietyCreatedEvent;
 import me.weekbelt.runningflex.modules.society.form.SocietyDescriptionForm;
 import me.weekbelt.runningflex.modules.tag.Tag;
 import me.weekbelt.runningflex.modules.zone.Zone;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,10 +20,12 @@ import static me.weekbelt.runningflex.modules.society.form.SocietyForm.VALID_PAT
 public class SocietyService {
 
     private final SocietyRepository societyRepository;
+    private final ApplicationEventPublisher eventPublisher;
 
     public Society createNewSociety(Society society, Account account) {
         Society newSociety = societyRepository.save(society);
         newSociety.addManager(account);
+        eventPublisher.publishEvent(new SocietyCreatedEvent(newSociety));
         return newSociety;
     }
 

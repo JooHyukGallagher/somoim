@@ -1,6 +1,7 @@
-package me.weekbelt.runningflex.modules.event;
+package me.weekbelt.runningflex.modules.enrollment;
 
 import me.weekbelt.runningflex.modules.account.Account;
+import me.weekbelt.runningflex.modules.event.Event;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.transaction.annotation.Transactional;
 

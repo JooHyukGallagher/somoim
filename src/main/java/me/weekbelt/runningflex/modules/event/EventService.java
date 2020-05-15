@@ -2,6 +2,8 @@ package me.weekbelt.runningflex.modules.event;
 
 import lombok.RequiredArgsConstructor;
 import me.weekbelt.runningflex.modules.account.Account;
+import me.weekbelt.runningflex.modules.enrollment.Enrollment;
+import me.weekbelt.runningflex.modules.enrollment.EnrollmentRepository;
 import me.weekbelt.runningflex.modules.event.form.EventForm;
 import me.weekbelt.runningflex.modules.society.Society;
 import org.springframework.stereotype.Service;

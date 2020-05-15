@@ -1,10 +1,11 @@
-package me.weekbelt.runningflex.modules.event;
+package me.weekbelt.runningflex.modules.enrollment;
 
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import me.weekbelt.runningflex.modules.account.Account;
+import me.weekbelt.runningflex.modules.event.Event;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;

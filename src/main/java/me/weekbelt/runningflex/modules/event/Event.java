@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import me.weekbelt.runningflex.modules.account.Account;
 import me.weekbelt.runningflex.modules.account.UserAccount;
+import me.weekbelt.runningflex.modules.enrollment.Enrollment;
 import me.weekbelt.runningflex.modules.event.form.EventForm;
 import me.weekbelt.runningflex.modules.society.Society;
 

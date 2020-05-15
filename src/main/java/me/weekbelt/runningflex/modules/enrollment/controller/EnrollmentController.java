@@ -1,10 +1,10 @@
-package me.weekbelt.runningflex.modules.event.controller;
+package me.weekbelt.runningflex.modules.enrollment.controller;
 
 import lombok.RequiredArgsConstructor;
 import me.weekbelt.runningflex.modules.account.Account;
 import me.weekbelt.runningflex.modules.account.CurrentAccount;
-import me.weekbelt.runningflex.modules.event.Enrollment;
-import me.weekbelt.runningflex.modules.event.EnrollmentService;
+import me.weekbelt.runningflex.modules.enrollment.Enrollment;
+import me.weekbelt.runningflex.modules.enrollment.EnrollmentService;
 import me.weekbelt.runningflex.modules.event.Event;
 import me.weekbelt.runningflex.modules.event.EventService;
 import me.weekbelt.runningflex.modules.society.Society;
