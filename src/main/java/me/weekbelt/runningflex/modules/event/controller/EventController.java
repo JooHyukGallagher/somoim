@@ -11,7 +11,6 @@ import me.weekbelt.runningflex.modules.event.validator.EventValidator;
 import me.weekbelt.runningflex.modules.society.Society;
 import me.weekbelt.runningflex.modules.society.SocietyService;
 import org.modelmapper.ModelMapper;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
@@ -76,9 +75,9 @@ public class EventController {
 
     @GetMapping("/events/{id}")
     public String getEvent(@CurrentAccount Account account, @PathVariable String path,
-                           @PathVariable Long id, Model model) {
+                           @PathVariable("id") Event event, Model model) {
         model.addAttribute("account", account);
-        model.addAttribute("event", eventService.getEventById(id));
+        model.addAttribute("event", event);
         model.addAttribute("society", societyService.getSocietyByPath(path));
         return "event/view";
     }
@@ -108,9 +107,8 @@ public class EventController {
 
     @GetMapping("/events/{id}/edit")
     public String updateEventForm(@CurrentAccount Account account, @PathVariable String path,
-                                  @PathVariable Long id, Model model) throws AccessDeniedException {
+                                  @PathVariable("id") Event event, Model model) throws AccessDeniedException {
         Society society = societyService.getSocietyToUpdate(account, path);
-        Event event = eventService.getEventById(id);
 
         model.addAttribute("account", account);
         model.addAttribute("society", society);
@@ -121,10 +119,9 @@ public class EventController {
 
     @PostMapping("/events/{id}/edit")
     public String updateEventSubmit(@CurrentAccount Account account, @PathVariable String path,
-                                    @PathVariable Long id, @Valid EventForm eventForm,
+                                    @PathVariable("id") Event event, @Valid EventForm eventForm,
                                     Errors errors, Model model) throws AccessDeniedException {
         Society society = societyService.getSocietyToUpdate(account, path);
-        Event event = eventService.getEventById(id);
         // 화면에 EventType 변경 화면이 없어도 url에 요청이 가능하기때문에 방지
         eventForm.setEventType(event.getEventType());
 
@@ -142,26 +139,9 @@ public class EventController {
 
     @DeleteMapping("/events/{id}")
     public String cancelEvent(@CurrentAccount Account account, @PathVariable String path,
-                                         @PathVariable Long id) throws AccessDeniedException {
+                                         @PathVariable("id") Event event) throws AccessDeniedException {
         Society society = societyService.getSocietyToUpdateStatus(account, path);
-        eventService.deleteEvent(eventService.getEventById(id));
+        eventService.deleteEvent(event);
         return "redirect:/society/" + society.getEncodedPath() + "/events";
     }
-
-    @PostMapping("/events/{id}/enroll")
-    public String newEnrollment(@CurrentAccount Account account, @PathVariable String path,
-                                @PathVariable Long id) {
-        Society society = societyService.getSocietyToEnroll(path);
-        eventService.newEnrollment(eventService.getEventById(id), account);
-        return "redirect:/society/" + society.getEncodedPath() + "/events/" + id;
-    }
-
-    @PostMapping("/events/{id}/disenroll")
-    public String cancelEnrollment(@CurrentAccount Account account, @PathVariable String path,
-                                @PathVariable Long id) {
-        Society society = societyService.getSocietyToEnroll(path);
-        eventService.cancelEnrollment(eventService.getEventById(id), account);
-        return "redirect:/society/" + society.getEncodedPath() + "/events/" + id;
-    }
-
 }

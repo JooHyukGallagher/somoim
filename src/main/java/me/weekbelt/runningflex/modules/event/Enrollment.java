@@ -50,4 +50,12 @@ public class Enrollment {
     public void notAccepted() {
         this.accepted = false;
     }
+
+    public void attended() {
+        this.attended = true;
+    }
+
+    public void notAttended() {
+        this.attended = false;
+    }
 }

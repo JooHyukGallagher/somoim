@@ -51,6 +51,7 @@ public class Event {
     private Integer limitOfEnrollments;
 
     @OneToMany(mappedBy = "event")
+    @OrderBy("enrolledAt")
     private List<Enrollment> enrollments = new ArrayList<>();
 
     @Enumerated(EnumType.STRING)
@@ -80,11 +81,11 @@ public class Event {
     }
 
     public boolean isEnrollableFor(UserAccount userAccount) {
-        return isNotClosed() && !isAlreadyEnrolled(userAccount);
+        return isNotClosed() && !this.isAttended(userAccount) && !isAlreadyEnrolled(userAccount);
     }
 
     public boolean isDisenrollableFor(UserAccount userAccount) {
-        return isNotClosed() && isAlreadyEnrolled(userAccount);
+        return isNotClosed() && !this.isAttended(userAccount) && isAlreadyEnrolled(userAccount);
     }
 
     private boolean isNotClosed() {
@@ -182,14 +183,27 @@ public class Event {
                 .collect(Collectors.toList());
     }
 
-//    public boolean isAttended(UserAccount userAccount) {
-//        Account account = userAccount.getAccount();
-//        for (Enrollment enrollment : enrollments) {
-//            if (enrollment.getAccount().equals(account) && enrollment.isAttended()) {
-//                return true;
-//            }
-//        }
-//
-//        return false;
-//    }
+    public boolean isAttended(UserAccount userAccount) {
+        Account account = userAccount.getAccount();
+        for (Enrollment enrollment : enrollments) {
+            if (enrollment.getAccount().equals(account) && enrollment.isAttended()) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public void accept(Enrollment enrollment) {
+        if (this.eventType == EventType.CONFIRMATIVE
+                && this.limitOfEnrollments > this.getNumberOfAcceptedEnrollments()){
+            enrollment.accepted();
+        }
+    }
+
+    public void reject(Enrollment enrollment) {
+        if (this.eventType == EventType.CONFIRMATIVE) {
+            enrollment.notAccepted();
+        }
+    }
 }

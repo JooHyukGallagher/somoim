@@ -5,13 +5,10 @@ import me.weekbelt.runningflex.modules.account.Account;
 import me.weekbelt.runningflex.modules.account.AccountFactory;
 import me.weekbelt.runningflex.modules.account.AccountService;
 import me.weekbelt.runningflex.modules.account.WithAccount;
-import me.weekbelt.runningflex.modules.event.Event;
-import me.weekbelt.runningflex.modules.event.EventService;
-import me.weekbelt.runningflex.modules.event.EventType;
+import me.weekbelt.runningflex.modules.event.*;
 import me.weekbelt.runningflex.modules.society.Society;
 import me.weekbelt.runningflex.modules.society.SocietyFactory;
 import me.weekbelt.runningflex.modules.society.SocietyService;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +16,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import java.time.LocalDateTime;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -39,6 +37,10 @@ class EventControllerTest {
     MockMvc mockMvc;
     @Autowired
     EventService eventService;
+    @Autowired
+    EventFactory eventFactory;
+    @Autowired
+    EnrollmentRepository enrollmentRepository;
 
     @DisplayName("모임 생성 폼")
     @WithAccount("joohyuk")
@@ -138,8 +140,8 @@ class EventControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(view().name("event/view"));
 
-        Assertions.assertThat(createdEvent.getCreatedBy()).isEqualTo(joohyuk);
-        Assertions.assertThat(createdEvent.getSociety()).isEqualTo(society);
+        assertThat(createdEvent.getCreatedBy()).isEqualTo(joohyuk);
+        assertThat(createdEvent.getSociety()).isEqualTo(society);
     }
 
 //    @DisplayName("모임 리스트 조회")
