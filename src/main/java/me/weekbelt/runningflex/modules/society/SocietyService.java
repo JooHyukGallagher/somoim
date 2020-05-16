@@ -25,7 +25,6 @@ public class SocietyService {
     public Society createNewSociety(Society society, Account account) {
         Society newSociety = societyRepository.save(society);
         newSociety.addManager(account);
-        eventPublisher.publishEvent(new SocietyCreatedEvent(newSociety));
         return newSociety;
     }
 
@@ -113,6 +112,7 @@ public class SocietyService {
 
     public void publish(Society society) {
         society.publish();
+        this.eventPublisher.publishEvent(new SocietyCreatedEvent(society));
     }
 
     public void close(Society society) {

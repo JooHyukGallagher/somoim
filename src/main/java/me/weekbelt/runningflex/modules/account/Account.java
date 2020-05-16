@@ -40,14 +40,14 @@ public class Account {
     @Basic(fetch = FetchType.EAGER)
     private String profileImage;
 
-    private boolean groupCreatedByEmail;
-    private boolean groupCreatedByWeb = true;
+    private boolean societyCreatedByEmail;
+    private boolean societyCreatedByWeb = true;
 
-    private boolean groupEnrollmentResultByEmail;
-    private boolean groupEnrollmentResultByWeb = true;
+    private boolean societyEnrollmentResultByEmail;
+    private boolean societyEnrollmentResultByWeb = true;
 
-    private boolean groupUpdatedByEmail;
-    private boolean groupUpdatedByWeb = true;
+    private boolean societyUpdatedByEmail;
+    private boolean societyUpdatedByWeb = true;
 
     private LocalDateTime emailCheckTokenGeneratedAt;
 
@@ -60,21 +60,21 @@ public class Account {
     @Builder
     public Account(String email, String nickname, String password, boolean emailVerified,
                    String emailCheckToken, LocalDateTime joinedAt,
-                   boolean groupCreatedByWeb, boolean groupCreatedByEmail,
-                   boolean groupEnrollmentResultByWeb, boolean groupEnrollmentResultByEmail,
-                   boolean groupUpdatedByWeb, boolean groupUpdatedByEmail) {
+                   boolean societyCreatedByWeb, boolean societyCreatedByEmail,
+                   boolean societyEnrollmentResultByWeb, boolean societyEnrollmentResultByEmail,
+                   boolean societyUpdatedByWeb, boolean societyUpdatedByEmail) {
         this.email = email;
         this.nickname = nickname;
         this.password = password;
         this.emailVerified = emailVerified;
         this.emailCheckToken = emailCheckToken;
         this.joinedAt = joinedAt;
-        this.groupCreatedByWeb = groupCreatedByWeb;
-        this.groupCreatedByEmail = groupCreatedByEmail;
-        this.groupEnrollmentResultByWeb = groupEnrollmentResultByWeb;
-        this.groupEnrollmentResultByEmail = groupEnrollmentResultByEmail;
-        this.groupUpdatedByWeb = groupUpdatedByWeb;
-        this.groupUpdatedByEmail = groupUpdatedByEmail;
+        this.societyCreatedByWeb = societyCreatedByWeb;
+        this.societyCreatedByEmail = societyCreatedByEmail;
+        this.societyEnrollmentResultByWeb = societyEnrollmentResultByWeb;
+        this.societyEnrollmentResultByEmail = societyEnrollmentResultByEmail;
+        this.societyUpdatedByWeb = societyUpdatedByWeb;
+        this.societyUpdatedByEmail = societyUpdatedByEmail;
     }
 
     public void generateEmailCheckToken() {
@@ -108,12 +108,12 @@ public class Account {
     }
 
     public void updateNotifications(Notifications notifications) {
-        this.groupCreatedByEmail = notifications.isGroupCreatedByEmail();
-        this.groupCreatedByWeb = notifications.isGroupCreatedByWeb();
-        this.groupUpdatedByEmail = notifications.isGroupUpdatedByEmail();
-        this.groupUpdatedByWeb = notifications.isGroupUpdatedByWeb();
-        this.groupEnrollmentResultByEmail = notifications.isGroupEnrollmentResultByEmail();
-        this.groupEnrollmentResultByWeb = notifications.isGroupEnrollmentResultByWeb();
+        this.societyCreatedByEmail = notifications.isGroupCreatedByEmail();
+        this.societyCreatedByWeb = notifications.isGroupCreatedByWeb();
+        this.societyUpdatedByEmail = notifications.isGroupUpdatedByEmail();
+        this.societyUpdatedByWeb = notifications.isGroupUpdatedByWeb();
+        this.societyEnrollmentResultByEmail = notifications.isGroupEnrollmentResultByEmail();
+        this.societyEnrollmentResultByWeb = notifications.isGroupEnrollmentResultByWeb();
     }
 
     public void updateNickname(String nickname) {

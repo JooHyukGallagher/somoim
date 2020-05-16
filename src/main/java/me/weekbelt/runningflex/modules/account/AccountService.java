@@ -52,9 +52,9 @@ public class AccountService implements UserDetailsService {
                 .nickname(signUpForm.getNickname())
                 .password(passwordEncoder.encode(signUpForm.getPassword()))
                 .emailVerified(false)
-                .groupCreatedByWeb(true)
-                .groupEnrollmentResultByWeb(true)
-                .groupUpdatedByWeb(true)
+                .societyCreatedByWeb(true)
+                .societyEnrollmentResultByWeb(true)
+                .societyUpdatedByWeb(true)
                 .build();
         account.generateEmailCheckToken();
         return accountRepository.save(account);
