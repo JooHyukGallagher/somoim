@@ -3,6 +3,7 @@ package me.weekbelt.runningflex.modules.society;
 import lombok.RequiredArgsConstructor;
 import me.weekbelt.runningflex.modules.account.Account;
 import me.weekbelt.runningflex.modules.society.event.SocietyCreatedEvent;
+import me.weekbelt.runningflex.modules.society.event.SocietyUpdateEvent;
 import me.weekbelt.runningflex.modules.society.form.SocietyDescriptionForm;
 import me.weekbelt.runningflex.modules.tag.Tag;
 import me.weekbelt.runningflex.modules.zone.Zone;
@@ -43,6 +44,7 @@ public class SocietyService {
 
     public void updateSocietyDescription(Society society, SocietyDescriptionForm societyDescriptionForm) {
         society.updateDescription(societyDescriptionForm);
+        eventPublisher.publishEvent(new SocietyUpdateEvent(society, "소모임 소개를 수정했습니다."));
     }
 
     public void updateSocietyImage(Society society, String image) {
@@ -117,14 +119,17 @@ public class SocietyService {
 
     public void close(Society society) {
         society.close();
+        eventPublisher.publishEvent(new SocietyUpdateEvent(society, "소모임을 종료했습니다."));
     }
 
     public void startRecruit(Society society) {
         society.startRecruit();
+        eventPublisher.publishEvent(new SocietyUpdateEvent(society, "회원 모집을 시작합니다."));
     }
 
     public void stopRecruit(Society society) {
         society.stopRecruit();
+        eventPublisher.publishEvent(new SocietyUpdateEvent(society, "회원 모집을 중단했습니다."));
     }
 
     public boolean isValidPath(String newPath) {

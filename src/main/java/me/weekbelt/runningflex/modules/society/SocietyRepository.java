@@ -29,4 +29,7 @@ public interface SocietyRepository extends JpaRepository<Society, Long> {
 
     @EntityGraph(attributePaths = {"tags", "zones"})
     Society findSocietyWithTagsAndZonesById(Long id);
+
+    @EntityGraph(attributePaths = {"members", "managers"})
+    Society findSocietyWithManagersAndMembersById(Long id);
 }
