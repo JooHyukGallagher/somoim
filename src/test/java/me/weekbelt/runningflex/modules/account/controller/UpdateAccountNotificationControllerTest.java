@@ -46,9 +46,9 @@ class UpdateAccountNotificationControllerTest {
                 .andExpect(flash().attributeExists("message"));
 
         Account account = accountRepository.findByNickname("joohyuk").get();
-        assertThat(account.isGroupCreatedByEmail()).isTrue();
-        assertThat(account.isGroupEnrollmentResultByEmail()).isTrue();
-        assertThat(account.isGroupUpdatedByEmail()).isTrue();
+        assertThat(account.isSocietyCreatedByEmail()).isTrue();
+        assertThat(account.isSocietyEnrollmentResultByEmail()).isTrue();
+        assertThat(account.isSocietyUpdatedByEmail()).isTrue();
     }
 
     @WithAccount("joohyuk")
