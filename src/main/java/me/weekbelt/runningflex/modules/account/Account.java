@@ -108,12 +108,12 @@ public class Account {
     }
 
     public void updateNotifications(Notifications notifications) {
-        this.societyCreatedByEmail = notifications.isGroupCreatedByEmail();
-        this.societyCreatedByWeb = notifications.isGroupCreatedByWeb();
-        this.societyUpdatedByEmail = notifications.isGroupUpdatedByEmail();
-        this.societyUpdatedByWeb = notifications.isGroupUpdatedByWeb();
-        this.societyEnrollmentResultByEmail = notifications.isGroupEnrollmentResultByEmail();
-        this.societyEnrollmentResultByWeb = notifications.isGroupEnrollmentResultByWeb();
+        this.societyCreatedByEmail = notifications.isSocietyCreatedByEmail();
+        this.societyCreatedByWeb = notifications.isSocietyCreatedByWeb();
+        this.societyUpdatedByEmail = notifications.isSocietyUpdatedByEmail();
+        this.societyUpdatedByWeb = notifications.isSocietyUpdatedByWeb();
+        this.societyEnrollmentResultByEmail = notifications.isSocietyEnrollmentResultByEmail();
+        this.societyEnrollmentResultByWeb = notifications.isSocietyEnrollmentResultByWeb();
     }
 
     public void updateNickname(String nickname) {

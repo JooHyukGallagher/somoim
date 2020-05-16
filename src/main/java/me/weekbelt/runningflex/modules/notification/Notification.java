@@ -44,4 +44,8 @@ public class Notification {
         this.createdDateTime = createdDateTime;
         this.notificationType = notificationType;
     }
+
+    public void checked() {
+        this.checked = true;
+    }
 }

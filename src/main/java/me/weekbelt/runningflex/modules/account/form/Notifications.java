@@ -7,13 +7,13 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class Notifications {
 
-    private boolean groupCreatedByEmail;
-    private boolean groupCreatedByWeb;
+    private boolean societyCreatedByEmail;
+    private boolean societyCreatedByWeb;
 
-    private boolean groupEnrollmentResultByEmail;
-    private boolean groupEnrollmentResultByWeb;
+    private boolean societyEnrollmentResultByEmail;
+    private boolean societyEnrollmentResultByWeb;
 
-    private boolean groupUpdatedByEmail;
-    private boolean groupUpdatedByWeb;
+    private boolean societyUpdatedByEmail;
+    private boolean societyUpdatedByWeb;
 
 }
