@@ -1,7 +1,7 @@
 package me.weekbelt.runningflex.modules.society.validator;
 
 import lombok.RequiredArgsConstructor;
-import me.weekbelt.runningflex.modules.society.SocietyRepository;
+import me.weekbelt.runningflex.modules.society.repository.SocietyRepository;
 import me.weekbelt.runningflex.modules.society.form.SocietyForm;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;

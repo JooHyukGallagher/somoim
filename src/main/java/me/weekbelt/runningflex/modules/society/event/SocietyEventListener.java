@@ -12,7 +12,7 @@ import me.weekbelt.runningflex.modules.notification.Notification;
 import me.weekbelt.runningflex.modules.notification.NotificationRepository;
 import me.weekbelt.runningflex.modules.notification.NotificationType;
 import me.weekbelt.runningflex.modules.society.Society;
-import me.weekbelt.runningflex.modules.society.SocietyRepository;
+import me.weekbelt.runningflex.modules.society.repository.SocietyRepository;
 import org.springframework.context.event.EventListener;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;

@@ -5,6 +5,7 @@ import me.weekbelt.runningflex.modules.account.Account;
 import me.weekbelt.runningflex.modules.society.event.SocietyCreatedEvent;
 import me.weekbelt.runningflex.modules.society.event.SocietyUpdateEvent;
 import me.weekbelt.runningflex.modules.society.form.SocietyDescriptionForm;
+import me.weekbelt.runningflex.modules.society.repository.SocietyRepository;
 import me.weekbelt.runningflex.modules.tag.Tag;
 import me.weekbelt.runningflex.modules.zone.Zone;
 import org.springframework.context.ApplicationEventPublisher;

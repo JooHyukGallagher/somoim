@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import me.weekbelt.runningflex.modules.account.Account;
 import me.weekbelt.runningflex.modules.account.CurrentAccount;
 import me.weekbelt.runningflex.modules.society.Society;
-import me.weekbelt.runningflex.modules.society.SocietyRepository;
+import me.weekbelt.runningflex.modules.society.repository.SocietyRepository;
 import me.weekbelt.runningflex.modules.society.SocietyService;
 import me.weekbelt.runningflex.modules.society.form.SocietyForm;
 import me.weekbelt.runningflex.modules.society.validator.SocietyFormValidator;

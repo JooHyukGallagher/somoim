@@ -4,7 +4,7 @@ import me.weekbelt.runningflex.infra.MockMvcTest;
 import me.weekbelt.runningflex.modules.account.*;
 import me.weekbelt.runningflex.modules.society.Society;
 import me.weekbelt.runningflex.modules.society.SocietyFactory;
-import me.weekbelt.runningflex.modules.society.SocietyRepository;
+import me.weekbelt.runningflex.modules.society.repository.SocietyRepository;
 import me.weekbelt.runningflex.modules.society.SocietyService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

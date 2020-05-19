@@ -1,5 +1,6 @@
-package me.weekbelt.runningflex.modules.society;
+package me.weekbelt.runningflex.modules.society.repository;
 
+import me.weekbelt.runningflex.modules.society.Society;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.transaction.annotation.Transactional;
@@ -7,7 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Optional;
 
 @Transactional(readOnly = true)
-public interface SocietyRepository extends JpaRepository<Society, Long> {
+public interface SocietyRepository extends JpaRepository<Society, Long>, SocietyRepositoryCustom {
     boolean existsByPath(String path);
 
     @EntityGraph(attributePaths = {"tags", "zones", "managers", "members"}, type = EntityGraph.EntityGraphType.LOAD)
