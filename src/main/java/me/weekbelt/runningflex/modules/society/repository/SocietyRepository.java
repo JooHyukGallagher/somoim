@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 @Transactional(readOnly = true)
@@ -33,4 +34,7 @@ public interface SocietyRepository extends JpaRepository<Society, Long>, Society
 
     @EntityGraph(attributePaths = {"members", "managers"})
     Society findSocietyWithManagersAndMembersById(Long id);
+
+    @EntityGraph(attributePaths = {"zones", "tags"})
+    List<Society> findFirst9ByPublishedAndClosedOrderByPublishedDateTimeDesc(boolean published, boolean closed);
 }

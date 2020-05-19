@@ -2,9 +2,6 @@ package me.weekbelt.runningflex.modules.society.repository;
 
 import com.querydsl.core.QueryResults;
 import com.querydsl.jpa.JPQLQuery;
-import com.querydsl.jpa.impl.JPAQueryFactory;
-import lombok.RequiredArgsConstructor;
-import me.weekbelt.runningflex.modules.account.QAccount;
 import me.weekbelt.runningflex.modules.society.QSociety;
 import me.weekbelt.runningflex.modules.society.Society;
 import me.weekbelt.runningflex.modules.tag.QTag;
