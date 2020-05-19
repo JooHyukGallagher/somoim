@@ -5,11 +5,13 @@ import me.weekbelt.runningflex.modules.account.Account;
 import me.weekbelt.runningflex.modules.account.CurrentAccount;
 import me.weekbelt.runningflex.modules.society.Society;
 import me.weekbelt.runningflex.modules.society.repository.SocietyRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-
-import java.util.List;
 
 @RequiredArgsConstructor
 @Controller
@@ -31,10 +33,14 @@ public class HomeController {
     }
 
     @GetMapping("/search/society")
-    public String searchSociety(String keyword, Model model) {
-        List<Society> societyList = societyRepository.findByKeyword(keyword);
-        model.addAttribute("societyList", societyList);
+    public String searchSociety(String keyword, Model model,
+                                @PageableDefault(size = 9, sort = "publishedDateTime",
+                                        direction = Sort.Direction.DESC) Pageable pageable) {
+        Page<Society> societyPage = societyRepository.findByKeyword(keyword, pageable);
+        model.addAttribute("societyPage", societyPage);
         model.addAttribute("keyword", keyword);
+        model.addAttribute("sortProperty", pageable.getSort()
+                .toString().contains("publishedDateTime") ? "publishedDateTime" : "memberCount");
         return "search";
     }
 }

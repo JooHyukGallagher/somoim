@@ -7,12 +7,15 @@ import me.weekbelt.runningflex.modules.society.event.SocietyUpdateEvent;
 import me.weekbelt.runningflex.modules.society.form.SocietyDescriptionForm;
 import me.weekbelt.runningflex.modules.society.repository.SocietyRepository;
 import me.weekbelt.runningflex.modules.tag.Tag;
+import me.weekbelt.runningflex.modules.tag.TagRepository;
 import me.weekbelt.runningflex.modules.zone.Zone;
+import net.bytebuddy.utility.RandomString;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.nio.file.AccessDeniedException;
+import java.util.HashSet;
 
 import static me.weekbelt.runningflex.modules.society.form.SocietyForm.VALID_PATH_PATTERN;
 
@@ -23,6 +26,7 @@ public class SocietyService {
 
     private final SocietyRepository societyRepository;
     private final ApplicationEventPublisher eventPublisher;
+    private final TagRepository tagRepository;
 
     public Society createNewSociety(Society society, Account account) {
         Society newSociety = societyRepository.save(society);
@@ -175,4 +179,5 @@ public class SocietyService {
         return societyRepository.findSocietyOnlyByPath(path)
                 .orElseThrow(() -> new IllegalArgumentException(path + "에 해당하는 스터디가 없습니다."));
     }
+
 }

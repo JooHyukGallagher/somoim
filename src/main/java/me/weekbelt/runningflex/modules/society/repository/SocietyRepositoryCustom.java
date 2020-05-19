@@ -1,12 +1,12 @@
 package me.weekbelt.runningflex.modules.society.repository;
 
 import me.weekbelt.runningflex.modules.society.Society;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 @Transactional(readOnly = true)
 public interface SocietyRepositoryCustom {
 
-    List<Society> findByKeyword(String keyword);
+    Page<Society> findByKeyword(String keyword, Pageable pageable);
 }
