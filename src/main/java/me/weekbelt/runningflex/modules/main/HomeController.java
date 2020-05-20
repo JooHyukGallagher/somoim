@@ -28,12 +28,13 @@ public class HomeController {
     @GetMapping("/")
     public String mainPage(@CurrentAccount Account account, Model model) {
         if (account != null) {
-            model.addAttribute("account",
-                    accountRepository.findAccountWithTagsAndZonesById(account.getId()));
+
+            Account findAccount = accountRepository.findAccountWithTagsAndZonesById(account.getId());
+            model.addAttribute("account", findAccount);
             model.addAttribute("enrollmentList",
                     enrollmentRepository.findByAccountAndAcceptedOrderByEnrolledAtDesc(account, true));
             model.addAttribute("societyList",
-                    societyRepository.findByAccount(account.getTags(), account.getZones()));
+                    societyRepository.findByAccount(findAccount.getTags(), findAccount.getZones()));
             model.addAttribute("societyManagerOf",
                     societyRepository.findFirst5ByManagersContainingAndClosedOrderByPublishedDateTimeDesc(account, false));
             model.addAttribute("societyMemberOf",
