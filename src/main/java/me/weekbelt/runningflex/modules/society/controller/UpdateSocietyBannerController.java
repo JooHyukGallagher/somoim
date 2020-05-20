@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import me.weekbelt.runningflex.modules.account.Account;
 import me.weekbelt.runningflex.modules.account.CurrentAccount;
 import me.weekbelt.runningflex.modules.society.Society;
-import me.weekbelt.runningflex.modules.society.SocietyService;
+import me.weekbelt.runningflex.modules.society.service.SocietyService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;

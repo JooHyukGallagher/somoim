@@ -3,6 +3,7 @@ package me.weekbelt.runningflex.modules.society;
 import lombok.RequiredArgsConstructor;
 import me.weekbelt.runningflex.modules.account.Account;
 import me.weekbelt.runningflex.modules.society.repository.SocietyRepository;
+import me.weekbelt.runningflex.modules.society.service.SocietyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -10,7 +11,8 @@ import org.springframework.stereotype.Component;
 @Component
 public class SocietyFactory {
 
-    @Autowired SocietyService societyService;
+    @Autowired
+    SocietyService societyService;
     @Autowired
     SocietyRepository societyRepository;
 

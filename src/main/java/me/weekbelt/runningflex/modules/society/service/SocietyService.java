@@ -1,7 +1,8 @@
-package me.weekbelt.runningflex.modules.society;
+package me.weekbelt.runningflex.modules.society.service;
 
 import lombok.RequiredArgsConstructor;
 import me.weekbelt.runningflex.modules.account.Account;
+import me.weekbelt.runningflex.modules.society.Society;
 import me.weekbelt.runningflex.modules.society.event.SocietyCreatedEvent;
 import me.weekbelt.runningflex.modules.society.event.SocietyUpdateEvent;
 import me.weekbelt.runningflex.modules.society.form.SocietyDescriptionForm;

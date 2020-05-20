@@ -7,7 +7,7 @@ import me.weekbelt.runningflex.modules.account.service.AccountService;
 import me.weekbelt.runningflex.modules.account.WithAccount;
 import me.weekbelt.runningflex.modules.society.Society;
 import me.weekbelt.runningflex.modules.society.SocietyFactory;
-import me.weekbelt.runningflex.modules.society.SocietyService;
+import me.weekbelt.runningflex.modules.society.service.SocietyService;
 import me.weekbelt.runningflex.modules.zone.Zone;
 import me.weekbelt.runningflex.modules.zone.ZoneRepository;
 import me.weekbelt.runningflex.modules.zone.ZoneService;

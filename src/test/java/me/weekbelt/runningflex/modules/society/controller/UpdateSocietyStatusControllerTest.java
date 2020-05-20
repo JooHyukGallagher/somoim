@@ -6,7 +6,7 @@ import me.weekbelt.runningflex.modules.account.service.AccountService;
 import me.weekbelt.runningflex.modules.account.WithAccount;
 import me.weekbelt.runningflex.modules.society.Society;
 import me.weekbelt.runningflex.modules.society.SocietyFactory;
-import me.weekbelt.runningflex.modules.society.SocietyService;
+import me.weekbelt.runningflex.modules.society.service.SocietyService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

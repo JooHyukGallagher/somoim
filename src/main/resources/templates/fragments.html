@@ -9,8 +9,8 @@
     <meta charset="UTF-8">
     <title>RunningFlex</title>
     <link href="https://fonts.googleapis.com/css?family=Noto+Sans+KR:300,400,500&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/node_modules/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="/node_modules/font-awesome/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="/node_modules/bootstrap/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="/node_modules/font-awesome/css/font-awesome.min.css"/>
     <link rel="stylesheet" href="/node_modules/@yaireo/tagify/dist/tagify.css">
     <link rel="stylesheet" href="/node_modules/summernote/dist/summernote-bs4.min.css">
     <script src="/node_modules/jquery/dist/jquery.min.js"></script>
@@ -20,6 +20,7 @@
         .container {
             max-width: 100%;
         }
+
         .tagify-outside {
             border: 0;
             padding: 0;
@@ -91,17 +92,17 @@
             </li>
         </ul>
     </div>
-
-    <div th:fragment="category">
-        <a href="#" class="badge badge-primary">운동/스포츠</a>
-        <a href="#" class="badge badge-primary">스터디</a>
-        <a href="#" class="badge badge-primary">공연</a>
-        <a href="#" class="badge badge-primary">여행</a>
-        <a href="#" class="badge badge-primary">음악/악기</a>
-        <a href="#" class="badge badge-primary">댄스/무용</a>
-        <a href="#" class="badge badge-primary">자유주제</a>
-    </div>
 </nav>
+
+<div th:fragment="category">
+    <a href="#" class="badge badge-primary">운동/스포츠</a>
+    <a href="#" class="badge badge-primary">스터디</a>
+    <a href="#" class="badge badge-primary">공연</a>
+    <a href="#" class="badge badge-primary">여행</a>
+    <a href="#" class="badge badge-primary">음악/악기</a>
+    <a href="#" class="badge badge-primary">댄스/무용</a>
+    <a href="#" class="badge badge-primary">자유주제</a>
+</div>
 
 
 <footer th:fragment="footer">
@@ -134,7 +135,7 @@
 </script>
 
 <script type="application/javascript" th:inline="javascript" th:fragment="ajax-csrf-header">
-    $(function() {
+    $(function () {
         const csrfToken = /*[[${_csrf.token}]]*/ null;
         const csrfHeader = /*[[${_csrf.headerName}]]*/ null;
         $(document).ajaxSend(function (e, xhr, options) {
@@ -146,7 +147,7 @@
 <div th:fragment="update-tags (baseUrl)">
     <script src="/node_modules/@yaireo/tagify/dist/tagify.min.js"></script>
     <script type="application/javascript" th:inline="javascript">
-        $(function() {
+        $(function () {
             function tagRequest(url, tagTitle) {
                 $.ajax({
                     dataType: "json",
@@ -175,7 +176,7 @@
             const tagify = new Tagify(tagInput, {
                 pattern: /^.{0,20}$/,
                 whitelist: JSON.parse(document.querySelector("#whitelist").textContent),
-                dropdown : {
+                dropdown: {
                     enabled: 1, // suggest tags after a single character input
                 } // map tags
             });
@@ -224,7 +225,7 @@
             var tagify = new Tagify(tagInput, {
                 enforceWhitelist: true,
                 whitelist: JSON.parse(document.querySelector("#whitelist").textContent),
-                dropdown : {
+                dropdown: {
                     enabled: 1, // suggest tags after a single character input
                 } // map tags
             });
@@ -276,25 +277,25 @@
     <script type="application/javascript">
         $(function () {
             moment.locale('ko');
-            $(".date-time").text(function(index, dateTime) {
+            $(".date-time").text(function (index, dateTime) {
                 return moment(dateTime, "YYYY-MM-DD`T`hh:mm").format('LLL');
             });
-            $(".date").text(function(index, dateTime) {
+            $(".date").text(function (index, dateTime) {
                 return moment(dateTime, "YYYY-MM-DD`T`hh:mm").format('LL');
             });
-            $(".weekday").text(function(index, dateTime) {
+            $(".weekday").text(function (index, dateTime) {
                 return moment(dateTime, "YYYY-MM-DD`T`hh:mm").format('dddd');
             });
-            $(".time").text(function(index, dateTime) {
+            $(".time").text(function (index, dateTime) {
                 return moment(dateTime, "YYYY-MM-DD`T`hh:mm").format('LT');
             });
-            $(".calendar").text(function(index, dateTime) {
+            $(".calendar").text(function (index, dateTime) {
                 return moment(dateTime, "YYYY-MM-DD`T`hh:mm").calendar();
             });
-            $(".fromNow").text(function(index, dateTime) {
+            $(".fromNow").text(function (index, dateTime) {
                 return moment(dateTime, "YYYY-MM-DD`T`hh:mm").fromNow();
             });
-            $(".date-weekday-time").text(function(index, dateTime) {
+            $(".date-weekday-time").text(function (index, dateTime) {
                 return moment(dateTime, "YYYY-MM-DD`T`hh:mm").format('LLLL');
             });
         })
@@ -305,21 +306,26 @@
     <div class="row">
         <div class="col-md-4" th:each="society: ${societyList}">
             <div class="card mb-4 shadow-sm">
-                <img th:src="${society.image}" class="card-img-top" th:alt="${society.title}" >
+                <img th:src="${society.image}" class="card-img-top" th:alt="${society.title}">
                 <div class="card-body">
                     <a th:href="@{'/society/' + ${society.path}}" class="text-decoration-none">
                         <h5 class="card-title context" th:text="${society.title}"></h5>
                     </a>
                     <p class="card-text" th:text="${society.shortDescription}">Short description</p>
                     <p class="card-text context">
-                                <span th:each="tag: ${society.tags}" class="font-weight-light text-monospace badge badge-pill badge-info mr-3">
-                                    <a th:href="@{'/search/tag/' + ${tag.title}}" class="text-decoration-none text-white">
+                                <span th:each="tag: ${society.tags}"
+                                      class="font-weight-light text-monospace badge badge-pill badge-info mr-3">
+                                    <a th:href="@{'/search/tag/' + ${tag.title}}"
+                                       class="text-decoration-none text-white">
                                         <i class="fa fa-tag"></i> <span th:text="${tag.title}">Tag</span>
                                     </a>
                                 </span>
-                        <span th:each="zone: ${society.zones}" class="font-weight-light text-monospace badge badge-primary mr-3">
-                                    <a th:href="@{'/search/zone/' + ${zone.id}}" class="text-decoration-none text-white">
-                                        <i class="fa fa-globe"></i> <span th:text="${zone.localNameOfCity}" class="text-white">City</span>
+                        <span th:each="zone: ${society.zones}"
+                              class="font-weight-light text-monospace badge badge-primary mr-3">
+                                    <a th:href="@{'/search/zone/' + ${zone.id}}"
+                                       class="text-decoration-none text-white">
+                                        <i class="fa fa-globe"></i> <span th:text="${zone.localNameOfCity}"
+                                                                          class="text-white">City</span>
                                     </a>
                                 </span>
                     </p>

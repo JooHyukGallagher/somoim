@@ -8,7 +8,7 @@ import me.weekbelt.runningflex.modules.enrollment.service.EnrollmentService;
 import me.weekbelt.runningflex.modules.event.Event;
 import me.weekbelt.runningflex.modules.event.service.EventService;
 import me.weekbelt.runningflex.modules.society.Society;
-import me.weekbelt.runningflex.modules.society.SocietyService;
+import me.weekbelt.runningflex.modules.society.service.SocietyService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;

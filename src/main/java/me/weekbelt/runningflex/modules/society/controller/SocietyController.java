@@ -5,7 +5,7 @@ import me.weekbelt.runningflex.modules.account.Account;
 import me.weekbelt.runningflex.modules.account.CurrentAccount;
 import me.weekbelt.runningflex.modules.society.Society;
 import me.weekbelt.runningflex.modules.society.repository.SocietyRepository;
-import me.weekbelt.runningflex.modules.society.SocietyService;
+import me.weekbelt.runningflex.modules.society.service.SocietyService;
 import me.weekbelt.runningflex.modules.society.form.SocietyForm;
 import me.weekbelt.runningflex.modules.society.validator.SocietyFormValidator;
 import org.springframework.stereotype.Controller;
@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.validation.Valid;
-import java.util.HashSet;
 
 @RequiredArgsConstructor
 @Controller

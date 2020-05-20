@@ -9,7 +9,7 @@ import me.weekbelt.runningflex.modules.event.service.EventService;
 import me.weekbelt.runningflex.modules.event.form.EventForm;
 import me.weekbelt.runningflex.modules.event.validator.EventValidator;
 import me.weekbelt.runningflex.modules.society.Society;
-import me.weekbelt.runningflex.modules.society.SocietyService;
+import me.weekbelt.runningflex.modules.society.service.SocietyService;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
