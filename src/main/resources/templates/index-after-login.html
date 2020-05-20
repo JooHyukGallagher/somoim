@@ -4,18 +4,18 @@
 <body class="bg-light">
 <div th:replace="fragments.html :: main-nav"></div>
 <div class="alert alert-warning" role="alert" th:if="${account != null && !account?.emailVerified}">
-    스터디올레 가입을 완료하려면 <a href="#" th:href="@{/check-email(email=${account.email})}" class="alert-link">계정 인증 이메일을 확인</a>하세요.
+    somoim 가입을 완료하려면 <a href="#" th:href="@{/check-email(email=${account.email})}" class="alert-link">계정 인증 이메일을 확인</a>하세요.
 </div>
 <div class="container mt-4">
     <div class="row">
         <div class="col-md-2">
-            <h5 class="font-weight-light">관심 스터디 주제</h5>
+            <h5 class="font-weight-light">관심 소모임 주제</h5>
             <ul class="list-group list-group-flush">
                 <li class="list-group-item" th:each="tag: ${account.tags}">
                     <i class="fa fa-tag"></i> <span th:text="${tag.title}"></span>
                 </li>
                 <li class="list-group-item" th:if="${account.tags.size() == 0}">
-                    <a th:href="@{/settings/tags}" class="btn-text">관심 스터디 주제</a>를 등록하세요.
+                    <a th:href="@{/settings/tags}" class="btn-text">관심 소모임 주제</a>를 등록하세요.
                 </li>
             </ul>
             <h5 class="mt-3 font-weight-light">주요 활동 지역</h5>
@@ -44,20 +44,20 @@
                                 </span>
                             </p>
                             <a th:href="@{'/society/' + ${enrollment.event.society.path} + '/events/' + ${enrollment.event.id}}" class="card-link">모임 조회</a>
-                            <a th:href="@{'/society/' + ${enrollment.event.society.path}}" class="card-link">스터디 조회</a>
+                            <a th:href="@{'/society/' + ${enrollment.event.society.path}}" class="card-link">소모임 조회</a>
                         </div>
                     </div>
                 </div>
             </div>
-            <h5 class="font-weight-light mt-3" th:if="${#lists.isEmpty(societyList)}">관련 스터디가 없습니다.</h5>
-            <h5 class="font-weight-light mt-3" th:if="${!#lists.isEmpty(societyList)}">주요 활동 지역의 관심 주제 스터디</h5>
+            <h5 class="font-weight-light mt-3" th:if="${#lists.isEmpty(societyList)}">관련 소모임이 없습니다.</h5>
+            <h5 class="font-weight-light mt-3" th:if="${!#lists.isEmpty(societyList)}">주요 활동 지역의 관심 주제 소모임</h5>
             <div class="row justify-content-center">
                 <div th:replace="fragments.html :: society-list (societyList=${societyList})"></div>
             </div>
         </div>
         <div class="col-md-3">
-            <h5 class="font-weight-light" th:if="${#lists.isEmpty(societyManagerOf)}">관리중인 스터디가 없습니다.</h5>
-            <h5 class="font-weight-light" th:if="${!#lists.isEmpty(societyManagerOf)}">관리중인 스터디</h5>
+            <h5 class="font-weight-light" th:if="${#lists.isEmpty(societyManagerOf)}">관리중인 소모임이 없습니다.</h5>
+            <h5 class="font-weight-light" th:if="${!#lists.isEmpty(societyManagerOf)}">관리중인 소모임</h5>
             <div class="list-group" th:if="${!#lists.isEmpty(societyManagerOf)}">
                 <a href="#" th:href="@{'/society/' + ${society.path}}" th:text="${society.title}"
                    class="list-group-item list-group-item-action" th:each="society: ${societyManagerOf}">
@@ -65,8 +65,8 @@
                 </a>
             </div>
 
-            <h5 class="font-weight-light mt-3" th:if="${#lists.isEmpty(societyMemberOf)}">참여중인 스터디가 없습니다.</h5>
-            <h5 class="font-weight-light mt-3" th:if="${!#lists.isEmpty(societyMemberOf)}">참여중인 스터디</h5>
+            <h5 class="font-weight-light mt-3" th:if="${#lists.isEmpty(societyMemberOf)}">참여중인 소모임이 없습니다.</h5>
+            <h5 class="font-weight-light mt-3" th:if="${!#lists.isEmpty(societyMemberOf)}">참여중인 소모임</h5>
             <div class="list-group" th:if="${!#lists.isEmpty(societyMemberOf)}">
                 <a href="#" th:href="@{'/society/' + ${society.path}}" th:text="${society.title}"
                    class="list-group-item list-group-item-action" th:each="society: ${societyManagerOf}">
