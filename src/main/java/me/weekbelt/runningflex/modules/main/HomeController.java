@@ -28,7 +28,6 @@ public class HomeController {
     @GetMapping("/")
     public String mainPage(@CurrentAccount Account account, Model model) {
         if (account != null) {
-
             Account findAccount = accountRepository.findAccountWithTagsAndZonesById(account.getId());
             model.addAttribute("account", findAccount);
             model.addAttribute("enrollmentList",
