@@ -1,6 +1,7 @@
 package me.weekbelt.runningflex.modules.society.repository;
 
 import me.weekbelt.runningflex.modules.society.Society;
+import me.weekbelt.runningflex.modules.society.SocietyType;
 import me.weekbelt.runningflex.modules.tag.Tag;
 import me.weekbelt.runningflex.modules.zone.Zone;
 import org.springframework.data.domain.Page;
@@ -16,4 +17,6 @@ public interface SocietyRepositoryCustom {
     Page<Society> findByKeyword(String keyword, Pageable pageable);
 
     List<Society> findByAccount(Set<Tag> tags, Set<Zone> zones);
+
+    Page<Society> findBySocietyType(SocietyType societyType, Pageable pageable);
 }

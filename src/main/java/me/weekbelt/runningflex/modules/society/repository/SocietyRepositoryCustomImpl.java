@@ -3,6 +3,7 @@ package me.weekbelt.runningflex.modules.society.repository;
 import com.querydsl.core.QueryResults;
 import com.querydsl.jpa.JPQLQuery;
 import me.weekbelt.runningflex.modules.society.Society;
+import me.weekbelt.runningflex.modules.society.SocietyType;
 import me.weekbelt.runningflex.modules.tag.QTag;
 import me.weekbelt.runningflex.modules.tag.Tag;
 import me.weekbelt.runningflex.modules.zone.QZone;
@@ -52,5 +53,21 @@ public class SocietyRepositoryCustomImpl extends QuerydslRepositorySupport imple
                 .distinct()
                 .limit(9);
         return query.fetch();
+    }
+
+    @Override
+    public Page<Society> findBySocietyType(SocietyType societyType, Pageable pageable) {
+        JPQLQuery<Society> query = from(society)
+                .where(society.published.isTrue()
+                        .and(society.closed.isFalse())
+                        .and(society.societyType.eq(societyType)))
+                .leftJoin(society.tags, QTag.tag).fetchJoin()
+                .leftJoin(society.zones, QZone.zone).fetchJoin()
+                .orderBy(society.publishedDateTime.desc())
+                .distinct()
+                .limit(9);
+        JPQLQuery<Society> pageableQuery = getQuerydsl().applyPagination(pageable, query);
+        QueryResults<Society> fetchResults = pageableQuery.fetchResults();
+        return new PageImpl<>(fetchResults.getResults(), pageable, fetchResults.getTotal());
     }
 }

@@ -95,13 +95,9 @@
 </nav>
 
 <div th:fragment="category">
-    <a href="#" class="badge badge-primary">운동/스포츠</a>
-    <a href="#" class="badge badge-primary">스터디</a>
-    <a href="#" class="badge badge-primary">공연</a>
-    <a href="#" class="badge badge-primary">여행</a>
-    <a href="#" class="badge badge-primary">음악/악기</a>
-    <a href="#" class="badge badge-primary">댄스/무용</a>
-    <a href="#" class="badge badge-primary">자유주제</a>
+    <a th:each="societyType : ${T(me.weekbelt.runningflex.modules.society.SocietyType).values()}"
+       th:href="'/search/society/category?societyType=' + ${societyType}"
+       class="badge badge-primary mx-2" th:text="${societyType.value}">운동/스포츠</a>
 </div>
 
 
