@@ -1,6 +1,7 @@
 package me.weekbelt.runningflex.modules.society.form;
 
 import lombok.Data;
+import me.weekbelt.runningflex.modules.society.SocietyType;
 import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.NotBlank;
@@ -26,4 +27,8 @@ public class SocietyForm {
 
     @NotBlank
     private String fullDescription;
+
+    @NotBlank
+    private SocietyType societyType = SocietyType.FREE;
+
 }

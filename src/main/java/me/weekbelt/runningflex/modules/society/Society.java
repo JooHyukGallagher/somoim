@@ -68,12 +68,17 @@ public class Society {
 
     private int memberCount;
 
+    @Enumerated(EnumType.STRING)
+    private SocietyType societyType;
+
     @Builder
-    public Society(String path, String title, String shortDescription, String fullDescription) {
+    public Society(String path, String title, String shortDescription, String fullDescription,
+                   SocietyType societyType) {
         this.path = path;
         this.title = title;
         this.shortDescription = shortDescription;
         this.fullDescription = fullDescription;
+        this.societyType = societyType;
     }
 
     public String getEncodedPath() {
