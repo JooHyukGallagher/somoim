@@ -2,6 +2,8 @@ package me.weekbelt.runningflex.modules.society.controller;
 
 import me.weekbelt.runningflex.infra.MockMvcTest;
 import me.weekbelt.runningflex.modules.account.*;
+import me.weekbelt.runningflex.modules.account.repository.AccountRepository;
+import me.weekbelt.runningflex.modules.account.service.AccountService;
 import me.weekbelt.runningflex.modules.society.Society;
 import me.weekbelt.runningflex.modules.society.SocietyFactory;
 import me.weekbelt.runningflex.modules.society.repository.SocietyRepository;

@@ -1,7 +1,7 @@
 package me.weekbelt.runningflex.modules.account.controller;
 
 import me.weekbelt.runningflex.infra.MockMvcTest;
-import me.weekbelt.runningflex.modules.account.AccountRepository;
+import me.weekbelt.runningflex.modules.account.repository.AccountRepository;
 import me.weekbelt.runningflex.modules.account.WithAccount;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

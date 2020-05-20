@@ -1,12 +1,14 @@
-package me.weekbelt.runningflex.modules.event;
+package me.weekbelt.runningflex.modules.event.service;
 
 import lombok.RequiredArgsConstructor;
 import me.weekbelt.runningflex.modules.account.Account;
 import me.weekbelt.runningflex.modules.enrollment.Enrollment;
-import me.weekbelt.runningflex.modules.enrollment.EnrollmentRepository;
-import me.weekbelt.runningflex.modules.event.event.EnrollmentAcceptedEvent;
-import me.weekbelt.runningflex.modules.event.event.EnrollmentRejectEvent;
+import me.weekbelt.runningflex.modules.enrollment.repository.EnrollmentRepository;
+import me.weekbelt.runningflex.modules.enrollment.event.EnrollmentAcceptedEvent;
+import me.weekbelt.runningflex.modules.enrollment.event.EnrollmentRejectEvent;
+import me.weekbelt.runningflex.modules.event.Event;
 import me.weekbelt.runningflex.modules.event.form.EventForm;
+import me.weekbelt.runningflex.modules.event.repository.EventRepository;
 import me.weekbelt.runningflex.modules.society.Society;
 import me.weekbelt.runningflex.modules.society.event.SocietyUpdateEvent;
 import org.springframework.context.ApplicationEventPublisher;

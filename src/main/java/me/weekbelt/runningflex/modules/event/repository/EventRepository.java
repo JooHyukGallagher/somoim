@@ -1,5 +1,6 @@
-package me.weekbelt.runningflex.modules.event;
+package me.weekbelt.runningflex.modules.event.repository;
 
+import me.weekbelt.runningflex.modules.event.Event;
 import me.weekbelt.runningflex.modules.society.Society;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;

@@ -1,6 +1,8 @@
-package me.weekbelt.runningflex.modules.enrollment;
+package me.weekbelt.runningflex.modules.enrollment.service;
 
 import lombok.RequiredArgsConstructor;
+import me.weekbelt.runningflex.modules.enrollment.Enrollment;
+import me.weekbelt.runningflex.modules.enrollment.repository.EnrollmentRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

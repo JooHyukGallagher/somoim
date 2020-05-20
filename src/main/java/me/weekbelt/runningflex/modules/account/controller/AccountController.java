@@ -2,8 +2,8 @@ package me.weekbelt.runningflex.modules.account.controller;
 
 import lombok.RequiredArgsConstructor;
 import me.weekbelt.runningflex.modules.account.Account;
-import me.weekbelt.runningflex.modules.account.AccountRepository;
-import me.weekbelt.runningflex.modules.account.AccountService;
+import me.weekbelt.runningflex.modules.account.repository.AccountRepository;
+import me.weekbelt.runningflex.modules.account.service.AccountService;
 import me.weekbelt.runningflex.modules.account.CurrentAccount;
 import me.weekbelt.runningflex.modules.account.form.SignUpForm;
 import me.weekbelt.runningflex.modules.account.validator.SignUpFormValidator;

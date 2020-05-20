@@ -1,4 +1,4 @@
-package me.weekbelt.runningflex.modules.event.event;
+package me.weekbelt.runningflex.modules.enrollment.event;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -9,7 +9,7 @@ import me.weekbelt.runningflex.modules.account.Account;
 import me.weekbelt.runningflex.modules.enrollment.Enrollment;
 import me.weekbelt.runningflex.modules.event.Event;
 import me.weekbelt.runningflex.modules.notification.Notification;
-import me.weekbelt.runningflex.modules.notification.NotificationRepository;
+import me.weekbelt.runningflex.modules.notification.repository.NotificationRepository;
 import me.weekbelt.runningflex.modules.notification.NotificationType;
 import me.weekbelt.runningflex.modules.society.Society;
 import org.springframework.context.event.EventListener;

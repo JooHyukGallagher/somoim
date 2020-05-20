@@ -1,4 +1,4 @@
-package me.weekbelt.runningflex.modules.event.event;
+package me.weekbelt.runningflex.modules.enrollment.event;
 
 import me.weekbelt.runningflex.modules.enrollment.Enrollment;
 

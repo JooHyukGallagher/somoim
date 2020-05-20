@@ -2,7 +2,7 @@ package me.weekbelt.runningflex.modules.account.controller;
 
 import lombok.RequiredArgsConstructor;
 import me.weekbelt.runningflex.modules.account.Account;
-import me.weekbelt.runningflex.modules.account.AccountService;
+import me.weekbelt.runningflex.modules.account.service.AccountService;
 import me.weekbelt.runningflex.modules.account.CurrentAccount;
 import me.weekbelt.runningflex.modules.account.form.PasswordForm;
 import me.weekbelt.runningflex.modules.account.validator.PasswordFormValidator;

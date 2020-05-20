@@ -2,8 +2,7 @@ package me.weekbelt.runningflex.modules.account;
 
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
-import me.weekbelt.runningflex.modules.account.AccountService;
-import me.weekbelt.runningflex.modules.account.WithAccount;
+import me.weekbelt.runningflex.modules.account.service.AccountService;
 import me.weekbelt.runningflex.modules.account.form.SignUpForm;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContext;

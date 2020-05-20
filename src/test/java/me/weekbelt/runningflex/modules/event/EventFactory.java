@@ -2,6 +2,7 @@ package me.weekbelt.runningflex.modules.event;
 
 import lombok.RequiredArgsConstructor;
 import me.weekbelt.runningflex.modules.account.Account;
+import me.weekbelt.runningflex.modules.event.repository.EventRepository;
 import me.weekbelt.runningflex.modules.society.Society;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

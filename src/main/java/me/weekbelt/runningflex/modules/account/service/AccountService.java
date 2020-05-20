@@ -1,13 +1,16 @@
-package me.weekbelt.runningflex.modules.account;
+package me.weekbelt.runningflex.modules.account.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import me.weekbelt.runningflex.infra.config.AppProperties;
 import me.weekbelt.runningflex.infra.mail.EmailMessage;
 import me.weekbelt.runningflex.infra.mail.EmailService;
+import me.weekbelt.runningflex.modules.account.Account;
+import me.weekbelt.runningflex.modules.account.UserAccount;
 import me.weekbelt.runningflex.modules.account.form.Notifications;
 import me.weekbelt.runningflex.modules.account.form.Profile;
 import me.weekbelt.runningflex.modules.account.form.SignUpForm;
+import me.weekbelt.runningflex.modules.account.repository.AccountRepository;
 import me.weekbelt.runningflex.modules.tag.Tag;
 import me.weekbelt.runningflex.modules.zone.Zone;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

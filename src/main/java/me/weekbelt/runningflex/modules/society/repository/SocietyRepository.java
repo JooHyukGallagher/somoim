@@ -1,5 +1,6 @@
 package me.weekbelt.runningflex.modules.society.repository;
 
+import me.weekbelt.runningflex.modules.account.Account;
 import me.weekbelt.runningflex.modules.society.Society;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -37,4 +38,10 @@ public interface SocietyRepository extends JpaRepository<Society, Long>, Society
 
     @EntityGraph(attributePaths = {"zones", "tags"})
     List<Society> findFirst9ByPublishedAndClosedOrderByPublishedDateTimeDesc(boolean published, boolean closed);
+
+    List<Society> findFirst5ByManagersContainingAndClosedOrderByPublishedDateTimeDesc(Account account, boolean checked);
+
+    List<Society> findFirst5ByMembersContainingAndClosedOrderByPublishedDateTimeDesc(Account account, boolean checked);
 }
+
+

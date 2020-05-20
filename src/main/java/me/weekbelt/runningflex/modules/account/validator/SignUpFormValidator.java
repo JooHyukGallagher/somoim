@@ -1,7 +1,7 @@
 package me.weekbelt.runningflex.modules.account.validator;
 
 import lombok.RequiredArgsConstructor;
-import me.weekbelt.runningflex.modules.account.AccountRepository;
+import me.weekbelt.runningflex.modules.account.repository.AccountRepository;
 import me.weekbelt.runningflex.modules.account.form.SignUpForm;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;

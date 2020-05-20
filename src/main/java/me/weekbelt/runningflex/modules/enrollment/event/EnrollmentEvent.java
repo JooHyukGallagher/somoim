@@ -1,4 +1,4 @@
-package me.weekbelt.runningflex.modules.event.event;
+package me.weekbelt.runningflex.modules.enrollment.event;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

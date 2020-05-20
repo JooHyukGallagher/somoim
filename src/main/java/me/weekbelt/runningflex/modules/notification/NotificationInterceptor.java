@@ -3,6 +3,7 @@ package me.weekbelt.runningflex.modules.notification;
 import lombok.RequiredArgsConstructor;
 import me.weekbelt.runningflex.modules.account.Account;
 import me.weekbelt.runningflex.modules.account.UserAccount;
+import me.weekbelt.runningflex.modules.notification.repository.NotificationRepository;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;

@@ -10,6 +10,13 @@ import me.weekbelt.runningflex.modules.event.Event;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
+@NamedEntityGraph(
+        name = "Enrollment.withEventAndSociety",
+        attributeNodes = {
+                @NamedAttributeNode(value = "event", subgraph = "society")
+        },
+        subgraphs = @NamedSubgraph(name = "society", attributeNodes = @NamedAttributeNode("society"))
+)
 @NoArgsConstructor
 @Getter @EqualsAndHashCode(of = "id")
 @Entity

@@ -1,6 +1,7 @@
 package me.weekbelt.runningflex.modules.account;
 
 import lombok.RequiredArgsConstructor;
+import me.weekbelt.runningflex.modules.account.repository.AccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

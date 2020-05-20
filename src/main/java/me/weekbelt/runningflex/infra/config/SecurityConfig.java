@@ -1,7 +1,6 @@
 package me.weekbelt.runningflex.infra.config;
 
 import lombok.RequiredArgsConstructor;
-import me.weekbelt.runningflex.modules.account.AccountService;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

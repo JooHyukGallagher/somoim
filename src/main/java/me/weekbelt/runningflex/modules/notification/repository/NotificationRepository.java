@@ -1,6 +1,7 @@
-package me.weekbelt.runningflex.modules.notification;
+package me.weekbelt.runningflex.modules.notification.repository;
 
 import me.weekbelt.runningflex.modules.account.Account;
+import me.weekbelt.runningflex.modules.notification.Notification;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.transaction.annotation.Transactional;
 

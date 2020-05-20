@@ -3,6 +3,8 @@ package me.weekbelt.runningflex.modules.main;
 import lombok.RequiredArgsConstructor;
 import me.weekbelt.runningflex.modules.account.Account;
 import me.weekbelt.runningflex.modules.account.CurrentAccount;
+import me.weekbelt.runningflex.modules.account.repository.AccountRepository;
+import me.weekbelt.runningflex.modules.enrollment.repository.EnrollmentRepository;
 import me.weekbelt.runningflex.modules.society.Society;
 import me.weekbelt.runningflex.modules.society.repository.SocietyRepository;
 import org.springframework.data.domain.Page;
@@ -20,11 +22,23 @@ import java.util.List;
 public class HomeController {
 
     private final SocietyRepository societyRepository;
+    private final AccountRepository accountRepository;
+    private final EnrollmentRepository enrollmentRepository;
 
     @GetMapping("/")
     public String mainPage(@CurrentAccount Account account, Model model) {
         if (account != null) {
-            model.addAttribute(account);
+            model.addAttribute("account",
+                    accountRepository.findAccountWithTagsAndZonesById(account.getId()));
+            model.addAttribute("enrollmentList",
+                    enrollmentRepository.findByAccountAndAcceptedOrderByEnrolledAtDesc(account, true));
+            model.addAttribute("societyList",
+                    societyRepository.findByAccount(account.getTags(), account.getZones()));
+            model.addAttribute("societyManagerOf",
+                    societyRepository.findFirst5ByManagersContainingAndClosedOrderByPublishedDateTimeDesc(account, false));
+            model.addAttribute("societyMemberOf",
+                    societyRepository.findFirst5ByMembersContainingAndClosedOrderByPublishedDateTimeDesc(account, false));
+            return "index-after-login";
         }
 
         List<Society> societyList = societyRepository
