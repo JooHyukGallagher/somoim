@@ -8,7 +8,6 @@ import me.weekbelt.runningflex.modules.society.event.SocietyUpdateEvent;
 import me.weekbelt.runningflex.modules.society.form.SocietyDescriptionForm;
 import me.weekbelt.runningflex.modules.society.repository.SocietyRepository;
 import me.weekbelt.runningflex.modules.tag.Tag;
-import me.weekbelt.runningflex.modules.tag.TagRepository;
 import me.weekbelt.runningflex.modules.zone.Zone;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;

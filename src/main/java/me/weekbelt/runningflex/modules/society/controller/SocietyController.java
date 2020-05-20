@@ -53,6 +53,7 @@ public class SocietyController {
                 .title(societyForm.getTitle())
                 .shortDescription(societyForm.getShortDescription())
                 .fullDescription(societyForm.getFullDescription())
+                .societyType(societyForm.getSocietyType())
                 .build();
 
         Society society = societyService.createNewSociety(newSociety, account);

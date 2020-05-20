@@ -6,6 +6,7 @@ import me.weekbelt.runningflex.modules.account.repository.AccountRepository;
 import me.weekbelt.runningflex.modules.account.service.AccountService;
 import me.weekbelt.runningflex.modules.society.Society;
 import me.weekbelt.runningflex.modules.society.SocietyFactory;
+import me.weekbelt.runningflex.modules.society.SocietyType;
 import me.weekbelt.runningflex.modules.society.repository.SocietyRepository;
 import me.weekbelt.runningflex.modules.society.service.SocietyService;
 import org.junit.jupiter.api.DisplayName;
@@ -56,6 +57,7 @@ class SocietyControllerTest {
                 .param("title", "study title")
                 .param("shortDescription", "short description of a society")
                 .param("fullDescription", "full description of a society")
+                .param("societyType", SocietyType.FREE.toString())
                 .with(csrf()))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(redirectedUrl("/society/test-path"));
@@ -76,6 +78,7 @@ class SocietyControllerTest {
                 .title("test society")
                 .shortDescription("short description")
                 .fullDescription("<p>full description</p>")
+                .societyType(SocietyType.FREE)
                 .build();
 
         Account joohyuk = accountService.getAccountByNickname("joohyuk");
@@ -86,6 +89,7 @@ class SocietyControllerTest {
                 .param("title", "society title")
                 .param("shortDescription", "short description of a society")
                 .param("fullDescription", "full description of a society")
+                .param("societyType", SocietyType.FREE.toString())
                 .with(csrf()))
                 .andExpect(status().isOk())
                 .andExpect(view().name("society/form"))

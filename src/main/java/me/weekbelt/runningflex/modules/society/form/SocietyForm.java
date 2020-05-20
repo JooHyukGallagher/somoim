@@ -28,7 +28,6 @@ public class SocietyForm {
     @NotBlank
     private String fullDescription;
 
-    @NotBlank
     private SocietyType societyType = SocietyType.FREE;
 
 }
