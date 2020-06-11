@@ -10,6 +10,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -32,6 +33,9 @@ class AccountControllerTest {
     AccountService accountService;
     @Autowired
     AccountRepository accountRepository;
+    @Autowired
+    PasswordEncoder passwordEncoder;
+
     @MockBean
     EmailService emailService;
 
@@ -77,7 +81,7 @@ class AccountControllerTest {
         // 저장된 계정의 Password값이 인코딩이 되어있는지 확인
         Account account = accountService.findByEmail("vfrvfr4207@hanmail.net");
         assertThat(account).isNotNull();
-        assertThat(account.getPassword()).isNotEqualTo("12345678");
+        assertThat(passwordEncoder.matches("12345678", account.getPassword()));
         assertThat(account.getEmailCheckToken()).isNotNull();
 
         // 가입 된 회원이 존재하는지 확인

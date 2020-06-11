@@ -34,7 +34,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .anyRequest().authenticated();
 
         http.formLogin()
-                .loginPage("/login")
+                .loginPage("/login")        // templates/login.html(로그인페이지 따로 만든 경우)
                 .permitAll();
 
         http.logout()

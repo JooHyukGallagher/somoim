@@ -69,7 +69,7 @@ public class AccountService implements UserDetailsService {
                 newAccount.getEmailCheckToken() + "&email=" + newAccount.getEmail());
         context.setVariable("nickname", newAccount.getNickname());
         context.setVariable("linkName", "이메일 인증하기");
-        context.setVariable("message", "RunningFlex 서비스를 사용하려면 링크를 클릭하세요.");
+        context.setVariable("message", "somoim 서비스를 사용하려면 링크를 클릭하세요.");
         context.setVariable("host", appProperties.getHost());
 
         String message = templateEngine.process("mail/simple-link", context);

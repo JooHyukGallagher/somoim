@@ -97,7 +97,7 @@
 <div th:fragment="category">
     <a th:each="societyType : ${T(me.weekbelt.runningflex.modules.society.SocietyType).values()}"
        th:href="'/search/society/category?societyType=' + ${societyType}"
-       class="badge badge-primary mx-2" th:text="${societyType.value}">운동/스포츠</a>
+       class="badge badge-dark mx-2" th:text="${societyType.value}">운동/스포츠</a>
 </div>
 
 
