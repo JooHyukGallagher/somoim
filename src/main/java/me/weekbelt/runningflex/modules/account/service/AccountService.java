@@ -95,7 +95,6 @@ public class AccountService implements UserDetailsService {
         String message = templateEngine.process("mail/simple-link", context);
 
         account.generateEmailCheckToken();
-        ;
         EmailMessage emailMessage = EmailMessage.builder()
                 .to(account.getEmail())
                 .subject("RunningFlex, 로그인 링크")
