@@ -34,6 +34,11 @@ public class SocietyController {
 
     @GetMapping("/new-society")
     public String newSocietyForm(@CurrentAccount Account account, Model model) {
+
+        if (!account.isEmailVerified()) {
+            return "redirect:/check-email";
+        }
+
         model.addAttribute("account", account);
         model.addAttribute("societyForm", new SocietyForm());
         return "society/form";

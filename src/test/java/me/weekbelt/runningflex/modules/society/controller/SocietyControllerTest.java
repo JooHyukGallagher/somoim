@@ -14,6 +14,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.util.Optional;
+
 import static org.assertj.core.api.Assertions.*;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -38,14 +40,26 @@ class SocietyControllerTest {
     @Autowired
     AccountFactory accountFactory;
 
-    @DisplayName("동호회 개설 폼 조회")
+    @DisplayName("동호회 개설 폼 조회 성공 - 이메일 인증을 받은 경우")
     @WithAccount("joohyuk")
     @Test
-    public void createSocietyForm() throws Exception {
+    public void createSocietyForm_success() throws Exception {
+        accountRepository.findByNickname("joohyuk")
+                .ifPresent(account -> accountService.completeSignUp(account));
+
         mockMvc.perform(get("/new-society"))
                 .andExpect(model().attributeExists("account"))
                 .andExpect(model().attributeExists("societyForm"))
                 .andExpect(view().name("society/form"));
+    }
+
+    @DisplayName("동호회 개설 폼 조회 실패 - 이메일 인증을 받지 않은 경우")
+    @WithAccount("joohyuk")
+    @Test
+    public void createSocietyForm_fail() throws Exception {
+        mockMvc.perform(get("/new-society"))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrl("/check-email"));
     }
 
     @DisplayName("동호회 개설 - 완료")
