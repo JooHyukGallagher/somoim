@@ -15,6 +15,7 @@ public class AccountFactory {
         Account account = Account.builder()
                 .nickname(nickname)
                 .email(nickname + "@email.com")
+                .password("12345678")
                 .build();
         return accountRepository.save(account);
     }

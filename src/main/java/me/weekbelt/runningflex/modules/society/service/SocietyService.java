@@ -33,7 +33,7 @@ public class SocietyService {
 
     public Society getSocietyByPath(String path) {
         return societyRepository.findByPath(path)
-                .orElseThrow(() -> new IllegalArgumentException(path + "에 해당하는 동호회가 없습니다."));
+                .orElseThrow(() -> new IllegalArgumentException(path + "에 해당하는 소모임이 없습니다."));
     }
 
     public Society getSocietyToUpdate(Account account, String path) throws AccessDeniedException {
