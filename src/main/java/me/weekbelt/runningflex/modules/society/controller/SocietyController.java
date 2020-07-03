@@ -91,6 +91,10 @@ public class SocietyController {
     // TODO: 원래 POST 요청을 해야한다.
     @GetMapping("/society/{path}/join")
     public String joinSociety(@CurrentAccount Account account, @PathVariable String path) {
+        if (!account.isEmailVerified()) {
+            return "redirect:/check-email";
+        }
+
         Society society = societyRepository.findSocietyWithMembersByPath(path)
                 .orElseThrow(() -> new IllegalArgumentException(path + "에 해당하는 소모임이 없습니다."));
         societyService.addMembers(society, account);

@@ -36,9 +36,6 @@ class UpdateSocietyBannerControllerTest {
     @WithAccount("joohyuk")
     @Test
     public void settingBannerForm_Success() throws Exception {
-        accountRepository.findByNickname("joohyuk")
-                .ifPresent(account -> accountService.completeSignUp(account));
-
         Account joohyuk = accountService.getAccountByNickname("joohyuk");
         societyFactory.createSociety("test-path", joohyuk);
 

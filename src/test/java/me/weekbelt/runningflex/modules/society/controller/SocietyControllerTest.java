@@ -140,6 +140,9 @@ class SocietyControllerTest {
     @WithAccount("joohyuk")
     @Test
     public void joinSociety() throws Exception {
+        accountRepository.findByNickname("joohyuk")
+                .ifPresent(account -> accountService.completeSignUp(account));
+
         Account weekbelt = accountFactory.createAccount("weekbelt");
         Society society = societyFactory.createSociety("test", weekbelt);
 

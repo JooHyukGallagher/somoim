@@ -25,9 +25,6 @@ public class UpdateSocietyBannerController {
     @GetMapping("/banner")
     public String SocietyImageForm(@CurrentAccount Account account,
                                    @PathVariable String path, Model model) throws AccessDeniedException {
-        if (!account.isEmailVerified()) {
-            return "redirect:/check-email";
-        }
         Society society = societyService.getSocietyToUpdate(account, path);
         model.addAttribute("account", account);
         model.addAttribute("society", society);
@@ -37,9 +34,6 @@ public class UpdateSocietyBannerController {
     @PostMapping("/banner")
     public String SocietyImageSubmit(@CurrentAccount Account account, @PathVariable String path,
                                    String image, RedirectAttributes attributes) throws AccessDeniedException {
-        if (!account.isEmailVerified()) {
-            return "redirect:/check-email";
-        }
         Society society = societyService.getSocietyToUpdate(account, path);
         societyService.updateSocietyImage(society, image);
         attributes.addFlashAttribute("message", "스터디 이미지를 수정했습니다.");
@@ -48,9 +42,6 @@ public class UpdateSocietyBannerController {
 
     @PostMapping("/banner/enable")
     public String enableStudyBanner(@CurrentAccount Account account, @PathVariable String path) throws AccessDeniedException {
-        if (!account.isEmailVerified()) {
-            return "redirect:/check-email";
-        }
         Society society = societyService.getSocietyToUpdate(account, path);
         societyService.enableSocietyBanner(society);
         return "redirect:/society/" + society.getEncodedPath() + "/settings/banner";
@@ -58,9 +49,6 @@ public class UpdateSocietyBannerController {
 
     @PostMapping("/banner/disable")
     public String disableStudyBanner(@CurrentAccount Account account, @PathVariable String path) throws AccessDeniedException {
-        if (!account.isEmailVerified()) {
-            return "redirect:/check-email";
-        }
         Society society = societyService.getSocietyToUpdate(account, path);
         societyService.disableSocietyBanner(society);
         return "redirect:/society/" + society.getEncodedPath() + "/settings/banner";

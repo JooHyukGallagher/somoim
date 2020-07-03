@@ -48,7 +48,7 @@ public class UpdateSocietyStatusController {
 
     @PostMapping("/recruit/start")
     public String startRecruit(@CurrentAccount Account account, @PathVariable String path,
-                               Model model, RedirectAttributes attributes) throws AccessDeniedException {
+                               RedirectAttributes attributes) throws AccessDeniedException {
         Society society = societyService.getSocietyToUpdateStatus(account, path);
         if (!society.canUpdateRecruiting()) {
             attributes.addFlashAttribute("message", "1시간 안에 인원 모집 설정을 여러번 변경할 수 없습니다.");
@@ -62,7 +62,7 @@ public class UpdateSocietyStatusController {
 
     @PostMapping("/recruit/stop")
     public String stopRecruit(@CurrentAccount Account account, @PathVariable String path,
-                              Model model, RedirectAttributes attributes) throws AccessDeniedException {
+                              RedirectAttributes attributes) throws AccessDeniedException {
         Society society = societyService.getSocietyToUpdateStatus(account, path);
         if (!society.canUpdateRecruiting()) {
             attributes.addFlashAttribute("message", "1시간 안에 인원 모집 설정을 여러번 변경할 수 없습니다.");
@@ -109,8 +109,8 @@ public class UpdateSocietyStatusController {
     }
 
     @PostMapping("/society/remove")
-    public String removeSociety(@CurrentAccount Account account, @PathVariable String path,
-                                Model model) throws AccessDeniedException {
+    public String removeSociety(@CurrentAccount Account account, @PathVariable String path)
+            throws AccessDeniedException {
         Society society = societyService.getSocietyToUpdateStatus(account, path);
         societyService.remove(society);
         return "redirect:/";
