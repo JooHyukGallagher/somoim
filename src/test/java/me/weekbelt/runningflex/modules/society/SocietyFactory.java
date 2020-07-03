@@ -19,6 +19,9 @@ public class SocietyFactory {
     public Society createSociety(String path, Account manager) {
         Society society = Society.builder()
                 .path(path)
+                .title("test society")
+                .shortDescription("short description")
+                .fullDescription("<p>full description<p>")
                 .build();
         societyService.createNewSociety(society, manager);
         return society;
