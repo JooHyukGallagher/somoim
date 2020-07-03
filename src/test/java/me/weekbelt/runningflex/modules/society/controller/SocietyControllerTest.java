@@ -64,6 +64,9 @@ class SocietyControllerTest {
     @WithAccount("joohyuk")
     @Test
     public void createSociety_success() throws Exception {
+        accountRepository.findByNickname("joohyuk")
+                .ifPresent(account -> accountService.completeSignUp(account));
+
         mockMvc.perform(post("/new-society")
                 .param("path", "test-path")
                 .param("title", "study title")
@@ -85,6 +88,9 @@ class SocietyControllerTest {
     @WithAccount("joohyuk")
     @Test
     public void createSociety_fail() throws Exception {
+        accountRepository.findByNickname("joohyuk")
+                .ifPresent(account -> accountService.completeSignUp(account));
+
         Society society = Society.builder()
                 .path("test-path")
                 .title("test society")

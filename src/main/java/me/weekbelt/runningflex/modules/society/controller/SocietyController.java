@@ -48,6 +48,11 @@ public class SocietyController {
     public String newSocietySubmit(@CurrentAccount Account account,
                                    @Valid SocietyForm societyForm, Errors errors,
                                    Model model) {
+
+        if (!account.isEmailVerified()) {
+            return "redirect:/check-email";
+        }
+
         if (errors.hasErrors()) {
             model.addAttribute("account", account);
             return "society/form";
@@ -68,6 +73,7 @@ public class SocietyController {
     @GetMapping("/society/{path}")
     public String viewSociety(@CurrentAccount Account account, @PathVariable String path,
                               Model model) {
+
         model.addAttribute("account", account);
         model.addAttribute("society", societyService.getSocietyByPath(path));
         return "society/view";
@@ -76,6 +82,7 @@ public class SocietyController {
     @GetMapping("/society/{path}/members")
     public String viewSocietyMember(@CurrentAccount Account account, @PathVariable String path,
                                     Model model) {
+
         model.addAttribute("account", account);
         model.addAttribute("society", societyService.getSocietyByPath(path));
         return "society/member";
