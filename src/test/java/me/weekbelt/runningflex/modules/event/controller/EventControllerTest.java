@@ -15,6 +15,8 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
+import org.springframework.test.web.servlet.ResultActions;
 
 import java.time.LocalDateTime;
 
@@ -146,33 +148,24 @@ class EventControllerTest {
         assertThat(createdEvent.getSociety()).isEqualTo(society);
     }
 
-//    @DisplayName("모임 리스트 조회")
-//    @WithAccount("joohyuk")
-//    @Test
-//    public void eventListView() throws Exception {
-//        Account joohyuk = accountService.getAccountByNickname("joohyuk");
-//        Society society = societyFactory.createSociety("test", joohyuk);
-//
-//        LocalDateTime now = LocalDateTime.now();
-//        Event event = Event.builder()
-//                .title("test title")
-//                .description("test description")
-//                .endEnrollmentDateTime(now.plusDays(1))
-//                .startDateTime(now.plusDays(1).plusHours(2))
-//                .endDateTime(now.plusDays(1).plusHours(7))
-//                .build();
-//
-//        Event createdEvent = eventService.createEvent(event, society, joohyuk);
-//
-//        String requestUrl = "/society/" + society.getEncodedPath() + "/events/" + createdEvent.getId();
-//        mockMvc.perform(get(requestUrl))
-//                .andExpect(model().attributeExists("account"))
-//                .andExpect(model().attributeExists("event"))
-//                .andExpect(model().attributeExists("society"))
-//                .andExpect(status().isOk())
-//                .andExpect(view().name("event/view"));
-//
-//        Assertions.assertThat(createdEvent.getCreatedBy()).isEqualTo(joohyuk);
-//        Assertions.assertThat(createdEvent.getSociety()).isEqualTo(society);
-//    }
+    @DisplayName("모임 리스트 조회")
+    @WithAccount("joohyuk")
+    @Test
+    public void eventsView() throws Exception {
+        Account joohyuk = accountService.getAccountByNickname("joohyuk");
+        Society society = societyFactory.createSociety("test-path", joohyuk);
+
+        Event event1 = eventFactory.createEvent("test event1", EventType.FCFS, 4, society, joohyuk);
+        Event event2 = eventFactory.createEvent("test event2", EventType.CONFIRMATIVE, 4, society, joohyuk);
+
+        ResultActions resultActions = mockMvc.perform(get("/society/test-path/events"))
+                .andExpect(model().attributeExists("account"))
+                .andExpect(model().attributeExists("society"))
+                .andExpect(model().attributeExists("newEvents"))
+                .andExpect(model().attributeExists("oldEvents"))
+                .andExpect(status().isOk())
+                .andExpect(view().name("society/events"));
+
+        // TODO: 지난 모임과 현재 모임 수 테스
+    }
 }
