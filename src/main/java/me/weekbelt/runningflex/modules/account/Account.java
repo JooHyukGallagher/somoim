@@ -3,20 +3,25 @@ package me.weekbelt.runningflex.modules.account;
 import lombok.*;
 import me.weekbelt.runningflex.modules.account.form.Notifications;
 import me.weekbelt.runningflex.modules.account.form.Profile;
+import me.weekbelt.runningflex.modules.account.form.SignUpForm;
 import me.weekbelt.runningflex.modules.society.Society;
 import me.weekbelt.runningflex.modules.tag.Tag;
 import me.weekbelt.runningflex.modules.zone.Zone;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.*;
 
-@AllArgsConstructor @NoArgsConstructor
-@Getter @EqualsAndHashCode(of = "id")
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@EqualsAndHashCode(of = "id")
 @Entity
 public class Account {
 
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(nullable = false, unique = true)
@@ -78,6 +83,18 @@ public class Account {
         this.societyUpdatedByEmail = societyUpdatedByEmail;
     }
 
+    public static Account createAccountFromSignUpForm(SignUpForm signUpForm, PasswordEncoder passwordEncoder) {
+        return Account.builder()
+                .email(signUpForm.getEmail())
+                .nickname(signUpForm.getNickname())
+                .password(passwordEncoder.encode(signUpForm.getPassword()))
+                .emailVerified(false)
+                .societyCreatedByWeb(true)
+                .societyEnrollmentResultByWeb(true)
+                .societyUpdatedByWeb(true)
+                .build();
+    }
+
     public void generateEmailCheckToken() {
         this.emailCheckToken = UUID.randomUUID().toString();
         this.emailCheckTokenGeneratedAt = LocalDateTime.now();
@@ -96,7 +113,7 @@ public class Account {
         return this.emailCheckTokenGeneratedAt.isBefore(LocalDateTime.now().minusMinutes(10));
     }
 
-    public void updateProfile(Profile profile){
+    public void updateProfile(Profile profile) {
         this.url = profile.getUrl();
         this.occupation = profile.getOccupation();
         this.location = profile.getLocation();
