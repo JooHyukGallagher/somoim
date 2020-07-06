@@ -225,22 +225,6 @@
     </div>
     <div th:replace="fragments.html :: footer"></div>
 </div>
-<!--<div class="societyPath" th:type="hidden" th:id="${society.path}"></div>-->
-<!--<div class="eventId" th:type="hidden" th:id="${event.id}"></div>-->
 <script th:replace="fragments.html :: date-time"></script>
-<!--<script src="/js/global.js"></script>-->
-<!--<script type="application/javascript">-->
-<!--    document.addEventListener("DOMContentLoaded", () => {-->
-<!--        const deleteEventButton = document.querySelector("#deleteEvent");-->
-<!--        deleteEventButton.addEventListener("click", async () => {-->
-<!--            const societyPath = document.querySelector(".societyPath").id;-->
-<!--            const eventId = document.querySelector(".eventId").id;-->
-<!--            const url = "/society/" + societyPath + "/events/" + eventId;-->
-
-<!--            let responseBody = await ajax("DELETE", url);-->
-<!--            console.log(responseBody)-->
-<!--        });-->
-<!--    });-->
-<!--</script>-->
 </body>
 </html>
