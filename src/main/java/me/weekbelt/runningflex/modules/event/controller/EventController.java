@@ -59,16 +59,7 @@ public class EventController {
             return "event/form";
         }
 
-        Event event = Event.builder()
-                .title(eventForm.getTitle())
-                .description(eventForm.getDescription())
-                .eventType(eventForm.getEventType())
-                .endEnrollmentDateTime(eventForm.getEndEnrollmentDateTime())
-                .startDateTime(eventForm.getStartDateTime())
-                .endDateTime(eventForm.getEndDateTime())
-                .limitOfEnrollments(eventForm.getLimitOfEnrollments())
-                .build();
-
+        Event event = Event.createEventFromEventForm(eventForm);
         Event createdEvent = eventService.createEvent(event, society, account);
         return "redirect:/society/" + society.getEncodedPath() + "/events/" + createdEvent.getId();
     }

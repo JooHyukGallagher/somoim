@@ -75,6 +75,18 @@ public class Event {
         this.eventType = eventType;
     }
 
+    public static Event createEventFromEventForm(EventForm eventForm){
+        return Event.builder()
+                .title(eventForm.getTitle())
+                .description(eventForm.getDescription())
+                .eventType(eventForm.getEventType())
+                .endEnrollmentDateTime(eventForm.getEndEnrollmentDateTime())
+                .startDateTime(eventForm.getStartDateTime())
+                .endDateTime(eventForm.getEndDateTime())
+                .limitOfEnrollments(eventForm.getLimitOfEnrollments())
+                .build();
+    }
+
     public void createEvent(Society society, Account createdBy) {
         this.createdBy = createdBy;
         this.createdDateTime = LocalDateTime.now();
