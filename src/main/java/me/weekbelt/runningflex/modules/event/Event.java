@@ -120,9 +120,6 @@ public class Event {
                 .filter(Enrollment::isAccepted).count();
     }
 
-    public long getNumberOfAcceptedEnrollments() {
-        return this.enrollments.stream().filter(Enrollment::isAccepted).count();
-    }
 
     public void updateEvent(EventForm eventForm) {
         this.title = eventForm.getTitle();
@@ -148,10 +145,6 @@ public class Event {
                 && enrollment.isAccepted();
     }
 
-    public boolean isAbleToAcceptWaitingEnrollment() {
-        return this.eventType == EventType.FCFS
-                && this.limitOfEnrollments > this.getNumberOfAcceptedEnrollments();
-    }
 
     public void addEnrollment(Enrollment enrollment) {
         this.enrollments.add(enrollment);
@@ -190,6 +183,11 @@ public class Event {
         }
     }
 
+    public boolean isAbleToAcceptWaitingEnrollment() {
+        return this.eventType == EventType.FCFS
+                && this.limitOfEnrollments > this.getNumberOfAcceptedEnrollments();
+    }
+
     private List<Enrollment> getWaitingList() {
         return this.enrollments.stream()
                 .filter(enrollment -> !enrollment.isAccepted())
@@ -212,6 +210,10 @@ public class Event {
                 && this.limitOfEnrollments > this.getNumberOfAcceptedEnrollments()){
             enrollment.accepted();
         }
+    }
+
+    public long getNumberOfAcceptedEnrollments() {
+        return this.enrollments.stream().filter(Enrollment::isAccepted).count();
     }
 
     public void reject(Enrollment enrollment) {

@@ -18,4 +18,5 @@ public class PackageDependencyTests {
     @ArchTest
     ArchRule accountPackageRule = classes().that().resideInAPackage(ACCOUNT)
             .should().accessClassesThat().resideInAnyPackage(ACCOUNT_TAG, ACCOUNT_ZONE, TAG, ZONE, ACCOUNT);
+
 }

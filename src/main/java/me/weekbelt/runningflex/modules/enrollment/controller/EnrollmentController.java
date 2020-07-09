@@ -24,7 +24,6 @@ public class EnrollmentController {
 
     private final SocietyService societyService;
     private final EventService eventService;
-    private final EnrollmentService enrollmentService;
 
     @PostMapping("/events/{id}/enroll")
     public String newEnrollment(@CurrentAccount Account account, @PathVariable String path,
