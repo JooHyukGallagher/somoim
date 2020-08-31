@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.ResultActions;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
@@ -42,12 +43,20 @@ class AccountControllerTest {
     @DisplayName("회원 가입 화면")
     @Test
     public void signUpForm() throws Exception {
-        mockMvc.perform(get("/sign-up"))
-                .andDo(print())
+        // given
+        String requestUrl = "/sign-up";
+
+        // when
+        ResultActions resultActions = mockMvc.perform(get(requestUrl))
+                .andDo(print());
+
+        // then
+        resultActions
                 .andExpect(status().isOk())
                 .andExpect(view().name("account/sign-up"))
                 .andExpect(model().attributeExists("signUpForm"))
                 .andExpect(unauthenticated());      // 인증된 사용자가 없는지 확인
+
     }
 
     @DisplayName("회원 가입 처리 - 입력값 오류")
