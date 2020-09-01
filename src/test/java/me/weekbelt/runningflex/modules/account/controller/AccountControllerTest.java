@@ -62,12 +62,19 @@ class AccountControllerTest {
     @DisplayName("회원 가입 처리 - 입력값 오류")
     @Test
     public void signUpSubmit_with_wrong_input() throws Exception {
-        mockMvc.perform(post("/sign-up")
+        // given
+        String requestUrl = "/sign-up";
+
+        // when
+        ResultActions resultActions = mockMvc.perform(post(requestUrl)
                 .param("nickname", "joohyuk")
                 .param("email", "email....")
                 .param("password", "12345")
                 .with(csrf()))
-                .andDo(print())
+                .andDo(print());
+
+        // then
+        resultActions
                 .andExpect(status().isOk())
                 .andExpect(view().name("account/sign-up"))
                 .andExpect(model().hasErrors())
@@ -77,12 +84,18 @@ class AccountControllerTest {
     @DisplayName("회원 가입 처리 - 입력값 정상")
     @Test
     public void signUpSubmit_with_correct_input() throws Exception {
-        // 회원 가입 요청이 제대로 작동하는지 화인
-        mockMvc.perform(post("/sign-up")
+        // given
+        String requestUrl = "/sign-up";
+
+        // when
+        ResultActions resultActions = mockMvc.perform(post(requestUrl)
                 .param("nickname", "joohyuk")
                 .param("email", "vfrvfr4207@hanmail.net")
                 .param("password", "12345678")
-                .with(csrf()))      // POST 요청시 CSRF값을 비교하여 같으면 요청을 처리하고 다르면 403에러가 발생한다.
+                .with(csrf()));
+
+        // then
+        resultActions
                 .andExpect(status().is3xxRedirection())
                 .andExpect(view().name("redirect:/"))
                 .andExpect(authenticated().withUsername("joohyuk"));
