@@ -116,9 +116,15 @@ class AccountControllerTest {
     @DisplayName("인증 메일 확인 - 입력값 오류")
     @Test
     public void checkEmailToken_with_wrong_input() throws Exception {
-        mockMvc.perform(get("/check-email-token")
+        // given
+        String requestUrl = "/check-email-token";
+
+        // when
+        ResultActions resultActions = mockMvc.perform(get(requestUrl)
                 .param("token", "asdfasdfasdf")
-                .param("email", "wfsdf@gmail.com"))
+                .param("email", "wfsdf@gmail.com"));
+        // then
+        resultActions
                 .andExpect(status().isOk())
                 .andExpect(model().attributeExists("error"))
                 .andExpect(view().name("account/checked-email"))
@@ -128,6 +134,7 @@ class AccountControllerTest {
     @DisplayName("인증 메일 확인 - 입력값 정상")
     @Test
     public void checkEmailToken_with_correct_input() throws Exception {
+        // given
         Account account = Account.builder()
                 .email("vfrvfr4207@hanmail.net")
                 .password("12345678")
@@ -136,10 +143,16 @@ class AccountControllerTest {
         Account newAccount = accountRepository.save(account);
         newAccount.generateEmailCheckToken();
 
-        mockMvc.perform(get("/check-email-token")
+        String requestUrl = "/check-email-token";
+
+        // when
+        ResultActions resultActions = mockMvc.perform(get(requestUrl)
                 .param("token", newAccount.getEmailCheckToken())
                 .param("email", newAccount.getEmail()))
-                .andExpect(status().isOk())
+                .andExpect(status().isOk());
+
+        // then
+        resultActions
                 .andExpect(model().attributeDoesNotExist("error"))
                 .andExpect(model().attributeExists("nickname"))
                 .andExpect(model().attributeExists("numberOfUser"))
