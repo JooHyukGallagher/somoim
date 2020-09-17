@@ -4,6 +4,7 @@ import me.weekbelt.runningflex.infra.MockMvcTest;
 import me.weekbelt.runningflex.modules.account.Account;
 import me.weekbelt.runningflex.modules.account.repository.AccountRepository;
 import me.weekbelt.runningflex.modules.account.WithAccount;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,8 +20,15 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @MockMvcTest
 class UpdateAccountProfileControllerTest {
 
-    @Autowired MockMvc mockMvc;
-    @Autowired AccountRepository accountRepository;
+    @Autowired
+    MockMvc mockMvc;
+    @Autowired
+    AccountRepository accountRepository;
+
+    @AfterEach
+    void afterEach() {
+        accountRepository.deleteAll(); 
+    }
 
     @WithAccount("joohyuk")
     @DisplayName("프로필 수정 폼")
